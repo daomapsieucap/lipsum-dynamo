@@ -25,62 +25,17 @@ class Lipsum_Dynamo_Generate{
 	}
 	
 	public function lipnamo_generate_items(){
-		
-		if(!$_POST || (!$_POST['cpo_data'] && !$_POST['post_type'])){
-			return false;
+		if(!$_POST){
+			return;
 		}
 		
-		parse_str($_POST['cpo_data'], $cpo_order);
+		$post_items      = lipnamo_array_key_exists('post_items', $_POST, 10);
+		$post_type      = lipnamo_array_key_exists('post_type', $_POST, 'post');
+		$post_author     = lipnamo_array_key_exists('post_author', $_POST);
+		$post_status      = lipnamo_array_key_exists('post_status', $_POST, 'publish');
+		$post_thumbnails      = lipnamo_array_key_exists('post_thumbnails', $_POST);
 		
-		global $wpdb;
 		
-		$post_type = $_POST['post_type'];
-		
-		$post_status = $_POST['post_status'] ? : 'publish';
-		$post_status = $post_status == 'all' ? 'any' : $post_status;
-		
-		$post_ids = $cpo_order['post'];
-		
-		if($post_ids){
-			$order_start = 0;
-			
-			// Get minimum post order
-			$pre_posts_args  = array(
-				'post_type'        => $post_type,
-				'posts_per_page'   => 1,
-				'post_status'      => $post_status,
-				'orderby'          => 'menu_order',
-				'order'            => 'ASC',
-				'post__in'         => $post_ids,
-				'suppress_filters' => false,
-				'fields'           => 'ids'
-			);
-			$pre_posts_query = new WP_Query($pre_posts_args);
-			if($pre_posts_query->have_posts()){
-				$order_start_id   = $pre_posts_query->posts[0];
-				$order_start_post = get_post($order_start_id);
-				$order_start      = $order_start_post->menu_order;
-			}
-			
-			// Update post order
-			$update_posts_args  = array(
-				'post_type'        => $post_type,
-				'posts_per_page'   => - 1,
-				'post_status'      => $post_status,
-				'orderby'          => 'post__in',
-				'order'            => 'ASC',
-				'post__in'         => $post_ids,
-				'suppress_filters' => false,
-				'fields'           => 'ids'
-			);
-			$update_posts_query = new WP_Query($update_posts_args);
-			if($update_posts_query->have_posts()){
-				foreach($update_posts_query->posts as $id){
-					$wpdb->update($wpdb->posts, array('menu_order' => $order_start), array('ID' => intval($id)));
-					$order_start ++;
-				}
-			}
-		}
 		
 		die();
 	}

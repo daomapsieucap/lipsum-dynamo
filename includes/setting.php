@@ -118,7 +118,7 @@ class Lipsum_Dynamo_Setting{
 		?>
         <fieldset>
             <label for="post_items">
-                <input name="lipnamo_options[post_items]" type="number" id="post_items" min="1" max="50" value="10" />
+                <input name="lipnamo_post_items" type="number" id="post_items" min="1" max="50" value="10" />
             </label>
         </fieldset>
 		<?php
@@ -129,7 +129,7 @@ class Lipsum_Dynamo_Setting{
 		?>
         <fieldset>
             <label for="post_type">
-                <select id="post_type" name='lipnamo_options[post_type]'>
+                <select id="post_type" name='lipnamo_post_type'>
                     <?php
                     if($post_types){
 	                    foreach($post_types as $slug=>$post_type){
@@ -151,7 +151,7 @@ class Lipsum_Dynamo_Setting{
 		?>
         <fieldset>
             <label for="post_author">
-                <select id="post_author" name='lipnamo_options[post_author]'>
+                <select id="post_author" name='lipnamo_post_author'>
 					<?php
 					if($users){
 						foreach($users as $user_id){
@@ -175,7 +175,7 @@ class Lipsum_Dynamo_Setting{
 		?>
         <fieldset>
             <label for="post_status">
-                <select id="post_status" name='lipnamo_options[post_status]'>
+                <select id="post_status" name='lipnamo_post_status'>
 					<?php
 					if($post_statuses){
 						foreach($post_statuses as $slug=>$post_status){
@@ -202,7 +202,7 @@ class Lipsum_Dynamo_Setting{
                 <ul class="lipnamo-preview__list"></ul>
             </div>
             <label>
-                <input id="lipnamo-thumbnails" type="hidden" name="lipnamo_options[thumbnails]" value=""/>
+                <input id="lipnamo-thumbnails" type="hidden" name="lipnamo_thumbnails" value=""/>
             </label>
             <button class="button lipnamo-upload"><?php echo __('Add Thumbnails', 'lipnamo'); ?></button>
         </fieldset>
