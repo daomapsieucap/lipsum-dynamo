@@ -30,11 +30,10 @@ class Lipsum_Dynamo_Generate{
 		}
 		
 		$post_items      = lipnamo_array_key_exists('post_items', $_POST, 10);
-		$post_type      = lipnamo_array_key_exists('post_type', $_POST, 'post');
+		$post_type       = lipnamo_array_key_exists('post_type', $_POST, 'post');
 		$post_author     = lipnamo_array_key_exists('post_author', $_POST);
-		$post_status      = lipnamo_array_key_exists('post_status', $_POST, 'publish');
-		$post_thumbnails      = lipnamo_array_key_exists('post_thumbnails', $_POST);
-		
+		$post_status     = lipnamo_array_key_exists('post_status', $_POST, 'publish');
+		$post_thumbnails = lipnamo_array_key_exists('post_thumbnails', $_POST);
 		
 		
 		die();

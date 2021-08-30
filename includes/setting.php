@@ -40,19 +40,19 @@ class Lipsum_Dynamo_Setting{
 	
 	public function lipnamo_admin_page(){
 		?>
-		<div class="wrap">
-			<h2>Lipsum Dynamo</h2>
+        <div class="wrap">
+            <h2>Lipsum Dynamo</h2>
 			<?php settings_errors(); ?>
-			
-			<form class="fiber-admin" method="post" action="options.php">
+
+            <form class="fiber-admin" method="post" action="options.php">
 				<?php
 				//settings_fields('lipnamo_group');
 				do_settings_sections('lipsum-dynamo');
 				
 				submit_button();
 				?>
-			</form>
-		</div>
+            </form>
+        </div>
 		<?php
 	}
 	
@@ -118,28 +118,28 @@ class Lipsum_Dynamo_Setting{
 		?>
         <fieldset>
             <label for="post_items">
-                <input name="lipnamo_post_items" type="number" id="post_items" min="1" max="50" value="10" />
+                <input name="lipnamo_post_items" type="number" id="post_items" min="1" max="50" value="10"/>
             </label>
         </fieldset>
 		<?php
 	}
 	
 	public function lipnamo_post_type(){
-	    $post_types = get_post_types(array('public'   => true),'objects');
+		$post_types = get_post_types(array('public' => true), 'objects');
 		?>
         <fieldset>
             <label for="post_type">
                 <select id="post_type" name='lipnamo_post_type'>
-                    <?php
-                    if($post_types){
-	                    foreach($post_types as $slug=>$post_type){
-		                    $list[$slug] = $post_type->label;
-		                    ?>
+					<?php
+					if($post_types){
+						foreach($post_types as $slug => $post_type){
+							$list[$slug] = $post_type->label;
+							?>
                             <option value="<?php echo $slug; ?>"><?php echo $post_type->label; ?></option>
-		                    <?php
-	                    }
-                    }
-                    ?>
+							<?php
+						}
+					}
+					?>
                 </select>
             </label>
         </fieldset>
@@ -147,7 +147,7 @@ class Lipsum_Dynamo_Setting{
 	}
 	
 	public function lipnamo_post_author(){
-		$users = get_users( array( 'role__in' => array( 'administrator' ) ,'fields' => array( 'ID' )) );
+		$users = get_users(array('role__in' => array('administrator'), 'fields' => array('ID')));
 		?>
         <fieldset>
             <label for="post_author">
@@ -155,9 +155,9 @@ class Lipsum_Dynamo_Setting{
 					<?php
 					if($users){
 						foreach($users as $user_id){
-                            $user_id = $user_id->ID;
-							$user_info = get_userdata( $user_id );
-							$name = $user_info->user_login;
+							$user_id   = $user_id->ID;
+							$user_info = get_userdata($user_id);
+							$name      = $user_info->user_login;
 							?>
                             <option value="<?php echo $user_id; ?>"><?php echo $name; ?></option>
 							<?php
@@ -178,11 +178,11 @@ class Lipsum_Dynamo_Setting{
                 <select id="post_status" name='lipnamo_post_status'>
 					<?php
 					if($post_statuses){
-						foreach($post_statuses as $slug=>$post_status){
-                            $selected = '';
-                            if($slug == 'publish'){
-                                $selected = 'selected';
-                            }
+						foreach($post_statuses as $slug => $post_status){
+							$selected = '';
+							if($slug == 'publish'){
+								$selected = 'selected';
+							}
 							?>
                             <option value="<?php echo $slug; ?>" <?php echo $selected; ?>><?php echo $post_status; ?></option>
 							<?php

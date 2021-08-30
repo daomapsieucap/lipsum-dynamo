@@ -2,7 +2,7 @@
  * Preview Gallery
  */
 
-.lipnamo-preview{
+.lipnamo-preview {
     max-width:800px; min-height:400px;
     background-color:#fff;
     border:#ccd0d4 solid 1px;
@@ -10,20 +10,20 @@
     overflow-x:auto;
 }
 
-.lipnamo-preview__list{
+.lipnamo-preview__list {
     display:flex;
-    flex-wrap: wrap;
+    flex-wrap:wrap;
 }
 
-.lipnamo-preview__list{
+.lipnamo-preview__list {
     padding:10px;
 }
 
-.lipnamo-preview__list li{
+.lipnamo-preview__list li {
     width:25%;
 }
 
-.lipnamo-preview__list li span{
+.lipnamo-preview__list li span {
     display:block;
     padding:10px;
     margin:5px;
@@ -31,9 +31,9 @@
     border:#d5d9dd solid 1px;
 }
 
-.lipnamo-preview__list li img{
-    height: auto;
-    max-height: 100%;
-    width: auto;
-    max-width: 100%;
+.lipnamo-preview__list li img {
+    height:auto;
+    max-height:100%;
+    width:auto;
+    max-width:100%;
 }

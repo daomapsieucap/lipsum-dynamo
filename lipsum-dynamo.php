@@ -49,7 +49,7 @@ function lipnamo_init(){
  * Database creation
  */
 
-register_activation_hook( __FILE__, 'lipnamo_install' );
+register_activation_hook(__FILE__, 'lipnamo_install');
 function lipnamo_install(){
 	global $wpdb;
 	
@@ -64,15 +64,15 @@ function lipnamo_install(){
 		PRIMARY KEY  (id)
 	) $charset_collate;";
 	
-	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-	dbDelta( $sql );
+	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+	dbDelta($sql);
 	
-	add_option( 'lipnamo_db_version', LIPNAMO_VERSION );
+	add_option('lipnamo_db_version', LIPNAMO_VERSION);
 }
 
-add_action( 'plugins_loaded', 'lipnamo_update_db_check' );
-function lipnamo_update_db_check() {
-	if ( get_site_option( 'lipnamo_db_version' ) != LIPNAMO_VERSION ) {
+add_action('plugins_loaded', 'lipnamo_update_db_check');
+function lipnamo_update_db_check(){
+	if(get_site_option('lipnamo_db_version') != LIPNAMO_VERSION){
 		lipnamo_install();
 	}
 }

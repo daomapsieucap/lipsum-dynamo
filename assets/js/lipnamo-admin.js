@@ -39,21 +39,21 @@ jQuery(document).ready(function($){
                 const attachment = custom_uploader.state().get('selection').toJSON();
 
                 if(attachment){
-                    for (let i = 0; i < attachment.length; i++) {
-                        preview.append('<li><span><img src="'+attachment[i].url+'" /></span></li>');
-                        $('#lipnamo-thumbnails').val( $('#lipnamo-thumbnails').val() + ','+attachment[i].id);
+                    for(let i = 0; i < attachment.length; i++){
+                        preview.append('<li><span><img src="' + attachment[i].url + '" /></span></li>');
+                        $('#lipnamo-thumbnails').val($('#lipnamo-thumbnails').val() + ',' + attachment[i].id);
                     }
                 }
             });
             //Show selected items when open media popup
-            custom_uploader.on('open',function() {
+            custom_uploader.on('open', function(){
                 var selection = custom_uploader.state().get('selection');
                 var ids_value = $('#lipnamo-thumbnails').val();
 
-                if(ids_value.length > 0) {
+                if(ids_value.length > 0){
                     var ids = ids_value.split(',');
 
-                    ids.forEach(function(id) {
+                    ids.forEach(function(id){
                         let attachment = wp.media.attachment(id);
                         attachment.fetch();
                         selection.add(attachment ? [attachment] : []);
