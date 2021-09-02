@@ -46,11 +46,10 @@ class Lipsum_Dynamo_Setting{
 
             <form class="fiber-admin" method="post" action="options.php">
 				<?php
-				//settings_fields('lipnamo_group');
 				do_settings_sections('lipsum-dynamo');
-				
-				submit_button();
 				?>
+                <input name="lipnamo-generate__progress" type="hidden" value=""/>
+                <a href="#" class="lipnamo-generate button button-primary"><?php echo __('Generate', 'lipnamo'); ?></a>
             </form>
         </div>
 		<?php
@@ -79,7 +78,7 @@ class Lipsum_Dynamo_Setting{
 		);
 		
 		add_settings_field(
-			'post_types', // id
+			'post_type', // id
 			'Select post type', // title
 			array($this, 'lipnamo_post_type'), // callback
 			'lipsum-dynamo', // page

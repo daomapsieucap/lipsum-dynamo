@@ -36,6 +36,7 @@ define("LIPNAMO_ASSETS_URL", plugin_dir_url(__FILE__) . 'assets/');
 add_action('init', 'lipnamo_init');
 function lipnamo_init(){
 	// helper functions
+	include_once(LIPNAMO_DIR . 'includes/lorem-ipsum.php');
 	include_once(LIPNAMO_DIR . 'includes/helper.php');
 	
 	// options pages
