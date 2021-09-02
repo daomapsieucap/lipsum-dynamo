@@ -44,11 +44,20 @@ class Lipsum_Dynamo_Setting{
             <h2>Lipsum Dynamo</h2>
 			<?php settings_errors(); ?>
 
-            <form class="fiber-admin" method="post" action="options.php">
+            <form class="lipnamo" method="post" action="options.php">
 				<?php
 				do_settings_sections('lipsum-dynamo');
 				?>
-                <input name="lipnamo-generate__progress" type="hidden" value=""/>
+                <input name="lipnamo-generate__step" type="hidden" value="1"/>
+                <div class="lipnamo-generate__progress-wrapper" style="display:none;">
+                    <div class="lipnamo-generate__progress">
+                        <div class="lipnamo-generate__progress-bar" style="width:0"></div>
+                    </div>
+                    <div class="lipnamo-generate__progress-text">
+                        Processing <span class="lipnamo-generate__progress-step">1</span> of <span
+                                class="lipnamo-generate__progress-total">10</span>
+                    </div>
+                </div>
                 <a href="#" class="lipnamo-generate button button-primary"><?php echo __('Generate', 'lipnamo'); ?></a>
             </form>
         </div>

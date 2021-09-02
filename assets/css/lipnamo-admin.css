@@ -1,39 +1,38 @@
 /**
+ * Settings
+ */
+
+.lipnamo .form-table th {vertical-align:middle;}
+.lipnamo .form-table th, .lipnamo .form-table td {padding:10px;}
+
+/**
  * Preview Gallery
  */
 
 .lipnamo-preview {
-    max-width:800px; min-height:400px;
-    background-color:#fff;
-    border:#ccd0d4 solid 1px;
-    margin-bottom:20px;
-    overflow-x:auto;
+    max-width:500px; height:200px;
+    background-color:#fff;border:#ccd0d4 solid 1px;
+    margin-bottom:20px;overflow-x:auto;
+}
+.lipnamo-preview .lipnamo-input__img {margin-bottom:10px;}
+.lipnamo-preview .lipnamo-preview__list {display:flex; flex-wrap:wrap;}
+.lipnamo-preview .lipnamo-preview__list {padding:0 10px;}
+.lipnamo-preview .lipnamo-preview__list li {width:25%;}
+.lipnamo-preview .lipnamo-preview__list li span {
+    display:block; padding:10px; margin:5px;
+    background:#eee; border:#d5d9dd solid 1px;
+}
+.lipnamo-preview .lipnamo-preview__list li img {
+    height:auto; max-height:100%;
+    width:auto; max-width:100%;
 }
 
-.lipnamo-preview__list {
-    display:flex;
-    flex-wrap:wrap;
-}
+/**
+ * Progress Bar
+ */
 
-.lipnamo-preview__list {
-    padding:10px;
-}
-
-.lipnamo-preview__list li {
-    width:25%;
-}
-
-.lipnamo-preview__list li span {
-    display:block;
-    padding:10px;
-    margin:5px;
-    background:#eee;
-    border:#d5d9dd solid 1px;
-}
-
-.lipnamo-preview__list li img {
-    height:auto;
-    max-height:100%;
-    width:auto;
-    max-width:100%;
+.lipnamo-generate__progress-wrapper {max-width:1000px;margin-bottom:20px;background-color:#fff; padding:15px 10px;}
+.lipnamo-generate__progress {margin-bottom:5px;color:#000;background-color:#cecece;}
+.lipnamo-generate__progress-bar {
+    height:20px;padding:0.01em 0;background-color:#0073aa;
 }

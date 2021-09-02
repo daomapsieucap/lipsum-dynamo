@@ -32,32 +32,67 @@ class Lipsum_Dynamo_Generate{
 		}
 		
 		// Get AJAX data
-		$post_items      = lipnamo_array_key_exists('post_items', $_POST, 10);
+		$post_total      = intval(lipnamo_array_key_exists('post_total', $_POST, 10));
 		$post_type       = lipnamo_array_key_exists('post_type', $_POST, 'post');
-		$post_author     = lipnamo_array_key_exists('post_author', $_POST);
+		$post_author     = intval(lipnamo_array_key_exists('post_author', $_POST));
 		$post_status     = lipnamo_array_key_exists('post_status', $_POST, 'publish');
 		$post_thumbnails = lipnamo_array_key_exists('post_thumbnails', $_POST);
+		$post_step       = intval(lipnamo_array_key_exists('post_step', $_POST));
 		
-		$generator = new LoremIpsum();
+		if($post_step <= $post_total){
+			$generator = new LoremIpsum();
+			
+			// Set dummy variables
+			$title_words        = rand(10, 15);
+			$excerpt_sentences  = rand(1, 3);
+			$content_paragraphs = rand(1, 10);
+			$thumbnail_id       = 0;
+			if($post_thumbnails){
+				$post_thumbnails = array_map('intval', explode(',', $post_thumbnails));
+				$thumbnail_rand  = array_rand($post_thumbnails);
+				$thumbnail_id    = $post_thumbnails[$thumbnail_rand];
+			}
+			
+			if($post_step > 1){
+				$generator->word();
+			}
+			$post_title   = ucfirst($generator->words($title_words));
+			$post_excerpt = $generator->sentences($excerpt_sentences);
+			$post_content = $generator->paragraphs($content_paragraphs);
+			
+			// Create post
+			$new_post = array(
+				'post_type'    => $post_type,
+				'post_title'   => wp_strip_all_tags($post_title),
+				'post_excerpt' => $post_excerpt,
+				'post_content' => $post_content,
+				'post_status'  => $post_status,
+				'post_author'  => $post_author
+			);
+			$post_id  = wp_insert_post($new_post);
+			if(!is_wp_error($post_id) && $thumbnail_id){
+				set_post_thumbnail($post_id, $thumbnail_id);
+			}
+			
+			$post_step ++;
+		}
 		
-		// Set dummy variables
-		$text         = $generator->word();
-		$post_title   = ucfirst($generator->words(10));
-		$post_excerpt = $generator->sentences(2);
-		$post_content = $generator->paragraphs(5);
+		if($post_step > $post_total){
+			$post_step = $post_total;
+		}
 		
-		// Create post
-		$new_post = array(
-			'post_type'    => $post_type,
-			'post_title'   => wp_strip_all_tags($post_title),
-			'post_excerpt' => $post_excerpt,
-			'post_content' => $post_content,
-			'post_status'  => $post_status,
-			'post_author'  => $post_author
+		// Store results in an array.
+		$result = array(
+			'step' => $post_step
 		);
-		wp_insert_post($new_post);
 		
-		die();
+		if($post_step >= $post_total){
+			$result['message'] = 'Finished creating total ' . $post_total . ' items';
+		}
+		
+		// Send output as JSON for processing via AJAX.
+		echo json_encode($result);
+		exit;
 	}
 }
 

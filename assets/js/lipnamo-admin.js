@@ -36,19 +36,31 @@ jQuery(document).ready(function($){
             });
             //When a file is selected, grab the URL and set it as the text field's value
             custom_uploader.on('select', function(){
-                const attachment = custom_uploader.state().get('selection').toJSON();
+                const attachment = custom_uploader.state().get('selection').toJSON(),
+                    $thumbnails = $('#lipnamo-thumbnails');
+
+                let thumbnail_val = $thumbnails.val();
 
                 if(attachment){
                     for(let i = 0; i < attachment.length; i++){
-                        preview.append('<li><span><img src="' + attachment[i].url + '" /></span></li>');
-                        $('#lipnamo-thumbnails').val($('#lipnamo-thumbnails').val() + ',' + attachment[i].id);
+                        thumbnail_val = $thumbnails.val();
+                        if(thumbnail_val){
+                            $thumbnails.val(thumbnail_val + ',' + attachment[i].id);
+                            let thumbnail_array = thumbnail_val.split(",").map(Number);
+                            if(!thumbnail_array.includes(attachment[i].id)){
+                                preview.append('<li><span><img src="' + attachment[i].url + '" /></span></li>');
+                            }
+                        }else{
+                            $thumbnails.val(attachment[i].id);
+                            preview.append('<li><span><img src="' + attachment[i].url + '" /></span></li>');
+                        }
                     }
                 }
             });
             //Show selected items when open media popup
             custom_uploader.on('open', function(){
-                var selection = custom_uploader.state().get('selection');
-                var ids_value = $('#lipnamo-thumbnails').val();
+                const selection = custom_uploader.state().get('selection'),
+                    ids_value = $('#lipnamo-thumbnails').val();
 
                 if(ids_value.length > 0){
                     var ids = ids_value.split(',');
