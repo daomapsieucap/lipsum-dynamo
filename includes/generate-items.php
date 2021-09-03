@@ -19,15 +19,21 @@ class Lipsum_Dynamo_Generate{
 	
 	public function lipnamo_generate_scripts(){
 		wp_enqueue_script('lipnamo-generate-items', LIPNAMO_ASSETS_URL . 'js/lipnamo-generate-items.js', array('jquery'), LIPNAMO_VERSION, true);
-		wp_localize_script(
-			'lipnamo-generate-items',
-			'lipnamo_items',
-			array('ajax_url' => admin_url('admin-ajax.php'))
+		wp_localize_script('lipnamo-generate-items', 'lipnamo_items',
+			array(
+				'ajax_url'   => admin_url('admin-ajax.php'),
+				'ajax_nonce' => wp_create_nonce('lipnamo_ajax_nonce'),
+			)
 		);
 	}
 	
 	public function lipnamo_generate_items(){
 		if(!$_POST){
+			return;
+		}
+		
+		// Bail if not authorized.
+		if(!check_admin_referer('lipnamo_ajax_nonce', 'lipnamo_ajax_nonce')){
 			return;
 		}
 		

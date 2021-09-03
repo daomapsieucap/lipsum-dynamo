@@ -79,9 +79,9 @@ class Lipsum_Dynamo_Setting{
 		);
 		
 		add_settings_field(
-			'post_items', // id
+			'lipnamo_post_total', // id
 			'Number of items', // title
-			array($this, 'lipnamo_post_items'), // callback
+			array($this, 'lipnamo_post_total'), // callback
 			'lipsum-dynamo', // page
 			'lipnamo_section' // section
 		);
@@ -122,11 +122,11 @@ class Lipsum_Dynamo_Setting{
 	public function lipnamo_admin_section_info(){
 	}
 	
-	public function lipnamo_post_items(){
+	public function lipnamo_post_total(){
 		?>
         <fieldset>
-            <label for="post_items">
-                <input name="lipnamo_post_items" type="number" id="post_items" min="1" max="50" value="10"/>
+            <label for="post_total">
+                <input name="lipnamo_post_total" type="number" id="post_total" min="1" max="50" value="10"/>
             </label>
         </fieldset>
 		<?php

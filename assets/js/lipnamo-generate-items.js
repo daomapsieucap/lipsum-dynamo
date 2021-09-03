@@ -1,5 +1,5 @@
 jQuery(document).ready(function($){
-    let i = 0;
+    let i = 1;
 
     $('.lipnamo-generate').click(function(e){
         e.preventDefault();
@@ -7,16 +7,17 @@ jQuery(document).ready(function($){
     });
 
     function lipnamoGenerateItems(){
-        $("#wpbody").addClass("lipnamo-loading");
-        $(".lipnamo-generate__progress-wrapper").show();
-        $(this).addClass('disabled');
-
         const post_total = parseInt($('input[name="lipnamo_post_total"]').val()),
             post_type = $('select[name="lipnamo_post_type"]').val(),
             post_author = $('select[name="lipnamo_post_author"]').val(),
             post_status = $('select[name="lipnamo_post_status"]').val(),
             post_thumbnails = $('input[name="lipnamo_thumbnails"]').val(),
-            $progressBar = $('.lipnamo-generate__progress-bar');
+            $progressBar = $('.lipnamo-generate__progress-bar'),
+            $wpbody = $("#wpbody");
+
+        $wpbody.addClass("lipnamo-loading");
+        $(".lipnamo-generate__progress-wrapper").show();
+        $(this).addClass('disabled');
 
         if(i >= post_total){
             return;
@@ -31,6 +32,7 @@ jQuery(document).ready(function($){
             type: 'POST',
             data: {
                 action: 'lipnamo_generate_items',
+                lipnamo_ajax_nonce: lipnamo_items.ajax_nonce,
                 post_total: post_total,
                 post_type: post_type,
                 post_author: post_author,
@@ -44,10 +46,6 @@ jQuery(document).ready(function($){
                     percent = step * 100 / post_total;
 
                 $('input[name="lipnamo-generate__step"]').val(step);
-
-                console.log(step);
-                console.log(post_total);
-                console.log(percent);
 
                 if(step < post_total){
                     $('.lipnamo-generate__progress-step').text(step);
@@ -68,7 +66,7 @@ jQuery(document).ready(function($){
             }
         });
 
-        $("#wpbody").removeClass("lipnamo-loading");
+        $wpbody.removeClass("lipnamo-loading");
         $(this).removeClass('disabled');
     }
 });
