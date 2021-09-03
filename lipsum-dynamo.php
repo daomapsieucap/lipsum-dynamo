@@ -84,23 +84,25 @@ function lipnamo_update_db_check(){
 
 register_uninstall_hook(__FILE__, 'lipnamo_uninstall');
 function lipnamo_uninstall(){
-	global $wpdb;
-	
-	$table_name = $wpdb->prefix . 'lipnamo';
-	
-	// Delete created posts
-	$posts = $wpdb->get_results("SELECT * FROM $table_name");
-	if($posts){
-		foreach($posts as $post){
-			$post_id = $post->post_id;
-			if(get_post_status($post_id)){
-				wp_delete_post($post_id);
+	if(lipnamo_get_option('setting_delete')){
+		global $wpdb;
+		
+		$table_name = $wpdb->prefix . 'lipnamo';
+		
+		// Delete created posts
+		$posts = $wpdb->get_results("SELECT * FROM $table_name");
+		if($posts){
+			foreach($posts as $post){
+				$post_id = $post->post_id;
+				if(get_post_status($post_id)){
+					wp_delete_post($post_id);
+				}
 			}
 		}
+		
+		// Delete plugin data
+		$sql = "DROP TABLE IF EXISTS $table_name";
+		$wpdb->query($sql);
+		delete_option('lipsum_dynamo');
 	}
-	
-	// Delete plugin data
-	$sql = "DROP TABLE IF EXISTS $table_name";
-	$wpdb->query($sql);
-	delete_option('lipsum_dynamo');
 }
