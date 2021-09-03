@@ -29,16 +29,16 @@ define('LIPNAMO_VERSION', '1.0.0');
 define("LIPNAMO_DIR", plugin_dir_path(__FILE__));
 define("LIPNAMO_ASSETS_URL", plugin_dir_url(__FILE__) . 'assets/');
 
+// helper functions
+include_once(LIPNAMO_DIR . 'includes/lorem-ipsum.php');
+include_once(LIPNAMO_DIR . 'includes/helper.php');
+
 /**
  * Init Functions
  */
 
 add_action('init', 'lipnamo_init');
 function lipnamo_init(){
-	// helper functions
-	include_once(LIPNAMO_DIR . 'includes/lorem-ipsum.php');
-	include_once(LIPNAMO_DIR . 'includes/helper.php');
-	
 	// options pages
 	include_once(LIPNAMO_DIR . 'includes/setting.php');
 	
