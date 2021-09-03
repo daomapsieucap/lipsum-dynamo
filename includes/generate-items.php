@@ -49,8 +49,8 @@ class Lipsum_Dynamo_Generate{
 			$generator = new LoremIpsum();
 			
 			// Set dummy variables
-			$title_words        = rand(10, 15);
-			$excerpt_sentences  = rand(1, 3);
+			$title_words        = rand(8, 15);
+			$excerpt_sentences  = rand(1, 2);
 			$content_paragraphs = rand(1, 10);
 			$thumbnail_id       = 0;
 			if($post_thumbnails){
@@ -78,6 +78,15 @@ class Lipsum_Dynamo_Generate{
 			$post_id  = wp_insert_post($new_post);
 			if(!is_wp_error($post_id) && $thumbnail_id){
 				set_post_thumbnail($post_id, $thumbnail_id);
+			}
+			
+			if(!is_wp_error($post_id)){
+				global $wpdb;
+				$table_name = $wpdb->prefix . 'lipnamo';
+				$wpdb->insert($table_name, array(
+					'post_id' => $post_id,
+					'time'    => wp_date('Y-m-d H:i:s')
+				));
 			}
 			
 			$post_step ++;

@@ -3,10 +3,20 @@ if(!function_exists('lipnamo_array_key_exists')){
 	function lipnamo_array_key_exists($key, $atts, $default = ''){
 		if($atts && is_array($atts)){
 			if(array_key_exists($key, $atts)){
-				return (!empty($atts[$key])) ? $atts[$key] : $default;
+				if(!empty($atts[$key])){
+					return $atts[$key];
+				}else{
+					return $default;
+				}
 			}
 		}
 		
 		return $default;
+	}
+}
+
+if(!function_exists('lipnamo_get_option')){
+	function lipnamo_get_option($key){
+		return lipnamo_array_key_exists($key, get_option('lipsum_dynamo'));
 	}
 }

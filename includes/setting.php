@@ -45,9 +45,7 @@ class Lipsum_Dynamo_Setting{
 			<?php settings_errors(); ?>
 
             <form class="lipnamo" method="post" action="options.php">
-				<?php
-				do_settings_sections('lipsum-dynamo');
-				?>
+				<?php do_settings_sections('lipsum-dynamo'); ?>
                 <input name="lipnamo-generate__step" type="hidden" value="1"/>
                 <div class="lipnamo-generate__progress-wrapper" style="display:none;">
                     <div class="lipnamo-generate__progress">
@@ -59,6 +57,13 @@ class Lipsum_Dynamo_Setting{
                     </div>
                 </div>
                 <a href="#" class="lipnamo-generate button button-primary"><?php echo __('Generate', 'lipnamo'); ?></a>
+            </form>
+            <form class="lipnamo" method="post" action="<?php echo get_admin_url() . 'options.php'; ?>">
+				<?php
+				settings_fields('lipnamo_group');
+				do_settings_sections('lipsum-dynamo-setting');
+				submit_button();
+				?>
             </form>
         </div>
 		<?php
@@ -73,7 +78,7 @@ class Lipsum_Dynamo_Setting{
 		
 		add_settings_section(
 			'lipnamo_section',
-			'<span class="dashicons dashicons-admin-settings"></span> General',
+			'<span class="dashicons dashicons-list-view"></span> General',
 			array($this, 'lipnamo_admin_section_info'),
 			'lipsum-dynamo'
 		);
@@ -116,6 +121,21 @@ class Lipsum_Dynamo_Setting{
 			array($this, 'lipnamo_post_thumbnail'), // callback
 			'lipsum-dynamo', // page
 			'lipnamo_section' // section
+		);
+		
+		add_settings_section(
+			'lipnamo_setting_section',
+			'<span class="dashicons dashicons-admin-settings"></span> Setting',
+			array($this, 'lipnamo_admin_section_info'),
+			'lipsum-dynamo-setting'
+		);
+		
+		add_settings_field(
+			'setting_delete', // id
+			'Delete data after uninstall', // title
+			array($this, 'lipnamo_setting_delete'), // callback
+			'lipsum-dynamo-setting', // page
+			'lipnamo_setting_section' // section
 		);
 	}
 	
@@ -213,6 +233,18 @@ class Lipsum_Dynamo_Setting{
                 <input id="lipnamo-thumbnails" type="hidden" name="lipnamo_thumbnails" value=""/>
             </label>
             <button class="button lipnamo-upload"><?php echo __('Add Thumbnails', 'lipnamo'); ?></button>
+        </fieldset>
+		<?php
+	}
+	
+	public function lipnamo_setting_delete(){
+		?>
+        <fieldset>
+            <label for="setting_delete">
+                <input type="checkbox" name="lipsum_dynamo[setting_delete]" id="setting_delete"
+                       value="yes" <?php checked(esc_attr(lipnamo_get_option('setting_delete')), 'yes'); ?> />
+            </label>
+            <p class="description"><?php echo __("This setting will delete all generated dummy data when uninstalling plugin. It can't be reverted, be careful to use."); ?></p>
         </fieldset>
 		<?php
 	}
