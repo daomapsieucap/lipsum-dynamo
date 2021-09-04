@@ -4,14 +4,14 @@
 
 ## Installation
 
-1. Download Lipsum Dynamo plugin
-2. Upload it to your wp-content/plugins directory
-3. Go to CMS admin plugins list and activate the plugin
-4. Go to Tools > Lipsum Dynamo to start using the tool.
+1. Install either via the WordPress.org plugin directory, or by uploading the files to your server.
+2. Go to CMS admin plugins list and activate the plugin.
+3. Go to Tools > Lipsum Dynamo to start using the tool.
 
 ## Features
 
 * Generate dummy content with many options.
+* Option to cleanup created dummy content after uninstall.
 
 ## Changelog
 
