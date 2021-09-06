@@ -8,7 +8,7 @@
  * Requires PHP:      7.2
  * Author:            Dao Chau
  * Author URI:        https://daochau.com/
- * Text Domain:       lipnamo
+ * Text Domain:       lipsum-dynamo
  */
 
 // If this file is called directly, abort.

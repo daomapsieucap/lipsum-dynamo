@@ -39,11 +39,17 @@ class Lipsum_Dynamo_Generate{
 		
 		// Get AJAX data
 		$post_total      = intval(lipnamo_array_key_exists('post_total', $_POST, 10));
-		$post_type       = lipnamo_array_key_exists('post_type', $_POST, 'post');
+		$post_type       = esc_attr(lipnamo_array_key_exists('post_type', $_POST, 'post'));
 		$post_author     = intval(lipnamo_array_key_exists('post_author', $_POST));
-		$post_status     = lipnamo_array_key_exists('post_status', $_POST, 'publish');
-		$post_thumbnails = lipnamo_array_key_exists('post_thumbnails', $_POST);
+		$post_status     = esc_attr(lipnamo_array_key_exists('post_status', $_POST, 'publish'));
+		$post_thumbnails = esc_attr(lipnamo_array_key_exists('post_thumbnails', $_POST));
 		$post_step       = intval(lipnamo_array_key_exists('post_step', $_POST));
+		
+		// Exit if invalid post type
+		$valid_post_types = get_post_types(array('public' => true), 'objects');
+		if(!in_array($post_type, array_keys($valid_post_types))){
+			return;
+		}
 		
 		if($post_step <= $post_total){
 			$generator = new LoremIpsum();

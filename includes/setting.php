@@ -56,7 +56,8 @@ class Lipsum_Dynamo_Setting{
                                 class="lipnamo-generate__progress-total">10</span>
                     </div>
                 </div>
-                <a href="#" class="lipnamo-generate button button-primary"><?php echo __('Generate', 'lipnamo'); ?></a>
+                <a href="#"
+                   class="lipnamo-generate button button-primary"><?php echo __('Generate', 'lipsum-dynamo'); ?></a>
             </form>
             <form class="lipnamo" method="post" action="<?php echo get_admin_url() . 'options.php'; ?>">
 				<?php
@@ -163,7 +164,7 @@ class Lipsum_Dynamo_Setting{
 						foreach($post_types as $slug => $post_type){
 							$list[$slug] = $post_type->label;
 							?>
-                            <option value="<?php echo $slug; ?>"><?php echo $post_type->label; ?></option>
+                            <option value="<?php echo esc_attr($slug); ?>"><?php echo esc_attr($post_type->label); ?></option>
 							<?php
 						}
 					}
@@ -187,7 +188,7 @@ class Lipsum_Dynamo_Setting{
 							$user_info = get_userdata($user_id);
 							$name      = $user_info->user_login;
 							?>
-                            <option value="<?php echo $user_id; ?>"><?php echo $name; ?></option>
+                            <option value="<?php echo intval($user_id); ?>"><?php echo esc_attr($name); ?></option>
 							<?php
 						}
 					}
@@ -212,7 +213,9 @@ class Lipsum_Dynamo_Setting{
 								$selected = 'selected';
 							}
 							?>
-                            <option value="<?php echo $slug; ?>" <?php echo $selected; ?>><?php echo $post_status; ?></option>
+                            <option value="<?php echo esc_attr($slug); ?>" <?php echo esc_attr($selected); ?>>
+								<?php echo esc_attr($post_status); ?>
+                            </option>
 							<?php
 						}
 					}
@@ -232,7 +235,7 @@ class Lipsum_Dynamo_Setting{
             <label>
                 <input id="lipnamo-thumbnails" type="hidden" name="lipnamo_thumbnails" value=""/>
             </label>
-            <button class="button lipnamo-upload"><?php echo __('Add Thumbnails', 'lipnamo'); ?></button>
+            <button class="button lipnamo-upload"><?php echo __('Add Thumbnails', 'lipsum-dynamo'); ?></button>
         </fieldset>
 		<?php
 	}
