@@ -188,7 +188,7 @@ class Lipsum_Dynamo_Setting{
 							$user_info = get_userdata($user_id);
 							$name      = $user_info->user_login;
 							?>
-                            <option value="<?php echo intval($user_id); ?>"><?php echo esc_attr($name); ?></option>
+                            <option value="<?php echo esc_attr($user_id); ?>"><?php echo esc_attr($name); ?></option>
 							<?php
 						}
 					}
