@@ -1,4 +1,6 @@
-# Lipsum Dynamo
+<p align="center"><img width="150" src="https://ps.w.org/lipsum-dynamo/assets/icon.svg" /></p>
+
+# [Lipsum Dynamo](https://wordpress.org/plugins/lipsum-dynamo/)
 
 > 🖨 WordPress plugin to generate dummy content for demo purpose.
 
