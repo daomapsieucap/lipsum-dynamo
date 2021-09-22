@@ -13,13 +13,18 @@ Generate dummy content for demo purpose
 **FEATURES**
 
 * Generate dummy content with many options.
-* Option to cleanup created dummy content after uninstall.
+* Option to delete generated items after uninstall.
+* Option to control length of dummy text for Title, Excerpt and Content.
 
 == Installation ==
 
 1. Install either via the WordPress.org plugin directory, or by uploading the files to your server.
 2. Go to CMS admin plugins list and activate the plugin.
-3. Go to Tools > Lipsum Dynamo to start using the tool.
+3. Go to Tools > Lipsum Dynamo to update options and generate dummy items.
+
+== Screenshots ==
+
+1. Setting page with multiple options
 
 == Changelog ==
 
