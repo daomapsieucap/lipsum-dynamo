@@ -29,6 +29,7 @@ Generate dummy content for demo purpose
 == Changelog ==
 
 = 1.1.0 =
+*Release Date - 22 Septempber 2021*
 
 * New: Add option to control length of dummy text for Title, Excerpt and Content.
 * Changed: Add option to prevent deleting generated items but still cleanup database.
