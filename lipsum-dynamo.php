@@ -3,7 +3,7 @@
  * Plugin Name:       Lipsum Dynamo
  * Plugin URI:        https://wordpress.org/plugins/lipsum-dynamo/
  * Description:       🖨 Generate dummy content for demo purpose
- * Version:           1.0.0
+ * Version:           1.1.0
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Dao Chau
@@ -25,7 +25,7 @@ if(!defined('ABSPATH')){
  * Definitions
  */
 
-define('LIPNAMO_VERSION', '1.0.0');
+define('LIPNAMO_VERSION', '1.1.0');
 define("LIPNAMO_DIR", plugin_dir_path(__FILE__));
 define("LIPNAMO_ASSETS_URL", plugin_dir_url(__FILE__) . 'assets/');
 
@@ -84,11 +84,11 @@ function lipnamo_update_db_check(){
 
 register_uninstall_hook(__FILE__, 'lipnamo_uninstall');
 function lipnamo_uninstall(){
-	if(lipnamo_get_option('setting_delete')){
-		global $wpdb;
-		
-		$table_name = $wpdb->prefix . 'lipnamo';
-		
+	global $wpdb;
+	
+	$table_name = $wpdb->prefix . 'lipnamo';
+	
+	if(lipnamo_get_option('setting_delete_generated')){
 		// Delete created posts
 		$posts = $wpdb->get_results("SELECT * FROM $table_name");
 		if($posts){
@@ -99,7 +99,9 @@ function lipnamo_uninstall(){
 				}
 			}
 		}
-		
+	}
+	
+	if(lipnamo_get_option('setting_delete')){
 		// Delete plugin data
 		$sql = "DROP TABLE IF EXISTS $table_name";
 		$wpdb->query($sql);

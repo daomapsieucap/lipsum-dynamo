@@ -4,7 +4,7 @@ Tags: lorem ipsum, dummy text generator, lorem ipsum generator
 Requires at least: 4.7
 Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,6 +23,6 @@ Generate dummy content for demo purpose
 
 == Changelog ==
 
-= 1.0.0 =
+= 1.1.0 =
 
 * The very first version

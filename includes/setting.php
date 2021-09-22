@@ -132,8 +132,16 @@ class Lipsum_Dynamo_Setting{
 		);
 		
 		add_settings_field(
-			'setting_delete', // id
-			'Delete data after uninstall', // title
+			'setting_delete_generated', // id
+			'Delete generated items after uninstall', // title
+			array($this, 'lipnamo_setting_delete_generated'), // callback
+			'lipsum-dynamo-setting', // page
+			'lipnamo_setting_section' // section
+		);
+		
+		add_settings_field(
+			'setting_delete_data', // id
+			'Cleanup plugin data after uninstall', // title
 			array($this, 'lipnamo_setting_delete'), // callback
 			'lipsum-dynamo-setting', // page
 			'lipnamo_setting_section' // section
@@ -240,6 +248,18 @@ class Lipsum_Dynamo_Setting{
 		<?php
 	}
 	
+	public function lipnamo_setting_delete_generated(){
+		?>
+        <fieldset>
+            <label for="setting_delete_generated">
+                <input type="checkbox" name="lipsum_dynamo[setting_delete_generated]" id="setting_delete_generated"
+                       value="yes" <?php checked(esc_attr(lipnamo_get_option('setting_delete_generated')), 'yes'); ?> />
+            </label>
+            <p class="description"><?php echo __("This setting will delete all generated dummy items when uninstalling plugin. It can't be reverted, be careful to use."); ?></p>
+        </fieldset>
+		<?php
+	}
+	
 	public function lipnamo_setting_delete(){
 		?>
         <fieldset>
@@ -247,7 +267,7 @@ class Lipsum_Dynamo_Setting{
                 <input type="checkbox" name="lipsum_dynamo[setting_delete]" id="setting_delete"
                        value="yes" <?php checked(esc_attr(lipnamo_get_option('setting_delete')), 'yes'); ?> />
             </label>
-            <p class="description"><?php echo __("This setting will delete all generated dummy data when uninstalling plugin. It can't be reverted, be careful to use."); ?></p>
+            <p class="description"><?php echo __("This setting will the plugin database when uninstalling plugin. It can't be reverted, be careful to use."); ?></p>
         </fieldset>
 		<?php
 	}

@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 1.1.0 =
+*Release Date - 22 Septempber 2021*
+
+* Changed: Add option to prevent deleting generated items but still cleanup database.
+
 = 1.0.0 =
 *Release Date - 07 Septempber 2021*
 
