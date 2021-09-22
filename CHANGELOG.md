@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## 1.1.0 - 2021-09-22
 
+* New: Add option to control length of dummy text for Title, Excerpt and Content.
 * Changed: Add option to prevent deleting generated items but still cleanup database.
 * Fixed: Check database table exists before creating the new one.
 

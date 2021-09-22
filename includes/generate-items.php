@@ -28,6 +28,7 @@ class Lipsum_Dynamo_Generate{
 	}
 	
 	public function lipnamo_generate_items(){
+		// Bail if there is no parameters passed
 		if(!$_POST){
 			return;
 		}
@@ -38,12 +39,15 @@ class Lipsum_Dynamo_Generate{
 		}
 		
 		// Get AJAX data
-		$post_total      = intval(lipnamo_array_key_exists('post_total', $_POST, 10));
-		$post_type       = sanitize_text_field(lipnamo_array_key_exists('post_type', $_POST, 'post'));
-		$post_author     = intval(lipnamo_array_key_exists('post_author', $_POST));
-		$post_status     = sanitize_text_field(lipnamo_array_key_exists('post_status', $_POST, 'publish'));
-		$post_thumbnails = sanitize_text_field(lipnamo_array_key_exists('post_thumbnails', $_POST));
-		$post_step       = intval(lipnamo_array_key_exists('post_step', $_POST));
+		$post_total          = intval(lipnamo_array_key_exists('post_total', $_POST, 10));
+		$post_type           = sanitize_text_field(lipnamo_array_key_exists('post_type', $_POST, 'post'));
+		$post_author         = intval(lipnamo_array_key_exists('post_author', $_POST));
+		$post_status         = sanitize_text_field(lipnamo_array_key_exists('post_status', $_POST, 'publish'));
+		$post_thumbnails     = sanitize_text_field(lipnamo_array_key_exists('post_thumbnails', $_POST));
+		$post_title_length   = sanitize_text_field(lipnamo_array_key_exists('post_title_length', $_POST));
+		$post_excerpt_length = sanitize_text_field(lipnamo_array_key_exists('post_excerpt_length', $_POST));
+		$post_body_length    = sanitize_text_field(lipnamo_array_key_exists('post_body_length', $_POST));
+		$post_step           = intval(lipnamo_array_key_exists('post_step', $_POST));
 		
 		// Exit if invalid post type
 		$valid_post_types = get_post_types(array('public' => true), 'objects');
@@ -51,13 +55,33 @@ class Lipsum_Dynamo_Generate{
 			return;
 		}
 		
+		// Validate data
+		$post_title_min = $post_title_max = 1;
+		if($post_title_length){
+			$post_title_array = explode(',', $post_title_length);
+			$post_title_min   = intval($post_title_array[0]);
+			$post_title_max   = intval($post_title_array[1]);
+		}
+		$post_excerpt_min = $post_excerpt_max = 1;
+		if($post_excerpt_length){
+			$post_excerpt_array = explode(',', $post_excerpt_length);
+			$post_excerpt_min   = intval($post_excerpt_array[0]);
+			$post_excerpt_max   = intval($post_excerpt_array[1]);
+		}
+		$post_body_min = $post_body_max = 1;
+		if($post_body_length){
+			$post_body_array = explode(',', $post_body_length);
+			$post_body_min   = intval($post_body_array[0]);
+			$post_body_max   = intval($post_body_array[1]);
+		}
+		
 		if($post_step <= $post_total){
 			$generator = new LoremIpsum();
 			
 			// Set dummy variables
-			$title_words        = rand(8, 15);
-			$excerpt_sentences  = rand(1, 2);
-			$content_paragraphs = rand(1, 10);
+			$title_words        = rand($post_title_min, $post_title_max);
+			$excerpt_sentences  = rand($post_excerpt_min, $post_excerpt_max);
+			$content_paragraphs = rand($post_body_min, $post_body_max);
 			$thumbnail_id       = 0;
 			if($post_thumbnails){
 				$post_thumbnails = array_map('intval', explode(',', $post_thumbnails));

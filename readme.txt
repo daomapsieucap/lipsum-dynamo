@@ -25,5 +25,6 @@ Generate dummy content for demo purpose
 
 = 1.1.0 =
 
+* New: Add option to control length of dummy text for Title, Excerpt and Content.
 * Changed: Add option to prevent deleting generated items but still cleanup database.
 * Fixed: Check database table exists before creating the new one.

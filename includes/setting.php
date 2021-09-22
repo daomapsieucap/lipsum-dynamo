@@ -124,6 +124,14 @@ class Lipsum_Dynamo_Setting{
 			'lipnamo_section' // section
 		);
 		
+		add_settings_field(
+			'length_control', // id
+			'Length Control', // title
+			array($this, 'lipnamo_length_control'), // callback
+			'lipsum-dynamo', // page
+			'lipnamo_section' // section
+		);
+		
 		add_settings_section(
 			'lipnamo_setting_section',
 			'<span class="dashicons dashicons-admin-settings"></span> Setting',
@@ -248,6 +256,43 @@ class Lipsum_Dynamo_Setting{
 		<?php
 	}
 	
+	public function lipnamo_length_control(){
+		?>
+        <fieldset class="lipnamo-length-control lipnamo-length-control__customize">
+            <label for="length_title_min"><?php echo __("Title", "lipsum-dynamo"); ?></label>
+			
+			<?php echo __("From", "lipsum-dynamo"); ?>
+            <input class="small-text" id="length_title_min" type="number" min="1" value="8"
+                   name="length_title_min"/> <?php echo __("word(s)", "lipsum-dynamo"); ?>
+			<?php echo __("to", "lipsum-dynamo"); ?>
+            <input class="small-text" id="length_title_max" type="number" min="1" value="15"
+                   name="length_title_max"/> <?php echo __("word(s)", "lipsum-dynamo"); ?>
+
+            <br/>
+
+            <label for="length_excerpt_min"><?php echo __("Excerpt", "lipsum-dynamo"); ?></label>
+			
+			<?php echo __("From", "lipsum-dynamo"); ?>
+            <input class="small-text" id="length_excerpt_min" type="number" min="1" value="1"
+                   name="length_excerpt_min"/> <?php echo __("sentence(s)", "lipsum-dynamo"); ?>
+			<?php echo __("to", "lipsum-dynamo"); ?>
+            <input class="small-text" id="length_excerpt_max" type="number" min="1" value="2"
+                   name="length_excerpt_max"/> <?php echo __("sentence(s)", "lipsum-dynamo"); ?>
+
+            <br/>
+
+            <label for="length_content_min"><?php echo __("Content", "lipsum-dynamo"); ?></label>
+			
+			<?php echo __("From", "lipsum-dynamo"); ?>
+            <input class="small-text" id="length_content_min" type="number" min="1" value="1"
+                   name="length_content_min"/> <?php echo __("paragraph(s)", "lipsum-dynamo"); ?>
+			<?php echo __("to", "lipsum-dynamo"); ?>
+            <input class="small-text" id="length_content_max" min="1" type="number" value="10"
+                   name="length_content_max"/> <?php echo __("paragraph(s)", "lipsum-dynamo"); ?>
+        </fieldset>
+		<?php
+	}
+	
 	public function lipnamo_setting_delete_generated(){
 		?>
         <fieldset>
@@ -255,7 +300,7 @@ class Lipsum_Dynamo_Setting{
                 <input type="checkbox" name="lipsum_dynamo[setting_delete_generated]" id="setting_delete_generated"
                        value="yes" <?php checked(esc_attr(lipnamo_get_option('setting_delete_generated')), 'yes'); ?> />
             </label>
-            <p class="description"><?php echo __("This setting will delete all generated dummy items when uninstalling plugin. It can't be reverted, be careful to use."); ?></p>
+            <p class="description"><?php echo __("This setting will delete all generated dummy items when uninstalling plugin. It can't be reverted, be careful to use.", "lipsum-dynamo"); ?></p>
         </fieldset>
 		<?php
 	}
@@ -267,7 +312,7 @@ class Lipsum_Dynamo_Setting{
                 <input type="checkbox" name="lipsum_dynamo[setting_delete]" id="setting_delete"
                        value="yes" <?php checked(esc_attr(lipnamo_get_option('setting_delete')), 'yes'); ?> />
             </label>
-            <p class="description"><?php echo __("This setting will the plugin database when uninstalling plugin. It can't be reverted, be careful to use."); ?></p>
+            <p class="description"><?php echo __("This setting will the plugin database when uninstalling plugin. It can't be reverted, be careful to use.", "lipsum-dynamo"); ?></p>
         </fieldset>
 		<?php
 	}
