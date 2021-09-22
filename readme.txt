@@ -25,4 +25,5 @@ Generate dummy content for demo purpose
 
 = 1.1.0 =
 
-* The very first version
+* Changed: Add option to prevent deleting generated items but still cleanup database.
+* Fixed: Check database table exists before creating the new one.
