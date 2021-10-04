@@ -3,10 +3,10 @@
  * Plugin Name:       Lipsum Dynamo
  * Plugin URI:        https://wordpress.org/plugins/lipsum-dynamo/
  * Description:       🖨 Generate dummy content for demo purpose
- * Version:           1.1.0
+ * Version:           2.0
  * Requires at least: 5.2
  * Requires PHP:      7.2
- * Author:            Dao Chau
+ * Author:            Dao
  * Author URI:        https://daochau.com/
  * Text Domain:       lipsum-dynamo
  */
@@ -25,7 +25,7 @@ if(!defined('ABSPATH')){
  * Definitions
  */
 
-define('LIPNAMO_VERSION', '1.1.0');
+define('LIPNAMO_VERSION', '2.0');
 define("LIPNAMO_DIR", plugin_dir_path(__FILE__));
 define("LIPNAMO_ASSETS_URL", plugin_dir_url(__FILE__) . 'assets/');
 
@@ -40,7 +40,9 @@ include_once(LIPNAMO_DIR . 'includes/helper.php');
 add_action('init', 'lipnamo_init');
 function lipnamo_init(){
 	// options pages
-	include_once(LIPNAMO_DIR . 'includes/setting.php');
+	include_once(LIPNAMO_DIR . 'includes/setting/general.php');
+	include_once(LIPNAMO_DIR . 'includes/setting/cleanup.php');
+	include_once(LIPNAMO_DIR . 'includes/setting/data.php');
 	
 	// functions
 	include_once(LIPNAMO_DIR . 'includes/generate-items.php');

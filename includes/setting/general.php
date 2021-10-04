@@ -28,6 +28,15 @@ class Lipsum_Dynamo_Setting{
 	}
 	
 	public function lipnamo_setting(){
+		add_menu_page(
+			'Lipsum Dynamo',
+			'Lipsum Dynamo',
+			'manage_options',
+			'lipsum-dynamo',
+			'',
+			'dashicons-art',
+			90
+		);
 		add_submenu_page(
 			'tools.php',
 			'Lipsum Dynamo',
@@ -58,6 +67,21 @@ class Lipsum_Dynamo_Setting{
                 </div>
                 <a href="#"
                    class="lipnamo-generate button button-primary"><?php echo __('Generate', 'lipsum-dynamo'); ?></a>
+            </form>
+            <form class="lipnamo" method="post" action="options.php">
+				<?php do_settings_sections('lipsum-dynamo-cleanup'); ?>
+                <input name="lipnamo-generate__step" type="hidden" value="1"/>
+                <div class="lipnamo-generate__progress-wrapper" style="display:none;">
+                    <div class="lipnamo-generate__progress">
+                        <div class="lipnamo-generate__progress-bar" style="width:0"></div>
+                    </div>
+                    <div class="lipnamo-generate__progress-text">
+                        Processing <span class="lipnamo-generate__progress-step">1</span> of <span
+                                class="lipnamo-generate__progress-total">10</span>
+                    </div>
+                </div>
+                <a href="#"
+                   class="lipnamo-generate button button-primary"><?php echo __('Cleanup', 'lipsum-dynamo'); ?></a>
             </form>
             <form class="lipnamo" method="post" action="<?php echo get_admin_url() . 'options.php'; ?>">
 				<?php
@@ -130,6 +154,21 @@ class Lipsum_Dynamo_Setting{
 			array($this, 'lipnamo_length_control'), // callback
 			'lipsum-dynamo', // page
 			'lipnamo_section' // section
+		);
+		
+		add_settings_section(
+			'lipnamo_cleanup_section',
+			'<span class="dashicons dashicons-list-view"></span> Cleanup',
+			array($this, 'lipnamo_admin_section_info'),
+			'lipsum-dynamo-cleanup'
+		);
+		
+		add_settings_field(
+			'post_type', // id
+			'Select post type', // title
+			array($this, 'lipnamo_post_type'), // callback
+			'lipsum-dynamo-cleanup', // page
+			'lipnamo_cleanup_section' // section
 		);
 		
 		add_settings_section(

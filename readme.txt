@@ -4,7 +4,7 @@ Tags: lorem ipsum, dummy text generator, lorem ipsum generator
 Requires at least: 4.7
 Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 1.1.0
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,9 +28,6 @@ Generate dummy content for demo purpose
 
 == Changelog ==
 
-= 1.1.0 =
-*Release Date - 22 Septempber 2021*
+= 2.0 =
+*Release Date - xx October 2021*
 
-* New: Add option to control length of dummy text for Title, Excerpt and Content.
-* Changed: Add option to prevent deleting generated items but still cleanup database.
-* Fixed: Check database table exists before creating the new one.
