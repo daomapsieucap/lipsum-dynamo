@@ -40,6 +40,7 @@ include_once(LIPNAMO_DIR . 'includes/helper.php');
 add_action('init', 'lipnamo_init');
 function lipnamo_init(){
 	// options pages
+	include_once(LIPNAMO_DIR . 'includes/setting/setting.php');
 	include_once(LIPNAMO_DIR . 'includes/setting/general.php');
 	include_once(LIPNAMO_DIR . 'includes/setting/cleanup.php');
 	include_once(LIPNAMO_DIR . 'includes/setting/data.php');

@@ -5,42 +5,20 @@ if(!defined('ABSPATH')){
 }
 
 /**
- * Setting Page
+ * General Setting Page
  */
-class Lipsum_Dynamo_Setting{
+class Lipsum_Dynamo_General_Setting{
 	
 	public function __construct(){
-		add_action('admin_menu', array($this, 'lipnamo_setting'));
-		add_action('admin_init', array($this, 'lipnamo_admin_page_init'));
-		
-		// enqueue assets
-		add_action("admin_enqueue_scripts", array($this, 'lipnamo_assets'));
+		add_action('admin_menu', array($this, 'lipnamo_general_setting'));
+		add_action('admin_init', array($this, 'lipnamo_general_page_init'));
 	}
 	
-	public function lipnamo_assets(){
-		wp_enqueue_style('lipnamo-admin', LIPNAMO_ASSETS_URL . 'css/lipnamo-admin.css', false, LIPNAMO_VERSION, 'all');
-		
-		// Upload field
-		wp_enqueue_media();
-		
-		// Plugin scripts
-		wp_enqueue_script('lipnamo-admin', LIPNAMO_ASSETS_URL . 'js/lipnamo-admin.js', array('jquery'), LIPNAMO_VERSION);
-	}
-	
-	public function lipnamo_setting(){
-		add_menu_page(
-			'Lipsum Dynamo',
-			'Lipsum Dynamo',
-			'manage_options',
-			'lipsum-dynamo',
-			'',
-			'dashicons-art',
-			90
-		);
+	public function lipnamo_general_setting(){
 		add_submenu_page(
-			'tools.php',
+			'lipsum-dynamo',
 			'Lipsum Dynamo',
-			'Lipsum Dynamo',
+			'General',
 			'manage_options',
 			'lipsum-dynamo',
 			array($this, 'lipnamo_admin_page')
@@ -68,33 +46,11 @@ class Lipsum_Dynamo_Setting{
                 <a href="#"
                    class="lipnamo-generate button button-primary"><?php echo __('Generate', 'lipsum-dynamo'); ?></a>
             </form>
-            <form class="lipnamo" method="post" action="options.php">
-				<?php do_settings_sections('lipsum-dynamo-cleanup'); ?>
-                <input name="lipnamo-generate__step" type="hidden" value="1"/>
-                <div class="lipnamo-generate__progress-wrapper" style="display:none;">
-                    <div class="lipnamo-generate__progress">
-                        <div class="lipnamo-generate__progress-bar" style="width:0"></div>
-                    </div>
-                    <div class="lipnamo-generate__progress-text">
-                        Processing <span class="lipnamo-generate__progress-step">1</span> of <span
-                                class="lipnamo-generate__progress-total">10</span>
-                    </div>
-                </div>
-                <a href="#"
-                   class="lipnamo-generate button button-primary"><?php echo __('Cleanup', 'lipsum-dynamo'); ?></a>
-            </form>
-            <form class="lipnamo" method="post" action="<?php echo get_admin_url() . 'options.php'; ?>">
-				<?php
-				settings_fields('lipnamo_group');
-				do_settings_sections('lipsum-dynamo-setting');
-				submit_button();
-				?>
-            </form>
         </div>
 		<?php
 	}
 	
-	public function lipnamo_admin_page_init(){
+	public function lipnamo_general_page_init(){
 		register_setting(
 			'lipnamo_group',
 			'lipsum_dynamo',
@@ -154,44 +110,6 @@ class Lipsum_Dynamo_Setting{
 			array($this, 'lipnamo_length_control'), // callback
 			'lipsum-dynamo', // page
 			'lipnamo_section' // section
-		);
-		
-		add_settings_section(
-			'lipnamo_cleanup_section',
-			'<span class="dashicons dashicons-list-view"></span> Cleanup',
-			array($this, 'lipnamo_admin_section_info'),
-			'lipsum-dynamo-cleanup'
-		);
-		
-		add_settings_field(
-			'post_type', // id
-			'Select post type', // title
-			array($this, 'lipnamo_post_type'), // callback
-			'lipsum-dynamo-cleanup', // page
-			'lipnamo_cleanup_section' // section
-		);
-		
-		add_settings_section(
-			'lipnamo_setting_section',
-			'<span class="dashicons dashicons-admin-settings"></span> Setting',
-			array($this, 'lipnamo_admin_section_info'),
-			'lipsum-dynamo-setting'
-		);
-		
-		add_settings_field(
-			'setting_delete_generated', // id
-			'Delete generated items after uninstall', // title
-			array($this, 'lipnamo_setting_delete_generated'), // callback
-			'lipsum-dynamo-setting', // page
-			'lipnamo_setting_section' // section
-		);
-		
-		add_settings_field(
-			'setting_delete_data', // id
-			'Cleanup plugin data after uninstall', // title
-			array($this, 'lipnamo_setting_delete'), // callback
-			'lipsum-dynamo-setting', // page
-			'lipnamo_setting_section' // section
 		);
 	}
 	
@@ -331,30 +249,6 @@ class Lipsum_Dynamo_Setting{
         </fieldset>
 		<?php
 	}
-	
-	public function lipnamo_setting_delete_generated(){
-		?>
-        <fieldset>
-            <label for="setting_delete_generated">
-                <input type="checkbox" name="lipsum_dynamo[setting_delete_generated]" id="setting_delete_generated"
-                       value="yes" <?php checked(esc_attr(lipnamo_get_option('setting_delete_generated')), 'yes'); ?> />
-            </label>
-            <p class="description"><?php echo __("This setting will delete all generated dummy items when uninstalling plugin. It can't be reverted, be careful to use.", "lipsum-dynamo"); ?></p>
-        </fieldset>
-		<?php
-	}
-	
-	public function lipnamo_setting_delete(){
-		?>
-        <fieldset>
-            <label for="setting_delete">
-                <input type="checkbox" name="lipsum_dynamo[setting_delete]" id="setting_delete"
-                       value="yes" <?php checked(esc_attr(lipnamo_get_option('setting_delete')), 'yes'); ?> />
-            </label>
-            <p class="description"><?php echo __("This setting will the plugin database when uninstalling plugin. It can't be reverted, be careful to use.", "lipsum-dynamo"); ?></p>
-        </fieldset>
-		<?php
-	}
 }
 
-new Lipsum_Dynamo_Setting();
+new Lipsum_Dynamo_General_Setting();
