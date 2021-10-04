@@ -28,7 +28,7 @@ class Lipsum_Dynamo_General_Setting{
 	public function lipnamo_admin_page(){
 		?>
         <div class="wrap">
-            <h2>Lipsum Dynamo</h2>
+            <h2>Generate dummy items</h2>
 			<?php settings_errors(); ?>
 
             <form class="lipnamo" method="post" action="options.php">
@@ -59,7 +59,7 @@ class Lipsum_Dynamo_General_Setting{
 		
 		add_settings_section(
 			'lipnamo_section',
-			'<span class="dashicons dashicons-list-view"></span> General',
+			'',
 			array($this, 'lipnamo_admin_section_info'),
 			'lipsum-dynamo'
 		);

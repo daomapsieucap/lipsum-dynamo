@@ -28,7 +28,7 @@ class Lipsum_Dynamo_Cleanup_Setting{
 	public function lipnamo_admin_page(){
 		?>
         <div class="wrap">
-            <h2>Lipsum Dynamo</h2>
+            <h2>Cleanup generated items</h2>
 			<?php settings_errors(); ?>
 
             <form class="lipnamo" method="post" action="options.php">
@@ -59,7 +59,7 @@ class Lipsum_Dynamo_Cleanup_Setting{
 		
 		add_settings_section(
 			'lipnamo_cleanup_section',
-			'<span class="dashicons dashicons-list-view"></span> Cleanup',
+			'',
 			array($this, 'lipnamo_admin_section_info'),
 			'lipsum-dynamo-cleanup'
 		);
@@ -84,6 +84,9 @@ class Lipsum_Dynamo_Cleanup_Setting{
                 <select id="post_type" name='lipnamo_post_type'>
 					<?php
 					if($post_types){
+						?>
+                        <option value="all"><?php echo __('All', 'lipsum-dynamo'); ?></option>
+						<?php
 						foreach($post_types as $slug => $post_type){
 							$list[$slug] = $post_type->label;
 							?>
