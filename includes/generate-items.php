@@ -114,8 +114,8 @@ class Lipsum_Dynamo_Generate{
 				global $wpdb;
 				$table_name = $wpdb->prefix . 'lipnamo';
 				$wpdb->insert($table_name, array(
-					'post_id' => $post_id,
-					'time'    => wp_date('Y-m-d H:i:s')
+					'post_id'   => $post_id,
+					'post_type' => $post_type
 				));
 			}
 			

@@ -85,7 +85,7 @@ class Lipsum_Dynamo_Cleanup_Setting{
 					<?php
 					if($post_types){
 						?>
-                        <option value="all"><?php echo __('All', 'lipsum-dynamo'); ?></option>
+                        <option value="any"><?php echo __('All', 'lipsum-dynamo'); ?></option>
 						<?php
 						foreach($post_types as $slug => $post_type){
 							$list[$slug] = $post_type->label;
@@ -97,6 +97,7 @@ class Lipsum_Dynamo_Cleanup_Setting{
 					?>
                 </select>
             </label>
+            <input type="hidden" name="lipnamo_post_total" value=""/>
         </fieldset>
 		<?php
 	}

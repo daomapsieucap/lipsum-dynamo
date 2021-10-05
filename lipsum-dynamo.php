@@ -50,7 +50,7 @@ function lipnamo_init(){
 }
 
 /**
- * Database creation
+ * Create / upgrade database
  */
 
 register_activation_hook(__FILE__, 'lipnamo_install');
@@ -66,7 +66,7 @@ function lipnamo_install(){
 		$sql = "CREATE TABLE $table_name (
 					id bigint(20) NOT NULL AUTO_INCREMENT,
 					post_id bigint(20) NOT NULL,
-					time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+					post_type varchar(20) NOT NULL,
 					PRIMARY KEY  (id)
 				) $charset_collate;";
 		
