@@ -1,12 +1,12 @@
 jQuery(document).ready(function($){
     let i = 1;
 
-    $('.lipnamo-generate').click(function(e){
+    $('.lipnamo-cleanup').click(function(e){
         e.preventDefault();
-        lipnamoGenerateItems();
+        lipnamoCleanupItems();
     });
 
-    function lipnamoGenerateItems(){
+    function lipnamoCleanupItems(){
         const post_total = parseInt($('input[name="lipnamo_post_total"]').val()),
             post_type = $('select[name="lipnamo_post_type"]').val(),
             post_author = $('select[name="lipnamo_post_author"]').val(),
@@ -54,7 +54,7 @@ jQuery(document).ready(function($){
                     step = parseInt(result.step),
                     percent = step * 100 / post_total;
 
-                $('input[name="lipnamo-generate__step"]').val(step);
+                $('input[name="lipnamo-cleanup__step"]').val(step);
 
                 if(step < post_total){
                     $('.lipnamo-progress-step').text(step);

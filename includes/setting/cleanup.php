@@ -18,7 +18,7 @@ class Lipsum_Dynamo_Cleanup_Setting{
 		add_submenu_page(
 			'lipsum-dynamo',
 			'Lipsum Dynamo Cleanup',
-			'Cleanup Tools',
+			'Cleanup Tool',
 			'manage_options',
 			'lipsum-dynamo-cleanup',
 			array($this, 'lipnamo_admin_page')
@@ -34,17 +34,17 @@ class Lipsum_Dynamo_Cleanup_Setting{
             <form class="lipnamo" method="post" action="options.php">
 				<?php do_settings_sections('lipsum-dynamo-cleanup'); ?>
                 <input name="lipnamo-generate__step" type="hidden" value="1"/>
-                <div class="lipnamo-generate__progress-wrapper" style="display:none;">
-                    <div class="lipnamo-generate__progress">
-                        <div class="lipnamo-generate__progress-bar" style="width:0"></div>
+                <div class="lipnamo-progress-wrapper" style="display:none;">
+                    <div class="lipnamo-progress">
+                        <div class="lipnamo-progress-bar" style="width:0"></div>
                     </div>
-                    <div class="lipnamo-generate__progress-text">
-                        Processing <span class="lipnamo-generate__progress-step">1</span> of <span
-                                class="lipnamo-generate__progress-total">10</span>
+                    <div class="lipnamo-progress-text">
+                        Processing <span class="lipnamo-progress-step">1</span> of <span
+                                class="lipnamo-progress-total">10</span>
                     </div>
                 </div>
                 <a href="#"
-                   class="lipnamo-generate button button-primary"><?php echo __('Cleanup', 'lipsum-dynamo'); ?></a>
+                   class="lipnamo-cleanup button button-primary"><?php echo __('Cleanup', 'lipsum-dynamo'); ?></a>
             </form>
         </div>
 		<?php

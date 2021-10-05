@@ -18,7 +18,7 @@ class Lipsum_Dynamo_Data_Setting{
 		add_submenu_page(
 			'lipsum-dynamo',
 			'Lipsum Dynamo Data',
-			'Data Settings',
+			'Settings',
 			'manage_options',
 			'lipsum-dynamo-data',
 			array($this, 'lipnamo_admin_page')

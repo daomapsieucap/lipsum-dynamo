@@ -11,12 +11,10 @@ class Lipsum_Dynamo_Setting{
 	
 	public function __construct(){
 		add_action('admin_menu', array($this, 'lipnamo_setting'));
-		
-		// register styles
-		add_action("admin_enqueue_scripts", array($this, 'lipnamo_styles'));
+		add_action("admin_enqueue_scripts", array($this, 'lipnamo_assets'));
 	}
 	
-	public function lipnamo_styles(){
+	public function lipnamo_assets(){
 		wp_enqueue_style('lipnamo-admin', LIPNAMO_ASSETS_URL . 'css/lipnamo-admin.css', false, LIPNAMO_VERSION);
 		
 		// Upload field

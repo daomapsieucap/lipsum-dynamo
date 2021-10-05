@@ -42,8 +42,8 @@
  * Progress Bar
  */
 
-.lipnamo-generate__progress-wrapper {max-width:1000px;margin-bottom:20px;background-color:#fff; padding:15px 10px;}
-.lipnamo-generate__progress {margin-bottom:5px;color:#000;background-color:#cecece;}
-.lipnamo-generate__progress-bar {
+.lipnamo-progress-wrapper {max-width:1000px;margin-bottom:20px;background-color:#fff; padding:15px 10px;}
+.lipnamo-progress {margin-bottom:5px;color:#000;background-color:#cecece;}
+.lipnamo-progress-bar {
     height:20px;padding:0.01em 0;background-color:#0073aa;
 }

@@ -34,13 +34,13 @@ class Lipsum_Dynamo_General_Setting{
             <form class="lipnamo" method="post" action="options.php">
 				<?php do_settings_sections('lipsum-dynamo'); ?>
                 <input name="lipnamo-generate__step" type="hidden" value="1"/>
-                <div class="lipnamo-generate__progress-wrapper" style="display:none;">
-                    <div class="lipnamo-generate__progress">
-                        <div class="lipnamo-generate__progress-bar" style="width:0"></div>
+                <div class="lipnamo-progress-wrapper" style="display:none;">
+                    <div class="lipnamo-progress">
+                        <div class="lipnamo-progress-bar" style="width:0"></div>
                     </div>
-                    <div class="lipnamo-generate__progress-text">
-                        Processing <span class="lipnamo-generate__progress-step">1</span> of <span
-                                class="lipnamo-generate__progress-total">10</span>
+                    <div class="lipnamo-progress-text">
+                        Processing <span class="lipnamo-progress-step">1</span> of <span
+                                class="lipnamo-progress-total">10</span>
                     </div>
                 </div>
                 <a href="#"
