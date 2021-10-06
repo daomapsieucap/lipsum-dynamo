@@ -88,6 +88,10 @@ class Lipsum_Dynamo_Cleanup_Setting{
                         <option value="any"><?php echo __('All', 'lipsum-dynamo'); ?></option>
 						<?php
 						foreach($post_types as $slug => $post_type){
+							// skip attachment post type
+							if($slug == 'attachment'){
+								continue;
+							}
 							$list[$slug] = $post_type->label;
 							?>
                             <option value="<?php echo esc_attr($slug); ?>"><?php echo esc_attr($post_type->label); ?></option>

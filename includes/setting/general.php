@@ -135,6 +135,10 @@ class Lipsum_Dynamo_General_Setting{
 					<?php
 					if($post_types){
 						foreach($post_types as $slug => $post_type){
+							// skip attachment post type
+							if($slug == 'attachment'){
+								continue;
+							}
 							$list[$slug] = $post_type->label;
 							?>
                             <option value="<?php echo esc_attr($slug); ?>"><?php echo esc_attr($post_type->label); ?></option>

@@ -3,7 +3,7 @@ Contributors: daomapsieucap
 Tags: lorem ipsum, dummy text generator, lorem ipsum generator
 Requires at least: 4.7
 Tested up to: 5.8
-Requires PHP: 7.0
+Requires PHP: 7.2
 Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -31,3 +31,6 @@ Generate dummy content for demo purpose
 = 2.0 =
 *Release Date - xx October 2021*
 
+* New: New menu for Lipsum Dynamo.
+* New: Cleanup tool to generate dummy items of specific post type.
+* Changed: Exclude attachment post type in Lipsum Dynamo.

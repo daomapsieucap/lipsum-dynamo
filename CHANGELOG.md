@@ -1,6 +1,12 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+All notable changes to Lipsum Dynamo will be documented in this file.
+
+## 2.0 - 2021-10-xx
+
+* New: New menu for Lipsum Dynamo.
+* New: Cleanup tool to generate dummy items of specific post type.
+* Changed: Exclude attachment post type in Lipsum Dynamo.
 
 ## 1.1.0 - 2021-09-22
 

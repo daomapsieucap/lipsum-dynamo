@@ -1,5 +1,12 @@
 == Changelog ==
 
+= 2.0 =
+*Release Date - xx October 2021*
+
+* New: New menu for Lipsum Dynamo.
+* New: Cleanup tool to generate dummy items of specific post type.
+* Changed: Exclude attachment post type in Lipsum Dynamo.
+
 = 1.1.0 =
 *Release Date - 22 Septempber 2021*
 
