@@ -47,6 +47,7 @@ function lipnamo_init(){
 	
 	// functions
 	include_once(LIPNAMO_DIR . 'includes/generate-items.php');
+	include_once(LIPNAMO_DIR . 'includes/cleanup.php');
 }
 
 /**

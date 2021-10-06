@@ -9,20 +9,25 @@ if(!defined('ABSPATH')){
  */
 class Lipsum_Dynamo_Cleanup{
 	public function __construct(){
-		add_action('admin_init', array($this, 'lipnamo_cleanup_scripts'));
+		add_action('admin_enqueue_scripts', array($this, 'lipnamo_cleanup_scripts'));
 		
 		add_action("wp_ajax_lipnamo_cleanup_items", array($this, 'lipnamo_cleanup_items'));
 		add_action("wp_ajax_nopriv_lipnamo_cleanup_items", array($this, 'lipnamo_cleanup_items'));
+		
+		add_action("wp_ajax_lipnamo_total_items", array($this, 'lipnamo_update_total_items'));
+		add_action("wp_ajax_nopriv_lipnamo_total_items", array($this, 'lipnamo_update_total_items'));
 	}
 	
-	public function lipnamo_cleanup_scripts(){
-		wp_enqueue_script('lipnamo-cleanup-items', LIPNAMO_ASSETS_URL . 'js/lipnamo-cleanup-items.js', array('jquery'), LIPNAMO_VERSION, true);
-		wp_localize_script('lipnamo-cleanup-items', 'lipnamo_items',
-			array(
-				'ajax_url'   => admin_url('admin-ajax.php'),
-				'ajax_nonce' => wp_create_nonce('lipnamo_ajax_nonce'),
-			)
-		);
+	public function lipnamo_cleanup_scripts($hook_suffix){
+		if(strpos($hook_suffix, 'cleanup') !== false){
+			wp_enqueue_script('lipnamo-cleanup-items', LIPNAMO_ASSETS_URL . 'js/lipnamo-cleanup-items.js', array('jquery'), LIPNAMO_VERSION, true);
+			wp_localize_script('lipnamo-cleanup-items', 'lipnamo_items',
+				array(
+					'ajax_url'   => admin_url('admin-ajax.php'),
+					'ajax_nonce' => wp_create_nonce('lipnamo_ajax_nonce'),
+				)
+			);
+		}
 	}
 	
 	public function lipnamo_cleanup_items(){
@@ -50,24 +55,22 @@ class Lipsum_Dynamo_Cleanup{
 		}
 		
 		if($post_step <= $post_total){
-			
-			$limit_from = $post_step;
-			$limit_to   = $post_step + 1;
-			
 			// delete posts
 			global $wpdb;
 			
 			$table_name = $wpdb->prefix . 'lipnamo';
+			$post_table = $wpdb->prefix . 'posts';
 			if($post_type = "any"){
-				$posts = $wpdb->get_results("SELECT * FROM $table_name");
+				$mysql_query = "SELECT lipnamo.post_id FROM $table_name as lipnamo,$post_table as posts WHERE lipnamo.post_id = posts.ID LIMIT 1";
 			}else{
-				$posts = $wpdb->get_results("SELECT * FROM $table_name WHERE post_type = '$post_type'");
+				$mysql_query = "SELECT lipnamo.post_id FROM $table_name as lipnamo,$post_table as posts WHERE lipnamo.post_id = posts.ID AND post_type = '$post_type' LIMIT 1";
 			}
+			$posts = $wpdb->get_results($mysql_query);
 			if($posts){
 				foreach($posts as $post){
-					$post_id = $post->post_id;
+					$post_id = intval($post->post_id);
 					if(get_post_status($post_id)){
-						wp_delete_post($post_id);
+						wp_delete_post($post_id, true);
 					}
 				}
 			}
@@ -85,8 +88,51 @@ class Lipsum_Dynamo_Cleanup{
 		);
 		
 		if($post_step >= $post_total){
-			$result['message'] = 'Finished creating total ' . $post_total . ' items';
+			$result['message'] = 'Finished deleting total ' . $post_total . ' items';
 		}
+		
+		// Send output as JSON for processing via AJAX.
+		echo json_encode($result);
+		exit;
+	}
+	
+	public function lipnamo_update_total_items(){
+		// Bail if there is no parameters passed
+		if(!$_POST){
+			return;
+		}
+		
+		// Bail if not authorized.
+		if(!check_admin_referer('lipnamo_ajax_nonce', 'lipnamo_ajax_nonce')){
+			return;
+		}
+		
+		// Get AJAX data
+		$post_type = sanitize_text_field(lipnamo_array_key_exists('post_type', $_POST, 'any'));
+		
+		// Exit if invalid post type
+		if($post_type !== 'any'){
+			$valid_post_types = get_post_types(array('public' => true), 'objects');
+			if(!in_array($post_type, array_keys($valid_post_types))){
+				return;
+			}
+		}
+		
+		global $wpdb;
+		$post_total = 0;
+		
+		$table_name = $wpdb->prefix . 'lipnamo';
+		if($post_type = "any"){
+			$mysql_query = "SELECT * FROM $table_name";
+		}else{
+			$mysql_query = "SELECT * FROM $table_name WHERE post_type = '$post_type'";
+		}
+		$posts = $wpdb->get_results($mysql_query);
+		if($posts){
+			$post_total = count($posts);
+		}
+		
+		$result['post_total'] = $post_total;
 		
 		// Send output as JSON for processing via AJAX.
 		echo json_encode($result);
