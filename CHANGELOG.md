@@ -6,6 +6,7 @@ All notable changes to Lipsum Dynamo will be documented in this file.
 
 * New: New menu for Lipsum Dynamo.
 * New: Cleanup tool to generate dummy items of specific post type.
+* New: Default post author set to configured Administration Email Address in Site Settings.
 * Changed: Exclude attachment post type in Lipsum Dynamo.
 
 ## 1.1.0 - 2021-09-22

@@ -153,7 +153,8 @@ class Lipsum_Dynamo_General_Setting{
 	}
 	
 	public function lipnamo_post_author(){
-		$users = get_users(array('role__in' => array('administrator'), 'fields' => array('ID')));
+		$users       = get_users(array('role__in' => array('administrator'), 'fields' => array('ID')));
+		$admin_email = get_option('new_admin_email');
 		?>
         <fieldset>
             <label for="post_author">
@@ -164,8 +165,12 @@ class Lipsum_Dynamo_General_Setting{
 							$user_id   = $user_id->ID;
 							$user_info = get_userdata($user_id);
 							$name      = $user_info->user_login;
+							$email     = $user_info->user_email;
+							$selected  = $admin_email == $email ? 'selected' : '';
 							?>
-                            <option value="<?php echo esc_attr($user_id); ?>"><?php echo esc_attr($name); ?></option>
+                            <option value="<?php echo esc_attr($user_id); ?>" <?php echo $selected; ?>>
+								<?php echo esc_attr($name); ?>
+                            </option>
 							<?php
 						}
 					}
