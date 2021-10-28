@@ -25,7 +25,7 @@ jQuery(document).ready(function($){
         $(".lipnamo-progress-wrapper").show();
         $(this).addClass('disabled');
 
-        if(i >= post_total){
+        if(i > post_total){
             return;
         }
 
