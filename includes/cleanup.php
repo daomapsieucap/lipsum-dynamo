@@ -71,6 +71,7 @@ class Lipsum_Dynamo_Cleanup{
 					$post_id = intval($post->post_id);
 					if(get_post_status($post_id)){
 						wp_delete_post($post_id, true);
+						$wpdb->query("DELETE FROM $table_name WHERE post_id = $post_id");
 					}
 				}
 			}
@@ -122,7 +123,7 @@ class Lipsum_Dynamo_Cleanup{
 		$post_total = 0;
 		
 		$table_name = $wpdb->prefix . 'lipnamo';
-		if($post_type = "any"){
+		if($post_type == "any"){
 			$mysql_query = "SELECT * FROM $table_name";
 		}else{
 			$mysql_query = "SELECT * FROM $table_name WHERE post_type = '$post_type'";

@@ -1,10 +1,9 @@
 jQuery(document).ready(function($){
-    const $wpbody = $("#wpbody");
+    const $wpbody = $("#wpbody"), $cleanupButton = $('.lipnamo-cleanup.button');
 
     // Update post total
     $('select[name="lipnamo_post_type"]').on('change', function(){
-        const post_type = $('select[name="lipnamo_post_type"]').val(),
-            $cleanupButton = $('.lipnamo-cleanup');
+        const post_type = $('select[name="lipnamo_post_type"]').val();
 
         $wpbody.addClass("lipnamo-loading");
         $cleanupButton.addClass('disabled');
@@ -23,18 +22,16 @@ jQuery(document).ready(function($){
 
                 $('input[name="lipnamo_post_total"]').val(post_total);
 
-                console.log(post_total);
+                $wpbody.removeClass("lipnamo-loading");
+                $cleanupButton.removeClass('disabled');
             }
         });
-
-        $wpbody.removeClass("lipnamo-loading");
-        $cleanupButton.removeClass('disabled');
     });
 
     // AJAX Cleanup
     let ajaxIndex = 1;
 
-    $('.lipnamo-cleanup').click(function(e){
+    $cleanupButton.click(function(e){
         e.preventDefault();
         lipnamoCleanupItems();
     });
@@ -48,7 +45,7 @@ jQuery(document).ready(function($){
         $(".lipnamo-progress-wrapper").show();
         $(this).addClass('disabled');
 
-        if(ajaxIndex >= post_total){
+        if(ajaxIndex > post_total){
             return;
         }
 
