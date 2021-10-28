@@ -29,8 +29,10 @@ Generate dummy content for demo purpose
 == Changelog ==
 
 = 2.0 =
-*Release Date - xx October 2021*
+*Release Date - 28 October 2021*
 
 * New: New menu for Lipsum Dynamo.
 * New: Cleanup tool to generate dummy items of specific post type.
+* New: Default post author set to configured Administration Email Address in Site Settings.
 * Changed: Exclude attachment post type in Lipsum Dynamo.
+* Fixed: Missing one item when generating dummy.

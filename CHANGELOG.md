@@ -2,7 +2,7 @@
 
 All notable changes to Lipsum Dynamo will be documented in this file.
 
-## 2.0 - 2021-10-xx
+## 2.0 - 2021-10-28
 
 * New: New menu for Lipsum Dynamo.
 * New: Cleanup tool to generate dummy items of specific post type.
