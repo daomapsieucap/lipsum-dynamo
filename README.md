@@ -19,4 +19,4 @@
 ## Changelog
 
 A complete listing of all notable changes to Lipsum Dynamo are documented
-in [CHANGELOG.md](https://github.com/daomapsieucap/lipsum-dynamo/blob/master/CHANGELOG.md).
+in [CHANGELOG.md](https://github.com/daomapsieucap/lipsum-dynamo/blob/master/changelog.txt).

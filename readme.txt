@@ -2,9 +2,9 @@
 Contributors: daomapsieucap
 Tags: lorem ipsum, dummy text generator, lorem ipsum generator
 Requires at least: 4.7
-Tested up to: 5.8
+Tested up to: 5.9
 Requires PHP: 7.2
-Stable tag: 2.0
+Stable tag: 2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,11 +28,7 @@ Generate dummy content for demo purpose
 
 == Changelog ==
 
-= 2.0 =
-*Release Date - 28 October 2021*
+= 2.1 =
+*Release Date - 10 February 2022*
 
-* New: New menu for Lipsum Dynamo.
-* New: Cleanup tool to generate dummy items of specific post type.
-* New: Default post author set to configured Administration Email Address in Site Settings.
-* Changed: Exclude attachment post type in Lipsum Dynamo.
-* Fixed: Missing one item when generating dummy.
+* Changed: Auto delete DB table after uninstallation.

@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 2.1 =
+*Release Date - 10 February 2022*
+
+* Changed: Auto delete DB table after uninstallation.
+
 = 2.0 =
 *Release Date - 28 October 2021*
 
