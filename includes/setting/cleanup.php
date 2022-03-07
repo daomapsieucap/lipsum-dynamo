@@ -33,7 +33,10 @@ class Lipsum_Dynamo_Cleanup_Setting{
 
             <form class="lipnamo" method="post" action="options.php">
 				<?php do_settings_sections('lipsum-dynamo-cleanup'); ?>
+
                 <input name="lipnamo-generate__step" type="hidden" value="1"/>
+                <input type="hidden" name="lipnamo_post_total" value=""/>
+
                 <div class="lipnamo-progress-wrapper" style="display:none;">
                     <div class="lipnamo-progress">
                         <div class="lipnamo-progress-bar" style="width:0"></div>
@@ -92,7 +95,6 @@ class Lipsum_Dynamo_Cleanup_Setting{
 							if($slug == 'attachment'){
 								continue;
 							}
-							$list[$slug] = $post_type->label;
 							?>
                             <option value="<?php echo esc_attr($slug); ?>"><?php echo esc_attr($post_type->label); ?></option>
 							<?php
@@ -101,7 +103,6 @@ class Lipsum_Dynamo_Cleanup_Setting{
 					?>
                 </select>
             </label>
-            <input type="hidden" name="lipnamo_post_total" value=""/>
         </fieldset>
 		<?php
 	}

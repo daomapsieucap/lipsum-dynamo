@@ -2,7 +2,7 @@
 Contributors: daomapsieucap
 Tags: lorem ipsum, dummy text generator, lorem ipsum generator
 Requires at least: 4.7
-Tested up to: 5.9
+Tested up to: 5.9.1
 Requires PHP: 7.2
 Stable tag: 2.1
 License: GPLv2 or later
@@ -28,7 +28,8 @@ Generate dummy content for demo purpose
 
 == Changelog ==
 
-= 2.1 =
-*Release Date - 10 February 2022*
+= 2.2 =
+*Release Date - 07 March 2022*
 
-* Changed: Auto delete DB table after uninstallation.
+* Changed: PHP code improvement.
+* Changed: WordPress 5.9.1 compatibility.

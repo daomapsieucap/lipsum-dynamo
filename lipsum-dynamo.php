@@ -3,7 +3,7 @@
  * Plugin Name:       Lipsum Dynamo
  * Plugin URI:        https://wordpress.org/plugins/lipsum-dynamo/
  * Description:       🖨 Generate dummy content for demo purpose
- * Version:           2.1
+ * Version:           2.2
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Dao

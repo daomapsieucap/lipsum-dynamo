@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 2.2 =
+*Release Date - 07 March 2022*
+
+* Changed: PHP code improvement.
+* Changed: WordPress 5.9.1 compatibility.
+
 = 2.1 =
 *Release Date - 10 February 2022*
 
