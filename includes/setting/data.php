@@ -10,44 +10,12 @@ if(!defined('ABSPATH')){
 class Lipsum_Dynamo_Data_Setting{
 	
 	public function __construct(){
-		add_action('admin_menu', array($this, 'lipnamo_data_setting'));
-		add_action('admin_init', array($this, 'lipnamo_data_page_init'));
-	}
-	
-	public function lipnamo_data_setting(){
-		add_submenu_page(
-			'lipsum-dynamo',
-			'Lipsum Dynamo Data',
-			'Settings',
-			'manage_options',
-			'lipsum-dynamo-data',
-			array($this, 'lipnamo_admin_page')
-		);
-	}
-	
-	public function lipnamo_admin_page(){
-		?>
-        <div class="wrap">
-            <h2>Uninstall Data</h2>
-            <p class="description"><?php echo __("When you uninstall this plugin, what do you want to do with your settings and the generated dummy items? Be carefull to use these options below. It can't be reverted.", "lipsum-dynamo"); ?></p>
-			
-			<?php settings_errors(); ?>
-
-            <form class="lipnamo" method="post" action="options.php">
-				<?php
-				settings_fields('lipnamo_data_group');
-				do_settings_sections('lipsum-dynamo-data');
-				submit_button();
-				?>
-            </form>
-        </div>
-		<?php
 	}
 	
 	public function lipnamo_data_page_init(){
 		register_setting(
 			'lipnamo_data_group',
-			'lipsum-dynamo-data',
+			'lipsum-dynamo-uninstall',
 			array($this, 'sanitize_text_field')
 		);
 		
@@ -55,14 +23,14 @@ class Lipsum_Dynamo_Data_Setting{
 			'lipnamo_data_setting_section',
 			'',
 			array($this, 'lipnamo_admin_section_info'),
-			'lipsum-dynamo-data'
+			'lipsum-dynamo-uninstall'
 		);
 		
 		add_settings_field(
 			'setting_delete_generated', // id
 			'Delete all generated items', // title
 			array($this, 'lipnamo_data_setting_delete_generated'), // callback
-			'lipsum-dynamo-data', // page
+			'lipsum-dynamo-uninstall', // page
 			'lipnamo_data_setting_section' // section
 		);
 	}
@@ -74,7 +42,7 @@ class Lipsum_Dynamo_Data_Setting{
 		?>
         <fieldset>
             <label for="setting_delete_generated">
-                <input type="checkbox" name="lipsum-dynamo-data[setting_delete_generated]" id="setting_delete_generated"
+                <input type="checkbox" name="lipsum-dynamo[setting_delete_generated]" id="setting_delete_generated"
                        value="yes" <?php checked(esc_attr(lipnamo_get_option('setting_delete_generated')), 'yes'); ?> />
             </label>
         </fieldset>

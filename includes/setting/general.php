@@ -10,50 +10,12 @@ if(!defined('ABSPATH')){
 class Lipsum_Dynamo_General_Setting{
 	
 	public function __construct(){
-		add_action('admin_menu', array($this, 'lipnamo_general_setting'));
-		add_action('admin_init', array($this, 'lipnamo_general_page_init'));
-	}
-	
-	public function lipnamo_general_setting(){
-		add_submenu_page(
-			'lipsum-dynamo',
-			'Lipsum Dynamo',
-			'General',
-			'manage_options',
-			'lipsum-dynamo',
-			array($this, 'lipnamo_admin_page')
-		);
-	}
-	
-	public function lipnamo_admin_page(){
-		?>
-        <div class="wrap">
-            <h2>Generate dummy items</h2>
-			<?php settings_errors(); ?>
-
-            <form class="lipnamo" method="post" action="options.php">
-				<?php do_settings_sections('lipsum-dynamo'); ?>
-                <input name="lipnamo-generate__step" type="hidden" value="1"/>
-                <div class="lipnamo-progress-wrapper" style="display:none;">
-                    <div class="lipnamo-progress">
-                        <div class="lipnamo-progress-bar" style="width:0"></div>
-                    </div>
-                    <div class="lipnamo-progress-text">
-                        Processing <span class="lipnamo-progress-step">1</span> of <span
-                                class="lipnamo-progress-total">10</span>
-                    </div>
-                </div>
-                <a href="#"
-                   class="lipnamo-generate button button-primary"><?php echo __('Generate', 'lipsum-dynamo'); ?></a>
-            </form>
-        </div>
-		<?php
 	}
 	
 	public function lipnamo_general_page_init(){
 		register_setting(
 			'lipnamo_group',
-			'lipsum_dynamo',
+			'lipsum-dynamo-general',
 			array($this, 'sanitize_text_field')
 		);
 		
@@ -61,14 +23,14 @@ class Lipsum_Dynamo_General_Setting{
 			'lipnamo_section',
 			'',
 			array($this, 'lipnamo_admin_section_info'),
-			'lipsum-dynamo'
+			'lipsum-dynamo-general'
 		);
 		
 		add_settings_field(
 			'lipnamo_post_total', // id
 			'Number of items', // title
 			array($this, 'lipnamo_post_total'), // callback
-			'lipsum-dynamo', // page
+			'lipsum-dynamo-general', // page
 			'lipnamo_section' // section
 		);
 		
@@ -76,7 +38,7 @@ class Lipsum_Dynamo_General_Setting{
 			'post_type', // id
 			'Select post type', // title
 			array($this, 'lipnamo_post_type'), // callback
-			'lipsum-dynamo', // page
+			'lipsum-dynamo-general', // page
 			'lipnamo_section' // section
 		);
 		
@@ -84,7 +46,7 @@ class Lipsum_Dynamo_General_Setting{
 			'post_author', // id
 			'Post author', // title
 			array($this, 'lipnamo_post_author'), // callback
-			'lipsum-dynamo', // page
+			'lipsum-dynamo-general', // page
 			'lipnamo_section' // section
 		);
 		
@@ -92,7 +54,7 @@ class Lipsum_Dynamo_General_Setting{
 			'post_status', // id
 			'New Item status', // title
 			array($this, 'lipnamo_post_status'), // callback
-			'lipsum-dynamo', // page
+			'lipsum-dynamo-general', // page
 			'lipnamo_section' // section
 		);
 		
@@ -100,7 +62,7 @@ class Lipsum_Dynamo_General_Setting{
 			'post_thumbnail', // id
 			'New Item Thumbnails', // title
 			array($this, 'lipnamo_post_thumbnail'), // callback
-			'lipsum-dynamo', // page
+			'lipsum-dynamo-general', // page
 			'lipnamo_section' // section
 		);
 		
@@ -108,7 +70,7 @@ class Lipsum_Dynamo_General_Setting{
 			'length_control', // id
 			'Length Control', // title
 			array($this, 'lipnamo_length_control'), // callback
-			'lipsum-dynamo', // page
+			'lipsum-dynamo-general', // page
 			'lipnamo_section' // section
 		);
 	}

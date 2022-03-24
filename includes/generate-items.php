@@ -18,7 +18,7 @@ class Lipsum_Dynamo_Generate{
 	}
 	
 	public function lipnamo_generate_scripts($hook_suffix){
-		if(strpos($hook_suffix, 'lipsum-dynamo') !== false && (strpos($hook_suffix, 'cleanup')) === false){
+		if(strpos($hook_suffix, 'lipsum-dynamo') !== false){
 			wp_enqueue_script('lipnamo-generate-items', LIPNAMO_ASSETS_URL . 'js/lipnamo-generate-items.js', array('jquery'), LIPNAMO_VERSION, true);
 			wp_localize_script('lipnamo-generate-items', 'lipnamo_items',
 				array(
@@ -134,7 +134,7 @@ class Lipsum_Dynamo_Generate{
 		);
 		
 		if($post_step >= $post_total){
-			$result['message'] = 'Finished creating total ' . $post_total . ' items';
+			$result['message'] = 'Created total ' . $post_total . ' items';
 		}
 		
 		// Send output as JSON for processing via AJAX.

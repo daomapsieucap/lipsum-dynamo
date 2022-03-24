@@ -10,50 +10,9 @@ if(!defined('ABSPATH')){
 class Lipsum_Dynamo_Cleanup_Setting{
 	
 	public function __construct(){
-		add_action('admin_menu', array($this, 'lipnamo_general_setting'));
-		add_action('admin_init', array($this, 'lipnamo_general_page_init'));
 	}
 	
-	public function lipnamo_general_setting(){
-		add_submenu_page(
-			'lipsum-dynamo',
-			'Lipsum Dynamo Cleanup',
-			'Cleanup Tool',
-			'manage_options',
-			'lipsum-dynamo-cleanup',
-			array($this, 'lipnamo_admin_page')
-		);
-	}
-	
-	public function lipnamo_admin_page(){
-		?>
-        <div class="wrap">
-            <h2>Cleanup generated items</h2>
-			<?php settings_errors(); ?>
-
-            <form class="lipnamo" method="post" action="options.php">
-				<?php do_settings_sections('lipsum-dynamo-cleanup'); ?>
-
-                <input name="lipnamo-generate__step" type="hidden" value="1"/>
-                <input type="hidden" name="lipnamo_post_total" value=""/>
-
-                <div class="lipnamo-progress-wrapper" style="display:none;">
-                    <div class="lipnamo-progress">
-                        <div class="lipnamo-progress-bar" style="width:0"></div>
-                    </div>
-                    <div class="lipnamo-progress-text">
-                        Processing <span class="lipnamo-progress-step">1</span> of <span
-                                class="lipnamo-progress-total">10</span>
-                    </div>
-                </div>
-                <a href="#"
-                   class="lipnamo-cleanup button button-primary"><?php echo __('Cleanup', 'lipsum-dynamo'); ?></a>
-            </form>
-        </div>
-		<?php
-	}
-	
-	public function lipnamo_general_page_init(){
+	public function lipnamo_cleanup_page_init(){
 		register_setting(
 			'lipnamo_group',
 			'lipsum_dynamo-cleanup',
