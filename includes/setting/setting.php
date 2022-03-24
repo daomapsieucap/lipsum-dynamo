@@ -11,6 +11,7 @@ class Lipsum_Dynamo_Setting{
 	
 	public function __construct(){
 		add_action('admin_menu', array($this, 'lipnamo_setting'));
+		
 		add_action("admin_enqueue_scripts", array($this, 'lipnamo_assets'));
 	}
 	
@@ -25,15 +26,18 @@ class Lipsum_Dynamo_Setting{
 	}
 	
 	public function lipnamo_setting(){
-		add_menu_page(
+		add_submenu_page(
+			'tools.php',
 			'Lipsum Dynamo',
 			'Lipsum Dynamo',
 			'manage_options',
 			'lipsum-dynamo',
-			'',
-			'dashicons-editor-justify',
-			85
+			array($this, 'lipnamo_setting_html'),
 		);
+	}
+	
+	public function lipnamo_setting_html(){
+		echo 'lipsum dynamo settings go here';
 	}
 }
 

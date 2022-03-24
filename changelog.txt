@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 3.0 =
+*Release Date - xx March 2022*
+
+* New: Move admin setting menu to Tools.
+* New: Upgrade setting UI to tabs.
+
 = 2.2 =
 *Release Date - 07 March 2022*
 

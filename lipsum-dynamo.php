@@ -3,7 +3,7 @@
  * Plugin Name:       Lipsum Dynamo
  * Plugin URI:        https://wordpress.org/plugins/lipsum-dynamo/
  * Description:       🖨 Generate dummy content for demo purpose
- * Version:           2.2
+ * Version:           3.0
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Dao
@@ -25,7 +25,7 @@ if(!defined('ABSPATH')){
  * Definitions
  */
 
-const LIPNAMO_VERSION = '2.1';
+const LIPNAMO_VERSION = '3.0';
 define("LIPNAMO_DIR", plugin_dir_path(__FILE__));
 define("LIPNAMO_ASSETS_URL", plugin_dir_url(__FILE__) . 'assets/');
 
