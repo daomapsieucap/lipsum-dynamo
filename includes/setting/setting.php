@@ -56,10 +56,8 @@ class Lipsum_Dynamo_Setting{
 			return;
 		}
 		
-		$form_action = admin_url("tools.php?page=lipsum-dynamo");
-		if(isset ($_GET['tab'])){
-			$form_action = admin_url("tools.php?page=lipsum-dynamo&tab=" . $_GET['tab']);
-		}
+		$tab         = esc_attr(lipnamo_array_key_exists('tab', $_GET));
+		$form_action = $tab ? admin_url("tools.php?page=lipsum-dynamo&tab=" . $tab) : admin_url("tools.php?page=lipsum-dynamo");
 		
 		echo '<div class="wrap">';
 		
@@ -67,8 +65,8 @@ class Lipsum_Dynamo_Setting{
 		
 		// nav
 		echo '<nav class="nav-tab-wrapper">';
-		if(isset ($_GET['tab'])){
-			$this->lipnamo_setting_tab_navs($_GET['tab']);
+		if($tab){
+			$this->lipnamo_setting_tab_navs($tab);
 		}else{
 			$this->lipnamo_setting_tab_navs();
 		}
@@ -160,7 +158,7 @@ class Lipsum_Dynamo_Setting{
 	
 	public function lipnamo_save_options(){
 		global $pagenow;
-		if($pagenow == 'tools.php' && $_GET['page'] == 'lipsum-dynamo'){
+		if($pagenow == 'tools.php' && esc_attr(lipnamo_array_key_exists('page', $_GET)) == 'lipsum-dynamo'){
 			$option_key = 'lipsum-dynamo';
 			if(isset($_POST[$option_key])){
 				$options = $new_options = $_POST[$option_key];
