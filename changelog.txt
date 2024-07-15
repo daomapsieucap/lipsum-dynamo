@@ -1,5 +1,12 @@
 == Changelog ==
 
+= 3.1.0 =
+*Release Date - 15 July 2024*
+
+* New: Rename plugin to Dummie.
+* Fixed: Fix wrong default admin post author.
+* Changed: Tested up to 6.5.5.
+
 = 3.0 =
 *Release Date - 24 March 2022*
 

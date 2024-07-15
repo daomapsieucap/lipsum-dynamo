@@ -2,9 +2,9 @@
 Contributors: daomapsieucap
 Tags: lorem ipsum, dummy text generator, lorem ipsum generator
 Requires at least: 4.7
-Tested up to: 5.9.1
+Tested up to: 6.5.5
 Requires PHP: 7.2
-Stable tag: 3.0
+Stable tag: 3.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,8 +28,9 @@ Generate dummy content for demo purpose
 
 == Changelog ==
 
-= 3.0 =
-*Release Date - 24 March 2022*
+= 3.1.0 =
+*Release Date - 15 July 2024*
 
-* New: Move admin setting menu to Tools.
-* New: Upgrade setting UI to tabs.
+* New: Rename plugin to Dummie.
+* Fixed: Fix wrong default admin post author.
+* Changed: Tested up to 6.5.5.
