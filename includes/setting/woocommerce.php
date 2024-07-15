@@ -1,6 +1,6 @@
 <?php
 // Exit if accessed directly
-if(!defined('ABSPATH')){
+if(!defined('ABSPATH') || !class_exists('woocommerce')){
 	exit;
 }
 
@@ -62,6 +62,14 @@ class Lipsum_Dynamo_Woocommerce_Setting{
 			'length_control', // id
 			'Length Control', // title
 			[$this, 'lipnamo_length_control'], // callback
+			'lipsum-dynamo-woocommerce', // page
+			'lipnamo_section' // section
+		);
+		
+		add_settings_field(
+			'product_info', // id
+			'Product Information', // title
+			[$this, 'lipnamo_product_info'], // callback
 			'lipsum-dynamo-woocommerce', // page
 			'lipnamo_section' // section
 		);
@@ -183,6 +191,20 @@ class Lipsum_Dynamo_Woocommerce_Setting{
 			<?php echo __("to", "lipsum-dynamo"); ?>
             <input class="small-text" id="length_content_max" min="1" type="number" value="10"
                    name="length_content_max"/> <?php echo __("paragraph(s)", "lipsum-dynamo"); ?>
+        </fieldset>
+		<?php
+	}
+	
+	public function lipnamo_product_info(){
+		?>
+        <fieldset class="lipnamo-product-info lipnamo-product-info__customize">
+            <label for="product_info_type"><?php echo __("Product Type", "lipsum-dynamo"); ?></label>
+
+            <select id="product_info_type" name='product_info_type'>
+                <option value="simple"><?php echo __('Simple', "lipsum-dynamo"); ?></option>
+                <option value="variable"><?php echo __('Variable', "lipsum-dynamo"); ?></option>
+            </select>
+
         </fieldset>
 		<?php
 	}
