@@ -17,13 +17,16 @@ class Lipsum_Dynamo_Setting{
 	}
 	
 	public function lipnamo_assets(){
-		wp_enqueue_style('lipnamo-admin', LIPNAMO_ASSETS_URL . 'css/lipnamo-admin.css', false, DUMMIE_VERSION);
-		
-		// Upload field
-		wp_enqueue_media();
-		
-		// Plugin scripts
-		wp_enqueue_script('lipnamo-admin', LIPNAMO_ASSETS_URL . 'js/lipnamo-admin.js', ['jquery'], DUMMIE_VERSION);
+		$screen = get_current_screen();
+		if(strpos($screen->id, 'lipsum-dynamo') !== false){
+			wp_enqueue_style('lipnamo-admin', LIPNAMO_ASSETS_URL . 'css/lipnamo-admin.css', false, DUMMIE_VERSION);
+			
+			// Upload field
+			wp_enqueue_media();
+			
+			// Plugin scripts
+			wp_enqueue_script('lipnamo-admin', LIPNAMO_ASSETS_URL . 'js/lipnamo-admin.js', ['jquery'], DUMMIE_VERSION);
+		}
 	}
 	
 	public function lipnamo_setting_init(){
