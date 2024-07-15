@@ -42,8 +42,8 @@ class Lipsum_Dynamo_Setting{
 	public function lipnamo_setting(){
 		add_submenu_page(
 			'tools.php',
-			'Lipsum Dynamo',
-			'Lipsum Dynamo',
+			'Dummie',
+			'Dummie',
 			'manage_options',
 			'lipsum-dynamo',
 			[$this, 'lipnamo_setting_html'],
@@ -61,6 +61,8 @@ class Lipsum_Dynamo_Setting{
 			$form_action = admin_url("tools.php?page=lipsum-dynamo&tab=" . $_GET['tab']);
 		}
 		
+		echo '<h1>Dummie</h1>';
+		
 		// nav
 		echo '<nav class="nav-tab-wrapper">';
 		if(isset ($_GET['tab'])){
@@ -73,6 +75,7 @@ class Lipsum_Dynamo_Setting{
 		// content
 		echo '<div class="tab-content">';
 		echo '<div class="wrap">';
+		
 		echo '<form class="lipsum-dynamo" method="POST" action="' . $form_action . '">';
 		
 		wp_nonce_field("lipsum-dynamo");
