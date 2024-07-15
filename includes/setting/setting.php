@@ -10,20 +10,20 @@ if(!defined('ABSPATH')){
 class Lipsum_Dynamo_Setting{
 	
 	public function __construct(){
-		add_action('admin_menu', array($this, 'lipnamo_setting'));
-		add_action('admin_init', array($this, 'lipnamo_setting_init'));
+		add_action('admin_menu', [$this, 'lipnamo_setting']);
+		add_action('admin_init', [$this, 'lipnamo_setting_init']);
 		
-		add_action("admin_enqueue_scripts", array($this, 'lipnamo_assets'));
+		add_action("admin_enqueue_scripts", [$this, 'lipnamo_assets']);
 	}
 	
 	public function lipnamo_assets(){
-		wp_enqueue_style('lipnamo-admin', LIPNAMO_ASSETS_URL . 'css/lipnamo-admin.css', false, LIPNAMO_VERSION);
+		wp_enqueue_style('lipnamo-admin', LIPNAMO_ASSETS_URL . 'css/lipnamo-admin.css', false, DUMMIE_VERSION);
 		
 		// Upload field
 		wp_enqueue_media();
 		
 		// Plugin scripts
-		wp_enqueue_script('lipnamo-admin', LIPNAMO_ASSETS_URL . 'js/lipnamo-admin.js', array('jquery'), LIPNAMO_VERSION);
+		wp_enqueue_script('lipnamo-admin', LIPNAMO_ASSETS_URL . 'js/lipnamo-admin.js', ['jquery'], DUMMIE_VERSION);
 	}
 	
 	public function lipnamo_setting_init(){
@@ -46,7 +46,7 @@ class Lipsum_Dynamo_Setting{
 			'Lipsum Dynamo',
 			'manage_options',
 			'lipsum-dynamo',
-			array($this, 'lipnamo_setting_html'),
+			[$this, 'lipnamo_setting_html'],
 		);
 	}
 	
@@ -96,11 +96,11 @@ class Lipsum_Dynamo_Setting{
 	}
 	
 	public function lipnamo_setting_tabs(): array{
-		return array(
+		return [
 			'general'   => 'General',
 			'cleanup'   => 'Cleanup',
 			'uninstall' => 'Uninstall',
-		);
+		];
 	}
 	
 	public function lipnamo_setting_tab_navs($current = 'general'){
@@ -167,7 +167,7 @@ class Lipsum_Dynamo_Setting{
 					$new_options[$key] = sanitize_text_field($value);
 				}
 			}else{
-				$new_options = array();
+				$new_options = [];
 			}
 			
 			update_option($option_key, $new_options);
