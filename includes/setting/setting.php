@@ -61,6 +61,8 @@ class Lipsum_Dynamo_Setting{
 			$form_action = admin_url("tools.php?page=lipsum-dynamo&tab=" . $_GET['tab']);
 		}
 		
+		echo '<div class="wrap">';
+		
 		echo '<h1>Dummie</h1>';
 		
 		// nav
@@ -74,19 +76,12 @@ class Lipsum_Dynamo_Setting{
 		
 		// content
 		echo '<div class="tab-content">';
-		echo '<div class="wrap">';
 		
 		echo '<form class="lipsum-dynamo" method="POST" action="' . $form_action . '">';
 		
 		wp_nonce_field("lipsum-dynamo");
 		
-		$current_tab = 'general';
-		if(isset ($_GET['tab'])){
-			$current_tab = $_GET['tab'];
-		}
-		
-		echo '<h1>' . $this->lipnamo_setting_tabs()[$current_tab] . '</h1>';
-		
+		$current_tab = lipnamo_array_key_exists('tab', $_GET) ? : 'general';
 		if($current_tab == 'uninstall'){
 			echo '<p class="description">' . __("When you uninstall this plugin, what do you want to do with your settings and the generated dummy items? Be careful to use this option. It can't be reverted.", "lipsum-dynamo") . '</p>';
 		}
@@ -95,7 +90,8 @@ class Lipsum_Dynamo_Setting{
 		
 		echo '</form>';
 		echo '</div>';
-		echo '</div>';
+		
+		echo '</div>'; // wrap
 	}
 	
 	public function lipnamo_setting_tabs(): array{
