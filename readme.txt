@@ -10,7 +10,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Generate dummy content for demo purpose
 
-**FEATURES**
+== Description ==
 
 * Generate dummy content with many options.
 * Option to delete generated items after uninstall.
