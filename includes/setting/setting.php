@@ -101,10 +101,6 @@ class Lipsum_Dynamo_Setting{
 			'uninstall' => 'Uninstall',
 		];
 		
-		if(class_exists('woocommerce')){
-			$tabs['woocommerce'] = 'Woocommerce';
-		}
-		
 		return $tabs;
 	}
 	
@@ -127,10 +123,6 @@ class Lipsum_Dynamo_Setting{
 				$data = new Lipsum_Dynamo_Data_Setting();
 				$data->lipnamo_data_page_init();
 				break;
-			case 'woocommerce':
-				$woocommerce = new Lipsum_Dynamo_Woocommerce_Setting();
-				$woocommerce->lipnamo_woocommerce_page_init();
-				break;
 			default:
 				$general = new Lipsum_Dynamo_General_Setting();
 				$general->lipnamo_general_page_init();
@@ -139,7 +131,7 @@ class Lipsum_Dynamo_Setting{
 		
 		do_settings_sections('lipsum-dynamo-' . $current);
 		
-		if($current == 'general' || $current == 'cleanup' || $current == 'woocommerce'){
+		if($current == 'general' || $current == 'cleanup'){
 			$btn = $current == 'general' ? 'generate' : $current;
 			?>
             <input name="lipnamo-generate__step" type="hidden" value="1"/>
