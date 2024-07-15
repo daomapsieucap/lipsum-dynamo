@@ -11,20 +11,20 @@ use joshtronic\LoremIpsum;
  */
 class Lipsum_Dynamo_Generate{
 	public function __construct(){
-		add_action('admin_enqueue_scripts', array($this, 'lipnamo_generate_scripts'));
+		add_action('admin_enqueue_scripts', [$this, 'lipnamo_generate_scripts']);
 		
-		add_action("wp_ajax_lipnamo_generate_items", array($this, 'lipnamo_generate_items'));
-		add_action("wp_ajax_nopriv_lipnamo_generate_items", array($this, 'lipnamo_generate_items'));
+		add_action("wp_ajax_lipnamo_generate_items", [$this, 'lipnamo_generate_items']);
+		add_action("wp_ajax_nopriv_lipnamo_generate_items", [$this, 'lipnamo_generate_items']);
 	}
 	
 	public function lipnamo_generate_scripts($hook_suffix){
 		if(strpos($hook_suffix, 'lipsum-dynamo') !== false){
-			wp_enqueue_script('lipnamo-generate-items', LIPNAMO_ASSETS_URL . 'js/lipnamo-generate-items.js', array('jquery'), LIPNAMO_VERSION, true);
+			wp_enqueue_script('lipnamo-generate-items', LIPNAMO_ASSETS_URL . 'js/lipnamo-generate-items.js', ['jquery'], DUMMIE_VERSION, true);
 			wp_localize_script('lipnamo-generate-items', 'lipnamo_items',
-				array(
+				[
 					'ajax_url'   => admin_url('admin-ajax.php'),
 					'ajax_nonce' => wp_create_nonce('lipnamo_ajax_nonce'),
-				)
+				]
 			);
 		}
 	}
@@ -52,7 +52,7 @@ class Lipsum_Dynamo_Generate{
 		$post_step           = intval(lipnamo_array_key_exists('post_step', $_POST));
 		
 		// Exit if invalid post type
-		$valid_post_types = get_post_types(array('public' => true), 'objects');
+		$valid_post_types = get_post_types(['public' => true], 'objects');
 		if(!in_array($post_type, array_keys($valid_post_types))){
 			return;
 		}
@@ -99,14 +99,14 @@ class Lipsum_Dynamo_Generate{
 			$post_content = $generator->paragraphs($content_paragraphs);
 			
 			// Create post
-			$new_post = array(
+			$new_post = [
 				'post_type'    => $post_type,
 				'post_title'   => wp_strip_all_tags($post_title),
 				'post_excerpt' => $post_excerpt,
 				'post_content' => $post_content,
 				'post_status'  => $post_status,
-				'post_author'  => $post_author
-			);
+				'post_author'  => $post_author,
+			];
 			$post_id  = wp_insert_post($new_post);
 			if(!is_wp_error($post_id) && $thumbnail_id){
 				set_post_thumbnail($post_id, $thumbnail_id);
@@ -115,10 +115,10 @@ class Lipsum_Dynamo_Generate{
 			if(!is_wp_error($post_id)){
 				global $wpdb;
 				$table_name = $wpdb->prefix . 'lipnamo';
-				$wpdb->insert($table_name, array(
+				$wpdb->insert($table_name, [
 					'post_id'   => $post_id,
-					'post_type' => $post_type
-				));
+					'post_type' => $post_type,
+				]);
 			}
 			
 			$post_step ++;
@@ -129,9 +129,9 @@ class Lipsum_Dynamo_Generate{
 		}
 		
 		// Store results in an array.
-		$result = array(
-			'step' => $post_step
-		);
+		$result = [
+			'step' => $post_step,
+		];
 		
 		if($post_step >= $post_total){
 			$result['message'] = 'Created total ' . $post_total . ' items';

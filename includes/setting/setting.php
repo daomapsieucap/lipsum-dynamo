@@ -10,20 +10,20 @@ if(!defined('ABSPATH')){
 class Lipsum_Dynamo_Setting{
 	
 	public function __construct(){
-		add_action('admin_menu', array($this, 'lipnamo_setting'));
-		add_action('admin_init', array($this, 'lipnamo_setting_init'));
+		add_action('admin_menu', [$this, 'lipnamo_setting']);
+		add_action('admin_init', [$this, 'lipnamo_setting_init']);
 		
-		add_action("admin_enqueue_scripts", array($this, 'lipnamo_assets'));
+		add_action("admin_enqueue_scripts", [$this, 'lipnamo_assets']);
 	}
 	
 	public function lipnamo_assets(){
-		wp_enqueue_style('lipnamo-admin', LIPNAMO_ASSETS_URL . 'css/lipnamo-admin.css', false, LIPNAMO_VERSION);
+		wp_enqueue_style('lipnamo-admin', LIPNAMO_ASSETS_URL . 'css/lipnamo-admin.css', false, DUMMIE_VERSION);
 		
 		// Upload field
 		wp_enqueue_media();
 		
 		// Plugin scripts
-		wp_enqueue_script('lipnamo-admin', LIPNAMO_ASSETS_URL . 'js/lipnamo-admin.js', array('jquery'), LIPNAMO_VERSION);
+		wp_enqueue_script('lipnamo-admin', LIPNAMO_ASSETS_URL . 'js/lipnamo-admin.js', ['jquery'], DUMMIE_VERSION);
 	}
 	
 	public function lipnamo_setting_init(){
@@ -42,11 +42,11 @@ class Lipsum_Dynamo_Setting{
 	public function lipnamo_setting(){
 		add_submenu_page(
 			'tools.php',
-			'Lipsum Dynamo',
-			'Lipsum Dynamo',
+			'Dummie',
+			'Dummie',
 			'manage_options',
 			'lipsum-dynamo',
-			array($this, 'lipnamo_setting_html'),
+			[$this, 'lipnamo_setting_html'],
 		);
 	}
 	
@@ -56,15 +56,17 @@ class Lipsum_Dynamo_Setting{
 			return;
 		}
 		
-		$form_action = admin_url("tools.php?page=lipsum-dynamo");
-		if(isset ($_GET['tab'])){
-			$form_action = admin_url("tools.php?page=lipsum-dynamo&tab=" . $_GET['tab']);
-		}
+		$tab         = esc_attr(lipnamo_array_key_exists('tab', $_GET));
+		$form_action = $tab ? admin_url("tools.php?page=lipsum-dynamo&tab=" . $tab) : admin_url("tools.php?page=lipsum-dynamo");
+		
+		echo '<div class="wrap">';
+		
+		echo '<h1>Dummie</h1>';
 		
 		// nav
 		echo '<nav class="nav-tab-wrapper">';
-		if(isset ($_GET['tab'])){
-			$this->lipnamo_setting_tab_navs($_GET['tab']);
+		if($tab){
+			$this->lipnamo_setting_tab_navs($tab);
 		}else{
 			$this->lipnamo_setting_tab_navs();
 		}
@@ -72,18 +74,12 @@ class Lipsum_Dynamo_Setting{
 		
 		// content
 		echo '<div class="tab-content">';
-		echo '<div class="wrap">';
+		
 		echo '<form class="lipsum-dynamo" method="POST" action="' . $form_action . '">';
 		
 		wp_nonce_field("lipsum-dynamo");
 		
-		$current_tab = 'general';
-		if(isset ($_GET['tab'])){
-			$current_tab = $_GET['tab'];
-		}
-		
-		echo '<h1>' . $this->lipnamo_setting_tabs()[$current_tab] . '</h1>';
-		
+		$current_tab = lipnamo_array_key_exists('tab', $_GET) ? : 'general';
 		if($current_tab == 'uninstall'){
 			echo '<p class="description">' . __("When you uninstall this plugin, what do you want to do with your settings and the generated dummy items? Be careful to use this option. It can't be reverted.", "lipsum-dynamo") . '</p>';
 		}
@@ -92,15 +88,18 @@ class Lipsum_Dynamo_Setting{
 		
 		echo '</form>';
 		echo '</div>';
-		echo '</div>';
+		
+		echo '</div>'; // wrap
 	}
 	
 	public function lipnamo_setting_tabs(): array{
-		return array(
+		$tabs = [
 			'general'   => 'General',
 			'cleanup'   => 'Cleanup',
 			'uninstall' => 'Uninstall',
-		);
+		];
+		
+		return $tabs;
 	}
 	
 	public function lipnamo_setting_tab_navs($current = 'general'){
@@ -159,7 +158,7 @@ class Lipsum_Dynamo_Setting{
 	
 	public function lipnamo_save_options(){
 		global $pagenow;
-		if($pagenow == 'tools.php' && $_GET['page'] == 'lipsum-dynamo'){
+		if($pagenow == 'tools.php' && esc_attr(lipnamo_array_key_exists('page', $_GET)) == 'lipsum-dynamo'){
 			$option_key = 'lipsum-dynamo';
 			if(isset($_POST[$option_key])){
 				$options = $new_options = $_POST[$option_key];
@@ -167,7 +166,7 @@ class Lipsum_Dynamo_Setting{
 					$new_options[$key] = sanitize_text_field($value);
 				}
 			}else{
-				$new_options = array();
+				$new_options = [];
 			}
 			
 			update_option($option_key, $new_options);

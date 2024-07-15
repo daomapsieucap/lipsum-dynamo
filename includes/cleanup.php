@@ -9,23 +9,23 @@ if(!defined('ABSPATH')){
  */
 class Lipsum_Dynamo_Cleanup{
 	public function __construct(){
-		add_action('admin_enqueue_scripts', array($this, 'lipnamo_cleanup_scripts'));
+		add_action('admin_enqueue_scripts', [$this, 'lipnamo_cleanup_scripts']);
 		
-		add_action("wp_ajax_lipnamo_cleanup_items", array($this, 'lipnamo_cleanup_items'));
-		add_action("wp_ajax_nopriv_lipnamo_cleanup_items", array($this, 'lipnamo_cleanup_items'));
+		add_action("wp_ajax_lipnamo_cleanup_items", [$this, 'lipnamo_cleanup_items']);
+		add_action("wp_ajax_nopriv_lipnamo_cleanup_items", [$this, 'lipnamo_cleanup_items']);
 		
-		add_action("wp_ajax_lipnamo_total_items", array($this, 'lipnamo_update_total_items'));
-		add_action("wp_ajax_nopriv_lipnamo_total_items", array($this, 'lipnamo_update_total_items'));
+		add_action("wp_ajax_lipnamo_total_items", [$this, 'lipnamo_update_total_items']);
+		add_action("wp_ajax_nopriv_lipnamo_total_items", [$this, 'lipnamo_update_total_items']);
 	}
 	
 	public function lipnamo_cleanup_scripts($hook_suffix){
 		if(strpos($hook_suffix, 'lipsum-dynamo') !== false){
-			wp_enqueue_script('lipnamo-cleanup-items', LIPNAMO_ASSETS_URL . 'js/lipnamo-cleanup-items.js', array('jquery'), LIPNAMO_VERSION, true);
+			wp_enqueue_script('lipnamo-cleanup-items', LIPNAMO_ASSETS_URL . 'js/lipnamo-cleanup-items.js', ['jquery'], DUMMIE_VERSION, true);
 			wp_localize_script('lipnamo-cleanup-items', 'lipnamo_items',
-				array(
+				[
 					'ajax_url'   => admin_url('admin-ajax.php'),
 					'ajax_nonce' => wp_create_nonce('lipnamo_ajax_nonce'),
-				)
+				]
 			);
 		}
 	}
@@ -48,7 +48,7 @@ class Lipsum_Dynamo_Cleanup{
 		
 		// Exit if invalid post type
 		if($post_type !== 'any'){
-			$valid_post_types = get_post_types(array('public' => true), 'objects');
+			$valid_post_types = get_post_types(['public' => true], 'objects');
 			if(!in_array($post_type, array_keys($valid_post_types))){
 				return;
 			}
@@ -84,9 +84,9 @@ class Lipsum_Dynamo_Cleanup{
 		}
 		
 		// Store results in an array.
-		$result = array(
-			'step' => $post_step
-		);
+		$result = [
+			'step' => $post_step,
+		];
 		
 		if($post_step >= $post_total){
 			$result['message'] = 'Deleted total ' . $post_total . ' items';
@@ -113,7 +113,7 @@ class Lipsum_Dynamo_Cleanup{
 		
 		// Exit if invalid post type
 		if($post_type !== 'any'){
-			$valid_post_types = get_post_types(array('public' => true), 'objects');
+			$valid_post_types = get_post_types(['public' => true], 'objects');
 			if(!in_array($post_type, array_keys($valid_post_types))){
 				return;
 			}
