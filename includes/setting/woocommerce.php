@@ -5,7 +5,7 @@ if(!defined('ABSPATH')){
 }
 
 /**
- * General Setting Page
+ * Woocommerce Setting Page
  */
 class Lipsum_Dynamo_Woocommerce_Setting{
 	
@@ -30,14 +30,6 @@ class Lipsum_Dynamo_Woocommerce_Setting{
 			'lipnamo_post_total', // id
 			'Number of items', // title
 			[$this, 'lipnamo_post_total'], // callback
-			'lipsum-dynamo-woocommerce', // page
-			'lipnamo_section' // section
-		);
-		
-		add_settings_field(
-			'post_type', // id
-			'Select post type', // title
-			[$this, 'lipnamo_post_type'], // callback
 			'lipsum-dynamo-woocommerce', // page
 			'lipnamo_section' // section
 		);
@@ -88,35 +80,9 @@ class Lipsum_Dynamo_Woocommerce_Setting{
 		<?php
 	}
 	
-	public function lipnamo_post_type(){
-		$post_types = get_post_types(['public' => true], 'objects');
-		?>
-        <fieldset>
-            <label for="post_type">
-                <select id="post_type" name='lipnamo_post_type'>
-					<?php
-					if($post_types){
-						foreach($post_types as $slug => $post_type){
-							// skip attachment post type
-							if($slug == 'attachment'){
-								continue;
-							}
-							$list[$slug] = $post_type->label;
-							?>
-                            <option value="<?php echo esc_attr($slug); ?>"><?php echo esc_attr($post_type->label); ?></option>
-							<?php
-						}
-					}
-					?>
-                </select>
-            </label>
-        </fieldset>
-		<?php
-	}
-	
 	public function lipnamo_post_author(){
 		$users       = get_users(['role__in' => ['administrator'], 'fields' => ['ID']]);
-		$admin_email = get_option('new_admin_email');
+		$admin_email = get_option('admin_email');
 		?>
         <fieldset>
             <label for="post_author">
@@ -198,7 +164,7 @@ class Lipsum_Dynamo_Woocommerce_Setting{
 
             <br/>
 
-            <label for="length_excerpt_min"><?php echo __("Excerpt", "lipsum-dynamo"); ?></label>
+            <label for="length_excerpt_min"><?php echo __("Short description", "lipsum-dynamo"); ?></label>
 			
 			<?php echo __("From", "lipsum-dynamo"); ?>
             <input class="small-text" id="length_excerpt_min" type="number" min="1" value="1"

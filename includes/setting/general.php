@@ -16,20 +16,20 @@ class Lipsum_Dynamo_General_Setting{
 		register_setting(
 			'lipnamo_group',
 			'lipsum-dynamo-general',
-			array($this, 'sanitize_text_field')
+			[$this, 'sanitize_text_field']
 		);
 		
 		add_settings_section(
 			'lipnamo_section',
 			'',
-			array($this, 'lipnamo_admin_section_info'),
+			[$this, 'lipnamo_admin_section_info'],
 			'lipsum-dynamo-general'
 		);
 		
 		add_settings_field(
 			'lipnamo_post_total', // id
 			'Number of items', // title
-			array($this, 'lipnamo_post_total'), // callback
+			[$this, 'lipnamo_post_total'], // callback
 			'lipsum-dynamo-general', // page
 			'lipnamo_section' // section
 		);
@@ -37,7 +37,7 @@ class Lipsum_Dynamo_General_Setting{
 		add_settings_field(
 			'post_type', // id
 			'Select post type', // title
-			array($this, 'lipnamo_post_type'), // callback
+			[$this, 'lipnamo_post_type'], // callback
 			'lipsum-dynamo-general', // page
 			'lipnamo_section' // section
 		);
@@ -45,7 +45,7 @@ class Lipsum_Dynamo_General_Setting{
 		add_settings_field(
 			'post_author', // id
 			'Post author', // title
-			array($this, 'lipnamo_post_author'), // callback
+			[$this, 'lipnamo_post_author'], // callback
 			'lipsum-dynamo-general', // page
 			'lipnamo_section' // section
 		);
@@ -53,7 +53,7 @@ class Lipsum_Dynamo_General_Setting{
 		add_settings_field(
 			'post_status', // id
 			'New Item status', // title
-			array($this, 'lipnamo_post_status'), // callback
+			[$this, 'lipnamo_post_status'], // callback
 			'lipsum-dynamo-general', // page
 			'lipnamo_section' // section
 		);
@@ -61,7 +61,7 @@ class Lipsum_Dynamo_General_Setting{
 		add_settings_field(
 			'post_thumbnail', // id
 			'New Item Thumbnails', // title
-			array($this, 'lipnamo_post_thumbnail'), // callback
+			[$this, 'lipnamo_post_thumbnail'], // callback
 			'lipsum-dynamo-general', // page
 			'lipnamo_section' // section
 		);
@@ -69,7 +69,7 @@ class Lipsum_Dynamo_General_Setting{
 		add_settings_field(
 			'length_control', // id
 			'Length Control', // title
-			array($this, 'lipnamo_length_control'), // callback
+			[$this, 'lipnamo_length_control'], // callback
 			'lipsum-dynamo-general', // page
 			'lipnamo_section' // section
 		);
@@ -89,7 +89,7 @@ class Lipsum_Dynamo_General_Setting{
 	}
 	
 	public function lipnamo_post_type(){
-		$post_types = get_post_types(array('public' => true), 'objects');
+		$post_types = get_post_types(['public' => true], 'objects');
 		?>
         <fieldset>
             <label for="post_type">
@@ -115,8 +115,8 @@ class Lipsum_Dynamo_General_Setting{
 	}
 	
 	public function lipnamo_post_author(){
-		$users       = get_users(array('role__in' => array('administrator'), 'fields' => array('ID')));
-		$admin_email = get_option('new_admin_email');
+		$users       = get_users(['role__in' => ['administrator'], 'fields' => ['ID']]);
+		$admin_email = get_option('admin_email');
 		?>
         <fieldset>
             <label for="post_author">
