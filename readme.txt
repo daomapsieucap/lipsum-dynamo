@@ -1,4 +1,4 @@
-=== Lipsum Dynamo ===
+=== Dummie ===
 Contributors: daomapsieucap
 Tags: lorem ipsum, dummy text generator, lorem ipsum generator
 Requires at least: 4.7
