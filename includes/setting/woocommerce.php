@@ -67,9 +67,9 @@ class Lipsum_Dynamo_Woocommerce_Setting{
 		);
 		
 		add_settings_field(
-			'product_info', // id
-			'Product Information', // title
-			[$this, 'lipnamo_product_info'], // callback
+			'product_type', // id
+			'Product Type', // title
+			[$this, 'lipnamo_product_type'], // callback
 			'lipsum-dynamo-woocommerce', // page
 			'lipnamo_section' // section
 		);
@@ -83,6 +83,19 @@ class Lipsum_Dynamo_Woocommerce_Setting{
         <fieldset>
             <label for="post_total">
                 <input name="lipnamo_post_total" type="number" id="post_total" min="1" max="50" value="10"/>
+            </label>
+        </fieldset>
+		<?php
+	}
+	
+	public function lipnamo_product_type(){
+		?>
+        <fieldset>
+            <label for="product_type">
+                <select id="product_type" name='product_type'>
+                    <option value="simple"><?php echo __('Simple', "lipsum-dynamo"); ?></option>
+                    <option value="variable"><?php echo __('Variable', "lipsum-dynamo"); ?></option>
+                </select>
             </label>
         </fieldset>
 		<?php
@@ -191,20 +204,6 @@ class Lipsum_Dynamo_Woocommerce_Setting{
 			<?php echo __("to", "lipsum-dynamo"); ?>
             <input class="small-text" id="length_content_max" min="1" type="number" value="10"
                    name="length_content_max"/> <?php echo __("paragraph(s)", "lipsum-dynamo"); ?>
-        </fieldset>
-		<?php
-	}
-	
-	public function lipnamo_product_info(){
-		?>
-        <fieldset class="lipnamo-product-info lipnamo-product-info__customize">
-            <label for="product_info_type"><?php echo __("Product Type", "lipsum-dynamo"); ?></label>
-
-            <select id="product_info_type" name='product_info_type'>
-                <option value="simple"><?php echo __('Simple', "lipsum-dynamo"); ?></option>
-                <option value="variable"><?php echo __('Variable', "lipsum-dynamo"); ?></option>
-            </select>
-
         </fieldset>
 		<?php
 	}
