@@ -28,7 +28,7 @@ class Lipsum_Dynamo_Woocommerce_Setting{
 		
 		add_settings_field(
 			'lipnamo_post_total', // id
-			'Number of items', // title
+			'Number of products', // title
 			[$this, 'lipnamo_post_total'], // callback
 			'lipsum-dynamo-woocommerce', // page
 			'lipnamo_section' // section
@@ -36,7 +36,7 @@ class Lipsum_Dynamo_Woocommerce_Setting{
 		
 		add_settings_field(
 			'post_author', // id
-			'Post author', // title
+			'Product author', // title
 			[$this, 'lipnamo_post_author'], // callback
 			'lipsum-dynamo-woocommerce', // page
 			'lipnamo_section' // section
@@ -44,7 +44,7 @@ class Lipsum_Dynamo_Woocommerce_Setting{
 		
 		add_settings_field(
 			'post_status', // id
-			'New Item status', // title
+			'Product status', // title
 			[$this, 'lipnamo_post_status'], // callback
 			'lipsum-dynamo-woocommerce', // page
 			'lipnamo_section' // section
@@ -52,7 +52,7 @@ class Lipsum_Dynamo_Woocommerce_Setting{
 		
 		add_settings_field(
 			'post_thumbnail', // id
-			'New Item Thumbnails', // title
+			'Product Thumbnails/Gallery', // title
 			[$this, 'lipnamo_post_thumbnail'], // callback
 			'lipsum-dynamo-woocommerce', // page
 			'lipnamo_section' // section
