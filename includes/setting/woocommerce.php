@@ -97,6 +97,7 @@ class Lipsum_Dynamo_Woocommerce_Setting{
                     <option value="variable"><?php echo __('Variable', "lipsum-dynamo"); ?></option>
                 </select>
             </label>
+            <input type="hidden" name="post_type" value="product"/>
         </fieldset>
 		<?php
 	}
