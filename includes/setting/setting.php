@@ -95,11 +95,17 @@ class Lipsum_Dynamo_Setting{
 	}
 	
 	public function lipnamo_setting_tabs(): array{
-		return [
+		$tabs = [
 			'general'   => 'General',
 			'cleanup'   => 'Cleanup',
 			'uninstall' => 'Uninstall',
 		];
+		
+		if(class_exists('woocommerce')){
+			$tabs['woocommerce'] = 'Woocommerce';
+		}
+		
+		return $tabs;
 	}
 	
 	public function lipnamo_setting_tab_navs($current = 'general'){

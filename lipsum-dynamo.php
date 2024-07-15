@@ -44,6 +44,7 @@ function lipnamo_init(){
 	include_once(LIPNAMO_DIR . 'includes/setting/general.php');
 	include_once(LIPNAMO_DIR . 'includes/setting/cleanup.php');
 	include_once(LIPNAMO_DIR . 'includes/setting/data.php');
+	include_once(LIPNAMO_DIR . 'includes/setting/woocommerce.php');
 	
 	// functions
 	include_once(LIPNAMO_DIR . 'includes/generate-items.php');
