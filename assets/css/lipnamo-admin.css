@@ -11,13 +11,11 @@
  */
 
 .lipnamo-preview {
-    max-width:500px; height:200px;
+    height:300px;
     background-color:#fff;border:#ccd0d4 solid 1px;
     margin-bottom:20px;overflow-x:auto;
 }
 .lipnamo-preview .lipnamo-input__img {margin-bottom:10px;}
-.lipnamo-preview .lipnamo-preview__list {display:flex; flex-wrap:wrap;}
-.lipnamo-preview .lipnamo-preview__list {padding:0 10px;}
 
 /* Responsive adjustments */
 @media (max-width:600px) {

@@ -216,7 +216,7 @@
          * Create preview item HTML
          */
         lipnamo_createPreviewItem(file){
-            const imageUrl = this.lipnamo_sanitizeUrl(file.url || '');
+            const imageUrl = this.lipnamo_sanitizeUrl(file.sizes.medium.url || '');
             const altText = this.lipnamo_sanitizeText(file.alt || file.title || 'Selected image');
             const imageId = parseInt(file.id);
 
