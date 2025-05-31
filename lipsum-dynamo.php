@@ -25,7 +25,7 @@ if(!defined('ABSPATH')){
  * Definitions
  */
 
-const DUMMIE_VERSION = '3.1.0';
+const LIPNAMO_VERSION = '3.1.0';
 define("LIPNAMO_DIR", plugin_dir_path(__FILE__));
 define("LIPNAMO_ASSETS_URL", plugin_dir_url(__FILE__) . 'assets/');
 
@@ -76,13 +76,13 @@ function lipnamo_install(){
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		dbDelta($sql);
 		
-		add_option('lipnamo_db_version', DUMMIE_VERSION);
+		add_option('lipnamo_db_version', LIPNAMO_VERSION);
 	}
 }
 
 add_action('plugins_loaded', 'lipnamo_update_db_check');
 function lipnamo_update_db_check(){
-	if(get_site_option('lipnamo_db_version') != DUMMIE_VERSION){
+	if(get_site_option('lipnamo_db_version') != LIPNAMO_VERSION){
 		lipnamo_install();
 	}
 }
