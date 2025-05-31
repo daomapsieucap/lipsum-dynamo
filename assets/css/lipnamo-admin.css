@@ -17,26 +17,8 @@
 }
 .lipnamo-preview .lipnamo-input__img {margin-bottom:10px;}
 
-/* Responsive adjustments */
-@media (max-width:600px) {
-    .lipnamo-preview .lipnamo-preview__list .lipnamo-preview-item {
-        width:50%;
-    }
-
-    .lipnamo-preview .lipnamo-preview__list li:not(.lipnamo-preview-item) {
-        width:50%;
-    }
-}
-
-@media (max-width:400px) {
-    .lipnamo-preview .lipnamo-preview__list .lipnamo-preview-item {
-        width:100%;
-    }
-
-    .lipnamo-preview .lipnamo-preview__list li:not(.lipnamo-preview-item) {
-        width:100%;
-    }
-}
+.lipnamo-preview .lipnamo-preview-item.attachment {width:12.5%;}
+.lipnamo-preview .lipnamo-preview-item.attachment img {max-height:100%; max-width:100%;}
 
 /* Loading state for preview items */
 .lipnamo-preview-item.lipnamo-loading .lipnamo-preview-wrapper {
