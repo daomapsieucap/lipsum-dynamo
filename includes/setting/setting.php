@@ -136,7 +136,8 @@ class Lipsum_Dynamo_Setting{
 		do_settings_sections('lipsum-dynamo-' . $current);
 		
 		if($current === 'general' || $current === 'cleanup'){
-			$btn = $current === 'general' ? 'generate' : $current;
+			$button       = $current === 'general' ? 'generate' : $current;
+			$button_title = ucfirst($button);
 			?>
             <input name="lipnamo-generate__step" type="hidden" value="1"/>
             <div class="lipnamo-progress-wrapper" style="display:none;">
@@ -148,8 +149,10 @@ class Lipsum_Dynamo_Setting{
                             class="lipnamo-progress-total">10</span>
                 </div>
             </div>
-            <a href="#"
-               class="lipnamo-<?php echo $btn; ?> button button-primary"><?php echo ucfirst($btn); ?></a>
+            <a href="#" class="lipnamo-<?php echo $button; ?> button button-primary"
+               title="<?php echo $button_title; ?>">
+				<?php echo ucfirst($button_title); ?>
+            </a>
 			<?php
 		}
 		

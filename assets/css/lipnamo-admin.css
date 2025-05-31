@@ -11,13 +11,13 @@
  */
 
 .lipnamo-preview {
-    height:300px;
+    height:300px; max-width:800px;
     background-color:#fff;border:#ccd0d4 solid 1px;
     margin-bottom:20px;overflow-x:auto;
 }
 .lipnamo-preview .lipnamo-input__img {margin-bottom:10px;}
 
-.lipnamo-preview .lipnamo-preview-item.attachment {width:12.5%;}
+.lipnamo-preview .lipnamo-preview-item.attachment {width:16.66%;}
 .lipnamo-preview .lipnamo-preview-item.attachment img {max-height:100%; max-width:100%;}
 
 /* Loading state for preview items */
@@ -68,8 +68,28 @@
  * Progress Bar
  */
 
-.lipnamo-progress-wrapper {max-width:1000px;margin-bottom:20px;background-color:#fff; padding:15px 10px;}
-.lipnamo-progress {margin-bottom:5px;color:#000;background-color:#cecece;}
+.lipnamo-progress-wrapper {
+    max-width:1000px;
+    margin-bottom:20px;
+    background-color:#fff;
+    padding:15px 10px;
+    border:1px solid #c3c4c7;
+    border-radius:4px;
+}
+
+.lipnamo-progress {
+    margin-bottom:5px;
+    color:#1d2327;
+    background-color:#dcdcde;
+    border-radius:3px;
+    overflow:hidden;
+    height:20px;
+}
+
 .lipnamo-progress-bar {
-    height:20px;padding:1px 0;background-color:#0073aa;
+    height:20px;
+    padding:1px 0;
+    background-color:#2271b1;
+    border-radius:2px;
+    transition:width 0.3s ease;
 }
