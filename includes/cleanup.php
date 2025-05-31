@@ -19,7 +19,7 @@ class Lipsum_Dynamo_Cleanup{
 	}
 	
 	public function lipnamo_cleanup_scripts($hook_suffix){
-		if(strpos($hook_suffix, 'lipsum-dynamo') !== false){
+		if(str_contains($hook_suffix, 'lipsum-dynamo')){
 			wp_enqueue_script('lipnamo-cleanup-items', LIPNAMO_ASSETS_URL . 'js/lipnamo-cleanup-items.js', ['jquery'], LIPNAMO_VERSION, true);
 			wp_localize_script('lipnamo-cleanup-items', 'lipnamo_items',
 				[
@@ -68,7 +68,7 @@ class Lipsum_Dynamo_Cleanup{
 			$posts = $wpdb->get_results($mysql_query);
 			if($posts){
 				foreach($posts as $post){
-					$post_id = intval($post->post_id);
+					$post_id = (int) $post->post_id;
 					if(get_post_status($post_id)){
 						wp_delete_post($post_id, true);
 						$wpdb->query("DELETE FROM $table_name WHERE post_id = $post_id");
@@ -93,7 +93,7 @@ class Lipsum_Dynamo_Cleanup{
 		}
 		
 		// Send output as JSON for processing via AJAX.
-		echo json_encode($result);
+		echo json_encode($result, JSON_THROW_ON_ERROR);
 		exit;
 	}
 	
@@ -136,7 +136,7 @@ class Lipsum_Dynamo_Cleanup{
 		$result['post_total'] = $post_total;
 		
 		// Send output as JSON for processing via AJAX.
-		echo json_encode($result);
+		echo json_encode($result, JSON_THROW_ON_ERROR);
 		exit;
 	}
 }

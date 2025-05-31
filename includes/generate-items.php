@@ -18,7 +18,7 @@ class Lipsum_Dynamo_Generate{
 	}
 	
 	public function lipnamo_generate_scripts($hook_suffix){
-		if(strpos($hook_suffix, 'lipsum-dynamo') !== false){
+		if(str_contains($hook_suffix, 'lipsum-dynamo')){
 			wp_enqueue_script('lipnamo-generate-items', LIPNAMO_ASSETS_URL . 'js/lipnamo-generate-items.js', ['jquery'], LIPNAMO_VERSION, true);
 			wp_localize_script('lipnamo-generate-items', 'lipnamo_items',
 				[
