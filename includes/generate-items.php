@@ -53,7 +53,7 @@ class Lipsum_Dynamo_Generate{
 		
 		// Exit if invalid post type
 		$valid_post_types = get_post_types(['public' => true], 'objects');
-		if(!array_key_exists($post_type, array_keys($valid_post_types))){
+		if(!in_array($post_type, array_keys($valid_post_types))){
 			return;
 		}
 		

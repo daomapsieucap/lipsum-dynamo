@@ -173,8 +173,8 @@ class Lipsum_Dynamo_General_Setting{
 	public function lipnamo_post_thumbnail(){
 		?>
         <fieldset class="lipnamo-input__img">
-            <div class="lipnamo-preview">
-                <ul class="lipnamo-preview__list"></ul>
+            <div class="lipnamo-preview attachments-wrapper">
+                <ul class="attachments lipnamo-preview__list"></ul>
             </div>
             <label>
                 <input id="lipnamo-thumbnails" type="hidden" name="lipnamo_thumbnails" value=""/>

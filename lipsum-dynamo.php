@@ -39,18 +39,15 @@ include_once(LIPNAMO_DIR . 'includes/helper.php');
  * Init Functions
  */
 
-add_action('init', 'lipnamo_init');
-function lipnamo_init(){
-	// options pages
-	include_once(LIPNAMO_DIR . 'includes/setting/setting.php');
-	include_once(LIPNAMO_DIR . 'includes/setting/general.php');
-	include_once(LIPNAMO_DIR . 'includes/setting/cleanup.php');
-	include_once(LIPNAMO_DIR . 'includes/setting/data.php');
-	
-	// functions
-	include_once(LIPNAMO_DIR . 'includes/generate-items.php');
-	include_once(LIPNAMO_DIR . 'includes/cleanup.php');
-}
+// options pages
+include_once(LIPNAMO_DIR . 'includes/setting/setting.php');
+include_once(LIPNAMO_DIR . 'includes/setting/general.php');
+include_once(LIPNAMO_DIR . 'includes/setting/cleanup.php');
+include_once(LIPNAMO_DIR . 'includes/setting/data.php');
+
+// functions
+include_once(LIPNAMO_DIR . 'includes/generate-items.php');
+include_once(LIPNAMO_DIR . 'includes/cleanup.php');
 
 /**
  * Create / upgrade database
