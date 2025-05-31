@@ -220,15 +220,21 @@
             const altText = this.lipnamo_sanitizeText(file.alt || file.title || 'Selected image');
             const imageId = parseInt(file.id);
 
-            return `<li class="lipnamo-preview-item" data-lipnamo-id="${imageId}">
-                        <span class="lipnamo-preview-wrapper">
-                            <img src="${imageUrl}" alt="${altText}" class="lipnamo-preview-image" />
+            return `<li class="lipnamo-preview-item attachment" data-lipnamo-id="${imageId}">
+                        <div class="attachment-preview">
+                            <div class="thumbnail">
+                                <div class="centered">
+                                    <img src="${imageUrl}" alt="${altText}" class="lipnamo-preview-image" />
+                                </div>
+                            </div>
                             <button type="button" 
-                                    class="lipnamo-remove-thumbnail" 
+                                    class="lipnamo-remove-thumbnail button-link attachment-close media-modal-icon" 
                                     data-lipnamo-id="${imageId}" 
                                     title="Remove image"
-                                    aria-label="Remove image">×</button>
-                        </span>
+                                    aria-label="Remove image">
+                                    <span class="screen-reader-text">Remove</span>
+                            </button>
+                        </div>
                     </li>`;
         }
 
