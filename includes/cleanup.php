@@ -42,14 +42,14 @@ class Lipsum_Dynamo_Cleanup{
 		}
 		
 		// Get AJAX data
-		$post_total = intval(lipnamo_array_key_exists('post_total', $_POST, 10));
+		$post_total = (int) lipnamo_array_key_exists('post_total', $_POST, 10);
 		$post_type  = sanitize_text_field(lipnamo_array_key_exists('post_type', $_POST, 'any'));
-		$post_step  = intval(lipnamo_array_key_exists('post_step', $_POST));
+		$post_step  = (int) lipnamo_array_key_exists('post_step', $_POST);
 		
 		// Exit if invalid post type
 		if($post_type !== 'any'){
 			$valid_post_types = get_post_types(['public' => true], 'objects');
-			if(!in_array($post_type, array_keys($valid_post_types))){
+			if(!array_key_exists($post_type, array_keys($valid_post_types))){
 				return;
 			}
 		}
@@ -114,7 +114,7 @@ class Lipsum_Dynamo_Cleanup{
 		// Exit if invalid post type
 		if($post_type !== 'any'){
 			$valid_post_types = get_post_types(['public' => true], 'objects');
-			if(!in_array($post_type, array_keys($valid_post_types))){
+			if(!array_key_exists($post_type, array_keys($valid_post_types))){
 				return;
 			}
 		}
@@ -123,7 +123,7 @@ class Lipsum_Dynamo_Cleanup{
 		$post_total = 0;
 		
 		$table_name = $wpdb->prefix . 'lipnamo';
-		if($post_type == "any"){
+		if($post_type === "any"){
 			$mysql_query = "SELECT * FROM $table_name";
 		}else{
 			$mysql_query = "SELECT * FROM $table_name WHERE post_type = '$post_type'";

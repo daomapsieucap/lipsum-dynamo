@@ -82,7 +82,7 @@ function lipnamo_install(){
 
 add_action('plugins_loaded', 'lipnamo_update_db_check');
 function lipnamo_update_db_check(){
-	if(get_site_option('lipnamo_db_version') != LIPNAMO_VERSION){
+	if(get_site_option('lipnamo_db_version') !== LIPNAMO_VERSION){
 		lipnamo_install();
 	}
 }
