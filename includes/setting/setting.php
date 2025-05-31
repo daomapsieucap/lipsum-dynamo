@@ -35,7 +35,7 @@ class Lipsum_Dynamo_Setting{
 	}
 	
 	public function lipnamo_setting_init(){
-		if(isset($_POST['lipsum-dynamo-submit'])){
+		if(lipnamo_array_key_exists('lipsum-dynamo-submit', $_POST) !== null){
 			check_admin_referer("lipsum-dynamo");
 			$this->lipnamo_save_options();
 			$updated_parameters = 'updated=true';
