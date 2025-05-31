@@ -5,7 +5,7 @@
  * Description:       🖨 Generate dummy content for demo purpose
  * Version:           3.1.0
  * Requires at least: 5.2
- * Requires PHP:      7.2
+ * Requires PHP:      8.0
  * Author:            Dao
  * Author URI:        https://daochau.com/
  * Text Domain:       lipsum-dynamo
