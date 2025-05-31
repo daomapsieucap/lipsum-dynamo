@@ -30,7 +30,7 @@
          */
         init(){
             if(!this.validateEnvironment()){
-                this.lipnamo_log('Media uploader functionality disabled - WordPress media library not found', 'warn');
+                console.log('Media uploader functionality disabled - WordPress media library not found', 'warn');
                 return;
             }
 
@@ -38,9 +38,8 @@
                 this.lipnamo_initImagePreview();
                 this.lipnamo_initMediaUploader();
                 this.lipnamo_initThumbnailRemoval();
-                this.lipnamo_log('Lipnamo Media Uploader initialized successfully');
             }catch(error){
-                this.lipnamo_log('Error initializing upload handlers: ' + error.message, 'error');
+                console.log('Error initializing upload handlers: ' + error.message, 'error');
             }
         }
 
@@ -51,16 +50,6 @@
             return typeof wp !== 'undefined' &&
                 typeof wp.media !== 'undefined' &&
                 typeof jQuery !== 'undefined';
-        }
-
-        /**
-         * Safe logging with plugin prefix
-         */
-        lipnamo_log(message, type = 'log'){
-            const prefixedMessage = `[Lipnamo Plugin] ${message}`;
-            if(console && typeof console[type] === 'function'){
-                console[type](prefixedMessage);
-            }
         }
 
         /**
@@ -307,8 +296,6 @@
 
             // Clear media uploaders
             this.mediaUploaders.clear();
-
-            this.lipnamo_log('Lipnamo Media Uploader destroyed');
         }
 
         /**
