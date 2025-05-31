@@ -18,7 +18,7 @@ class Lipsum_Dynamo_Setting{
 	
 	public function lipnamo_assets(){
 		$screen = get_current_screen();
-		if(strpos($screen->id, 'lipsum-dynamo') !== false){
+		if(str_contains($screen->id, 'lipsum-dynamo')){
 			wp_enqueue_style('lipnamo-admin', LIPNAMO_ASSETS_URL . 'css/lipnamo-admin.css', false, LIPNAMO_VERSION);
 			
 			// Upload field
@@ -83,7 +83,7 @@ class Lipsum_Dynamo_Setting{
 		wp_nonce_field("lipsum-dynamo");
 		
 		$current_tab = lipnamo_array_key_exists('tab', $_GET) ? : 'general';
-		if($current_tab == 'uninstall'){
+		if($current_tab === 'uninstall'){
 			echo '<p class="description">' . __("When you uninstall this plugin, what do you want to do with your settings and the generated dummy items? Be careful to use this option. It can't be reverted.", "lipsum-dynamo") . '</p>';
 		}
 		
@@ -95,20 +95,18 @@ class Lipsum_Dynamo_Setting{
 		echo '</div>'; // wrap
 	}
 	
-	public function lipnamo_setting_tabs(): array{
-		$tabs = [
+	public function lipnamo_setting_tabs(){
+		return [
 			'general'   => 'General',
 			'cleanup'   => 'Cleanup',
 			'uninstall' => 'Uninstall',
 		];
-		
-		return $tabs;
 	}
 	
 	public function lipnamo_setting_tab_navs($current = 'general'){
 		$tabs = $this->lipnamo_setting_tabs();
 		foreach($tabs as $tab => $name){
-			$class = ($tab == $current) ? ' nav-tab-active' : '';
+			$class = ($tab === $current) ? ' nav-tab-active' : '';
 			echo "<a class='nav-tab$class' href='?page=lipsum-dynamo&tab=$tab' title='$name'>$name</a>";
 			
 		}
@@ -132,8 +130,8 @@ class Lipsum_Dynamo_Setting{
 		
 		do_settings_sections('lipsum-dynamo-' . $current);
 		
-		if($current == 'general' || $current == 'cleanup'){
-			$btn = $current == 'general' ? 'generate' : $current;
+		if($current === 'general' || $current === 'cleanup'){
+			$btn = $current === 'general' ? 'generate' : $current;
 			?>
             <input name="lipnamo-generate__step" type="hidden" value="1"/>
             <div class="lipnamo-progress-wrapper" style="display:none;">
@@ -150,18 +148,18 @@ class Lipsum_Dynamo_Setting{
 			<?php
 		}
 		
-		if($current == 'cleanup'){
+		if($current === 'cleanup'){
 			?>
             <input type="hidden" name="lipnamo_post_total" value=""/>
 			<?php
-		}elseif($current == 'uninstall'){
+		}elseif($current === 'uninstall'){
 			submit_button(null, 'primary', 'lipsum-dynamo-submit');
 		}
 	}
 	
 	public function lipnamo_save_options(){
 		global $pagenow;
-		if($pagenow == 'tools.php' && esc_attr(lipnamo_array_key_exists('page', $_GET)) == 'lipsum-dynamo'){
+		if($pagenow === 'tools.php' && esc_attr(lipnamo_array_key_exists('page', $_GET)) === 'lipsum-dynamo'){
 			$option_key = 'lipsum-dynamo';
 			if(isset($_POST[$option_key])){
 				$options = $new_options = $_POST[$option_key];
