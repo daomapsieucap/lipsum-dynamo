@@ -20,7 +20,7 @@ class Lipsum_Dynamo_Cleanup{
 	
 	public function lipnamo_cleanup_scripts($hook_suffix){
 		if(str_contains($hook_suffix, 'lipsum-dynamo')){
-			wp_enqueue_script('lipnamo-cleanup-items', LIPNAMO_ASSETS_URL . 'js/lipnamo-cleanup-items.js', ['jquery'], LIPNAMO_VERSION, true);
+			wp_enqueue_script('lipnamo-cleanup-items', LIPNAMO_ASSETS_URL . 'js/lipnamo-cleanup-items' . LIPNAMO_CSSJS_SUFFIX . '.js', false, LIPNAMO_VERSION, true);
 			wp_localize_script('lipnamo-cleanup-items', 'lipnamo_items',
 				[
 					'ajax_url'   => admin_url('admin-ajax.php'),

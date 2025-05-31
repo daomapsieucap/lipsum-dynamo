@@ -275,10 +275,6 @@ class LipnamoCleanupManager{
         }
     }
 
-    async refreshPostTotal(){
-        await this.updatePostTotal();
-    }
-
     getStatus(){
         return {
             isRunning: this.isRunning,
