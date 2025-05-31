@@ -35,7 +35,7 @@ define("LIPNAMO_ASSETS_URL", plugin_dir_url(__FILE__) . 'assets/');
 require_once('vendor/LoremIpsum.php');
 
 // helper functions
-include_once(LIPNAMO_DIR . 'includes/helper.php');
+include_once(LIPNAMO_DIR . 'includes/helpers.php');
 
 /**
  * Init Functions
