@@ -77,7 +77,6 @@
 .lipnamo-preview .lipnamo-remove-thumbnail:hover {
     opacity:1;
     background:#a00;
-    transform:scale(1.1);
 }
 
 .lipnamo-preview .lipnamo-remove-thumbnail:focus {
