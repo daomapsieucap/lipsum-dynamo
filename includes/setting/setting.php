@@ -25,7 +25,11 @@ class Lipsum_Dynamo_Setting{
 			wp_enqueue_media();
 			
 			// Plugin scripts
-			wp_enqueue_script('lipnamo-admin', LIPNAMO_ASSETS_URL . 'js/lipnamo-admin.js', ['jquery'], LIPNAMO_VERSION);
+			wp_enqueue_script('lipnamo-admin', LIPNAMO_ASSETS_URL . 'js/lipnamo-admin.js', [
+				'jquery',
+				'media-upload',
+				'media-views',
+			], LIPNAMO_VERSION);
 		}
 	}
 	
