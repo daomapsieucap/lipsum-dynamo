@@ -18,24 +18,156 @@
 .lipnamo-preview .lipnamo-input__img {margin-bottom:10px;}
 .lipnamo-preview .lipnamo-preview__list {display:flex; flex-wrap:wrap;}
 .lipnamo-preview .lipnamo-preview__list {padding:0 10px;}
-.lipnamo-preview .lipnamo-preview__list li {width:25%;}
-.lipnamo-preview .lipnamo-preview__list li span {
-    display:block; padding:10px; margin:5px;
-    background:#eee; border:#d5d9dd solid 1px;
+
+/* Updated preview item styles with new classes */
+.lipnamo-preview .lipnamo-preview__list .lipnamo-preview-item {
+    width:25%;
+    list-style:none;
+    margin:0;
+    padding:0;
+    position:relative;
 }
-.lipnamo-preview .lipnamo-preview__list li img {
-    height:auto; max-height:100%;
-    width:auto; max-width:100%;
+
+.lipnamo-preview .lipnamo-preview__list .lipnamo-preview-wrapper {
+    display:block;
+    padding:10px;
+    margin:5px;
+    background:#eee;
+    border:#d5d9dd solid 1px;
+    position:relative;
+    border-radius:3px;
+    transition:all 0.2s ease;
+}
+
+.lipnamo-preview .lipnamo-preview__list .lipnamo-preview-wrapper:hover {
+    background:#e0e0e0;
+    border-color:#999;
+}
+
+.lipnamo-preview .lipnamo-preview__list .lipnamo-preview-image {
+    height:auto;
+    max-height:100%;
+    width:auto;
+    max-width:100%;
+    display:block;
+    border-radius:2px;
+}
+
+/* Remove thumbnail button styles */
+.lipnamo-preview .lipnamo-remove-thumbnail {
+    position:absolute;
+    top:5px;
+    right:5px;
+    width:20px;
+    height:20px;
+    background:#dc3232;
+    color:#fff;
+    border:none;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:14px;
+    line-height:1;
+    text-align:center;
+    padding:0;
+    opacity:0.8;
+    transition:all 0.2s ease;
+    z-index:10;
+}
+
+.lipnamo-preview .lipnamo-remove-thumbnail:hover {
+    opacity:1;
+    background:#a00;
+    transform:scale(1.1);
+}
+
+.lipnamo-preview .lipnamo-remove-thumbnail:focus {
+    outline:2px solid #0073aa;
+    outline-offset:1px;
+}
+
+/* Backward compatibility for existing li elements */
+.lipnamo-preview .lipnamo-preview__list li:not(.lipnamo-preview-item) {
+    width:25%;
+}
+
+.lipnamo-preview .lipnamo-preview__list li:not(.lipnamo-preview-item) span {
+    display:block;
+    padding:10px;
+    margin:5px;
+    background:#eee;
+    border:#d5d9dd solid 1px;
+}
+
+.lipnamo-preview .lipnamo-preview__list li:not(.lipnamo-preview-item) img {
+    height:auto;
+    max-height:100%;
+    width:auto;
+    max-width:100%;
+}
+
+/* Responsive adjustments */
+@media (max-width:600px) {
+    .lipnamo-preview .lipnamo-preview__list .lipnamo-preview-item {
+        width:50%;
+    }
+
+    .lipnamo-preview .lipnamo-preview__list li:not(.lipnamo-preview-item) {
+        width:50%;
+    }
+}
+
+@media (max-width:400px) {
+    .lipnamo-preview .lipnamo-preview__list .lipnamo-preview-item {
+        width:100%;
+    }
+
+    .lipnamo-preview .lipnamo-preview__list li:not(.lipnamo-preview-item) {
+        width:100%;
+    }
+}
+
+/* Loading state for preview items */
+.lipnamo-preview-item.lipnamo-loading .lipnamo-preview-wrapper {
+    opacity:0.5;
+    pointer-events:none;
+}
+
+.lipnamo-preview-item.lipnamo-loading .lipnamo-preview-wrapper::after {
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:20px;
+    height:20px;
+    margin:-10px 0 0 -10px;
+    border:2px solid #ccc;
+    border-top-color:#0073aa;
+    border-radius:50%;
+    animation:lipnamo-spin 1s linear infinite;
+}
+
+@keyframes lipnamo-spin {
+    to { transform:rotate(360deg); }
+}
+
+/* Empty state */
+.lipnamo-preview__list:empty::after {
+    content:"No images selected. Click 'Upload Images' to add some.";
+    display:block;
+    padding:20px;
+    text-align:center;
+    color:#666;
+    font-style:italic;
 }
 
 /**
  * Length control
  */
 
-.lipnamo-length-control input {margin:0 0 1em;}
+.lipnamo-length-control input {margin:0 0 16px;}
 .lipnamo-length-control label, .lipnamo-length-control select {
-    display:inline-block;min-width:10em;vertical-align:middle;
-    margin:.35em 0 .75em !important;
+    display:inline-block;min-width:160px;vertical-align:middle;
+    margin:6px 0 12px !important;
 }
 
 /**
@@ -45,5 +177,5 @@
 .lipnamo-progress-wrapper {max-width:1000px;margin-bottom:20px;background-color:#fff; padding:15px 10px;}
 .lipnamo-progress {margin-bottom:5px;color:#000;background-color:#cecece;}
 .lipnamo-progress-bar {
-    height:20px;padding:0.01em 0;background-color:#0073aa;
+    height:20px;padding:1px 0;background-color:#0073aa;
 }
