@@ -49,7 +49,7 @@ class Lipsum_Dynamo_Cleanup{
 		// Exit if invalid post type
 		if($post_type !== 'any'){
 			$valid_post_types = get_post_types(['public' => true], 'objects');
-			if(!array_key_exists($post_type, array_keys($valid_post_types))){
+			if(!in_array($post_type, array_keys($valid_post_types))){
 				return;
 			}
 		}
@@ -114,7 +114,7 @@ class Lipsum_Dynamo_Cleanup{
 		// Exit if invalid post type
 		if($post_type !== 'any'){
 			$valid_post_types = get_post_types(['public' => true], 'objects');
-			if(!array_key_exists($post_type, array_keys($valid_post_types))){
+			if(!in_array($post_type, array_keys($valid_post_types))){
 				return;
 			}
 		}
