@@ -19,8 +19,8 @@ class Lipsum_Dynamo_Cleanup{
 	}
 	
 	public function lipnamo_cleanup_scripts($hook_suffix){
-		if(strpos($hook_suffix, 'lipsum-dynamo') !== false){
-			wp_enqueue_script('lipnamo-cleanup-items', LIPNAMO_ASSETS_URL . 'js/lipnamo-cleanup-items.js', ['jquery'], DUMMIE_VERSION, true);
+		if(str_contains($hook_suffix, 'lipsum-dynamo')){
+			wp_enqueue_script('lipnamo-cleanup-items', LIPNAMO_ASSETS_URL . 'js/lipnamo-cleanup-items.js', ['jquery'], LIPNAMO_VERSION, true);
 			wp_localize_script('lipnamo-cleanup-items', 'lipnamo_items',
 				[
 					'ajax_url'   => admin_url('admin-ajax.php'),
@@ -42,14 +42,14 @@ class Lipsum_Dynamo_Cleanup{
 		}
 		
 		// Get AJAX data
-		$post_total = intval(lipnamo_array_key_exists('post_total', $_POST, 10));
+		$post_total = (int) lipnamo_array_key_exists('post_total', $_POST, 10);
 		$post_type  = sanitize_text_field(lipnamo_array_key_exists('post_type', $_POST, 'any'));
-		$post_step  = intval(lipnamo_array_key_exists('post_step', $_POST));
+		$post_step  = (int) lipnamo_array_key_exists('post_step', $_POST);
 		
 		// Exit if invalid post type
 		if($post_type !== 'any'){
 			$valid_post_types = get_post_types(['public' => true], 'objects');
-			if(!in_array($post_type, array_keys($valid_post_types))){
+			if(!array_key_exists($post_type, array_keys($valid_post_types))){
 				return;
 			}
 		}
@@ -68,7 +68,7 @@ class Lipsum_Dynamo_Cleanup{
 			$posts = $wpdb->get_results($mysql_query);
 			if($posts){
 				foreach($posts as $post){
-					$post_id = intval($post->post_id);
+					$post_id = (int) $post->post_id;
 					if(get_post_status($post_id)){
 						wp_delete_post($post_id, true);
 						$wpdb->query("DELETE FROM $table_name WHERE post_id = $post_id");
@@ -93,7 +93,7 @@ class Lipsum_Dynamo_Cleanup{
 		}
 		
 		// Send output as JSON for processing via AJAX.
-		echo json_encode($result);
+		echo json_encode($result, JSON_THROW_ON_ERROR);
 		exit;
 	}
 	
@@ -114,7 +114,7 @@ class Lipsum_Dynamo_Cleanup{
 		// Exit if invalid post type
 		if($post_type !== 'any'){
 			$valid_post_types = get_post_types(['public' => true], 'objects');
-			if(!in_array($post_type, array_keys($valid_post_types))){
+			if(!array_key_exists($post_type, array_keys($valid_post_types))){
 				return;
 			}
 		}
@@ -123,7 +123,7 @@ class Lipsum_Dynamo_Cleanup{
 		$post_total = 0;
 		
 		$table_name = $wpdb->prefix . 'lipnamo';
-		if($post_type == "any"){
+		if($post_type === "any"){
 			$mysql_query = "SELECT * FROM $table_name";
 		}else{
 			$mysql_query = "SELECT * FROM $table_name WHERE post_type = '$post_type'";
@@ -136,7 +136,7 @@ class Lipsum_Dynamo_Cleanup{
 		$result['post_total'] = $post_total;
 		
 		// Send output as JSON for processing via AJAX.
-		echo json_encode($result);
+		echo json_encode($result, JSON_THROW_ON_ERROR);
 		exit;
 	}
 }

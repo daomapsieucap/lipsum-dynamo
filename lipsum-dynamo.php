@@ -5,7 +5,7 @@
  * Description:       🖨 Generate dummy content for demo purpose
  * Version:           3.1.0
  * Requires at least: 5.2
- * Requires PHP:      7.2
+ * Requires PHP:      8.0
  * Author:            Dao
  * Author URI:        https://daochau.com/
  * Text Domain:       lipsum-dynamo
@@ -25,12 +25,14 @@ if(!defined('ABSPATH')){
  * Definitions
  */
 
-const DUMMIE_VERSION = '3.1.0';
+const LIPNAMO_VERSION = '3.1.0';
 define("LIPNAMO_DIR", plugin_dir_path(__FILE__));
 define("LIPNAMO_ASSETS_URL", plugin_dir_url(__FILE__) . 'assets/');
 
+// libraries
+require_once('vendor/LoremIpsum.php');
+
 // helper functions
-include_once(LIPNAMO_DIR . 'includes/lorem-ipsum.php');
 include_once(LIPNAMO_DIR . 'includes/helper.php');
 
 /**
@@ -74,13 +76,13 @@ function lipnamo_install(){
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		dbDelta($sql);
 		
-		add_option('lipnamo_db_version', DUMMIE_VERSION);
+		add_option('lipnamo_db_version', LIPNAMO_VERSION);
 	}
 }
 
 add_action('plugins_loaded', 'lipnamo_update_db_check');
 function lipnamo_update_db_check(){
-	if(get_site_option('lipnamo_db_version') != DUMMIE_VERSION){
+	if(get_site_option('lipnamo_db_version') !== LIPNAMO_VERSION){
 		lipnamo_install();
 	}
 }

@@ -18,8 +18,8 @@ class Lipsum_Dynamo_Generate{
 	}
 	
 	public function lipnamo_generate_scripts($hook_suffix){
-		if(strpos($hook_suffix, 'lipsum-dynamo') !== false){
-			wp_enqueue_script('lipnamo-generate-items', LIPNAMO_ASSETS_URL . 'js/lipnamo-generate-items.js', ['jquery'], DUMMIE_VERSION, true);
+		if(str_contains($hook_suffix, 'lipsum-dynamo')){
+			wp_enqueue_script('lipnamo-generate-items', LIPNAMO_ASSETS_URL . 'js/lipnamo-generate-items.js', ['jquery'], LIPNAMO_VERSION, true);
 			wp_localize_script('lipnamo-generate-items', 'lipnamo_items',
 				[
 					'ajax_url'   => admin_url('admin-ajax.php'),
@@ -41,19 +41,19 @@ class Lipsum_Dynamo_Generate{
 		}
 		
 		// Get AJAX data
-		$post_total          = intval(lipnamo_array_key_exists('post_total', $_POST, 10));
+		$post_total          = (int) lipnamo_array_key_exists('post_total', $_POST, 10);
 		$post_type           = sanitize_text_field(lipnamo_array_key_exists('post_type', $_POST, 'post'));
-		$post_author         = intval(lipnamo_array_key_exists('post_author', $_POST));
+		$post_author         = (int) lipnamo_array_key_exists('post_author', $_POST);
 		$post_status         = sanitize_text_field(lipnamo_array_key_exists('post_status', $_POST, 'publish'));
 		$post_thumbnails     = sanitize_text_field(lipnamo_array_key_exists('post_thumbnails', $_POST));
 		$post_title_length   = sanitize_text_field(lipnamo_array_key_exists('post_title_length', $_POST));
 		$post_excerpt_length = sanitize_text_field(lipnamo_array_key_exists('post_excerpt_length', $_POST));
 		$post_body_length    = sanitize_text_field(lipnamo_array_key_exists('post_body_length', $_POST));
-		$post_step           = intval(lipnamo_array_key_exists('post_step', $_POST));
+		$post_step           = (int) lipnamo_array_key_exists('post_step', $_POST);
 		
 		// Exit if invalid post type
 		$valid_post_types = get_post_types(['public' => true], 'objects');
-		if(!in_array($post_type, array_keys($valid_post_types))){
+		if(!array_key_exists($post_type, array_keys($valid_post_types))){
 			return;
 		}
 		
@@ -61,20 +61,20 @@ class Lipsum_Dynamo_Generate{
 		$post_title_min = $post_title_max = 1;
 		if($post_title_length){
 			$post_title_array = explode(',', $post_title_length);
-			$post_title_min   = intval($post_title_array[0]);
-			$post_title_max   = intval($post_title_array[1]);
+			$post_title_min   = (int) $post_title_array[0];
+			$post_title_max   = (int) $post_title_array[1];
 		}
 		$post_excerpt_min = $post_excerpt_max = 1;
 		if($post_excerpt_length){
 			$post_excerpt_array = explode(',', $post_excerpt_length);
-			$post_excerpt_min   = intval($post_excerpt_array[0]);
-			$post_excerpt_max   = intval($post_excerpt_array[1]);
+			$post_excerpt_min   = (int) $post_excerpt_array[0];
+			$post_excerpt_max   = (int) $post_excerpt_array[1];
 		}
 		$post_body_min = $post_body_max = 1;
 		if($post_body_length){
 			$post_body_array = explode(',', $post_body_length);
-			$post_body_min   = intval($post_body_array[0]);
-			$post_body_max   = intval($post_body_array[1]);
+			$post_body_min   = (int) $post_body_array[0];
+			$post_body_max   = (int) $post_body_array[1];
 		}
 		
 		if($post_step <= $post_total){

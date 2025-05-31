@@ -5,9 +5,9 @@ if(!function_exists('lipnamo_array_key_exists')){
 			if(array_key_exists($key, $atts)){
 				if(!empty($atts[$key])){
 					return $atts[$key];
-				}else{
-					return $default;
 				}
+				
+				return $default;
 			}
 		}
 		
