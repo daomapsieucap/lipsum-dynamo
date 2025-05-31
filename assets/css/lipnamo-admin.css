@@ -19,60 +19,6 @@
 .lipnamo-preview .lipnamo-preview__list {display:flex; flex-wrap:wrap;}
 .lipnamo-preview .lipnamo-preview__list {padding:0 10px;}
 
-/* Updated preview item styles with new classes */
-/*.lipnamo-preview .lipnamo-preview__list .lipnamo-preview-item {*/
-/*    width:25%;*/
-/*    list-style:none;*/
-/*    margin:0;*/
-/*    padding:0;*/
-/*    position:relative;*/
-/*}*/
-
-/*.lipnamo-preview .lipnamo-preview__list .lipnamo-preview-wrapper {*/
-/*    display:block;*/
-/*    padding:5px;*/
-/*    margin:5px;*/
-/*    background:#eee;*/
-/*    border:#d5d9dd solid 1px;*/
-/*    position:relative;*/
-/*    border-radius:3px;*/
-/*    transition:all 0.2s ease;*/
-/*}*/
-
-/*.lipnamo-preview .lipnamo-preview__list .lipnamo-preview-wrapper:hover {*/
-/*    background:#e0e0e0;*/
-/*    border-color:#999;*/
-/*}*/
-
-/*.lipnamo-preview .lipnamo-preview__list .lipnamo-preview-image {*/
-/*    height:auto;*/
-/*    max-height:100%;*/
-/*    width:auto;*/
-/*    max-width:100%;*/
-/*    display:block;*/
-/*    border-radius:2px;*/
-/*}*/
-
-/* Backward compatibility for existing li elements */
-/*.lipnamo-preview .lipnamo-preview__list li:not(.lipnamo-preview-item) {*/
-/*    width:25%;*/
-/*}*/
-
-/*.lipnamo-preview .lipnamo-preview__list li:not(.lipnamo-preview-item) span {*/
-/*    display:block;*/
-/*    padding:10px;*/
-/*    margin:5px;*/
-/*    background:#eee;*/
-/*    border:#d5d9dd solid 1px;*/
-/*}*/
-
-/*.lipnamo-preview .lipnamo-preview__list li:not(.lipnamo-preview-item) img {*/
-/*    height:auto;*/
-/*    max-height:100%;*/
-/*    width:auto;*/
-/*    max-width:100%;*/
-/*}*/
-
 /* Responsive adjustments */
 @media (max-width:600px) {
     .lipnamo-preview .lipnamo-preview__list .lipnamo-preview-item {
