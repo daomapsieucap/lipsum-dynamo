@@ -29,8 +29,10 @@ const DUMMIE_VERSION = '3.1.0';
 define("LIPNAMO_DIR", plugin_dir_path(__FILE__));
 define("LIPNAMO_ASSETS_URL", plugin_dir_url(__FILE__) . 'assets/');
 
+// libraries
+require_once('vendor/LoremIpsum.php');
+
 // helper functions
-include_once(LIPNAMO_DIR . 'includes/lorem-ipsum.php');
 include_once(LIPNAMO_DIR . 'includes/helper.php');
 
 /**
