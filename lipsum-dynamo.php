@@ -25,7 +25,9 @@ if(!defined('ABSPATH')){
  * Definitions
  */
 
-const LIPNAMO_VERSION = '3.1.0';
+const LIPNAMO_VERSION      = '3.1.0';
+const LIPNAMO_ENVIRONMENT  = 'production';
+const LIPNAMO_CSSJS_SUFFIX = (LIPNAMO_ENVIRONMENT !== 'development') ? '.min' : '';
 define("LIPNAMO_DIR", plugin_dir_path(__FILE__));
 define("LIPNAMO_ASSETS_URL", plugin_dir_url(__FILE__) . 'assets/');
 
