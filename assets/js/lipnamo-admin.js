@@ -73,6 +73,7 @@ jQuery(document).ready(function($){
         if(!attachments?.length) return;
 
         const currentIds = lipnamoGetCurrentImageIds();
+        const newIds = [];
 
         attachments.forEach((attachment, index) => {
             const imageId = parseInt(attachment.id);
@@ -80,13 +81,18 @@ jQuery(document).ready(function($){
             // Skip if image already exists
             if(currentIds.includes(imageId)) return;
 
-            // Update hidden field
-            lipnamoUpdateThumbnailField([...currentIds, imageId]);
+            // Add to new IDs array
+            newIds.push(imageId);
 
             // Add to preview
             const altText = attachment.alt || `Image ${index + 1}`;
             $preview.append(lipnamoCreateThumbnailHTML(imageId, attachment.url, altText));
         });
+
+        // Update hidden field with combined IDs
+        if(newIds.length){
+            lipnamoUpdateThumbnailField([...currentIds, ...newIds]);
+        }
     }
 
     /**
