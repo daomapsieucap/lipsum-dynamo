@@ -48,7 +48,7 @@ jQuery(document).ready(function($){
                 post_title_length: post_title_min + ',' + post_title_max,
                 post_excerpt_length: post_excerpt_min + ',' + post_excerpt_max,
                 post_body_length: post_body_min + ',' + post_body_max,
-                post_step: i
+                post_step: lipnamoCurrentStep
             },
             success: function(response){
                 let result = JSON.parse(response),
