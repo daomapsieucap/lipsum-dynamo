@@ -1,247 +1,158 @@
-class LipnamoGenerator{
-    constructor(){
-        this.currentStep = 1;
-        this.isRunning = false;
-        this.config = {};
-        this.elements = {};
+jQuery(document).ready(function($){
+    let lipnamoCurrentStep = 1;
 
-        this.init();
-    }
+    $('.lipnamo-generate').click(function(e){
+        e.preventDefault();
+        lipnamoInitializeGeneration();
+    });
 
-    init(){
-        this.cacheElements();
-        this.bindEvents();
-    }
+    function lipnamoInitializeGeneration(){
+        lipnamoCurrentStep = 1;
+        const config = lipnamoGetFormConfig();
 
-    cacheElements(){
-        this.elements = {
-            generateBtn: document.querySelector('.lipnamo-generate'),
-            progressBar: document.querySelector('.lipnamo-progress-bar'),
-            progressWrapper: document.querySelector('.lipnamo-progress-wrapper'),
-            progressStep: document.querySelector('.lipnamo-progress-step'),
-            progressTotal: document.querySelector('.lipnamo-progress-total'),
-            progressText: document.querySelector('.lipnamo-progress-text'),
-            wpBody: document.getElementById('wpbody'),
-            stepInput: document.querySelector('input[name="lipnamo-generate__step"]'),
-            
-            // Form inputs
-            postTotal: document.querySelector('input[name="lipnamo_post_total"]'),
-            postType: document.querySelector('select[name="lipnamo_post_type"]'),
-            postAuthor: document.querySelector('select[name="lipnamo_post_author"]'),
-            postStatus: document.querySelector('select[name="lipnamo_post_status"]'),
-            postThumbnails: document.querySelector('input[name="lipnamo_thumbnails"]'),
-            titleMin: document.querySelector('input[name="length_title_min"]'),
-            titleMax: document.querySelector('input[name="length_title_max"]'),
-            excerptMin: document.querySelector('input[name="length_excerpt_min"]'),
-            excerptMax: document.querySelector('input[name="length_excerpt_max"]'),
-            bodyMin: document.querySelector('input[name="length_content_min"]'),
-            bodyMax: document.querySelector('input[name="length_content_max"]')
-        };
-    }
-
-    bindEvents(){
-        if(this.elements.generateBtn){
-            this.elements.generateBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.startGeneration();
-            });
-        }
-    }
-
-    getFormConfig(){
-        return {
-            postTotal: parseInt(this.elements.postTotal?.value) || 0,
-            postType: this.elements.postType?.value || '',
-            postAuthor: this.elements.postAuthor?.value || '',
-            postStatus: this.elements.postStatus?.value || '',
-            postThumbnails: this.elements.postThumbnails?.value || '',
-            postTitleLength: `${this.elements.titleMin?.value || ''},${this.elements.titleMax?.value || ''}`,
-            postExcerptLength: `${this.elements.excerptMin?.value || ''},${this.elements.excerptMax?.value || ''}`,
-            postBodyLength: `${this.elements.bodyMin?.value || ''},${this.elements.bodyMax?.value || ''}`
-        };
-    }
-
-    startGeneration(){
-        if(this.isRunning) return;
-
-        this.config = this.getFormConfig();
-        this.currentStep = 1;
-        this.isRunning = true;
-
-        this.showProgress();
-        if(this.elements.progressTotal){
-            this.elements.progressTotal.textContent = this.config.postTotal;
-        }
-
-        this.lipnamoGenerateItems();
-    }
-
-    showProgress(){
-        if(this.elements.wpBody){
-            this.elements.wpBody.classList.add('lipnamo-loading');
-        }
-        if(this.elements.progressWrapper){
-            this.elements.progressWrapper.style.display = 'block';
-        }
-        if(this.elements.generateBtn){
-            this.elements.generateBtn.classList.add('disabled');
-        }
-    }
-
-    hideProgress(){
-        if(this.elements.wpBody){
-            this.elements.wpBody.classList.remove('lipnamo-loading');
-        }
-        if(this.elements.generateBtn){
-            this.elements.generateBtn.classList.remove('disabled');
-        }
-        this.isRunning = false;
-    }
-
-    updateProgress(step, total){
-        const percent = Math.min((step * 100) / total, 100);
-
-        if(this.elements.progressStep){
-            this.elements.progressStep.textContent = step;
-        }
-        if(this.elements.stepInput){
-            this.elements.stepInput.value = step;
-        }
-
-        if(this.elements.progressBar){
-            this.animateProgressBar(percent);
-        }
-    }
-
-    animateProgressBar(targetPercent){
-        const progressBar = this.elements.progressBar;
-        const currentWidth = parseFloat(progressBar.style.width) || 0;
-        const targetWidth = targetPercent;
-        const duration = 150;
-        const startTime = performance.now();
-
-        const animate = (currentTime) => {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-
-            // Easing function (ease-out)
-            const easeOut = 1 - Math.pow(1 - progress, 3);
-            const currentPercent = currentWidth + (targetWidth - currentWidth) * easeOut;
-
-            progressBar.style.width = `${currentPercent}%`;
-
-            if(progress < 1){
-                requestAnimationFrame(animate);
-            }
-        };
-
-        requestAnimationFrame(animate);
-    }
-
-    lipnamoGenerateItems(){
-        if(this.currentStep > this.config.postTotal){
-            this.hideProgress();
+        if(!lipnamoValidateConfig(config)){
             return;
         }
 
-        const formData = new FormData();
-        formData.append('action', 'lipnamo_generate_items');
-        formData.append('lipnamo_ajax_nonce', lipnamo_items.ajax_nonce);
-        formData.append('post_total', this.config.postTotal);
-        formData.append('post_type', this.config.postType);
-        formData.append('post_author', this.config.postAuthor);
-        formData.append('post_status', this.config.postStatus);
-        formData.append('post_thumbnails', this.config.postThumbnails);
-        formData.append('post_title_length', this.config.postTitleLength);
-        formData.append('post_excerpt_length', this.config.postExcerptLength);
-        formData.append('post_body_length', this.config.postBodyLength);
-        formData.append('post_step', this.currentStep);
-
-        fetch(lipnamo_items.ajax_url, {
-            method: 'POST',
-            body: formData,
-            credentials: 'same-origin'
-        })
-            .then(response => {
-                if(!response.ok){
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.text();
-            })
-            .then(responseText => this.handleSuccess(responseText))
-            .catch(error => this.handleError(error));
+        lipnamoSetupUI();
+        lipnamoExecuteGeneration(config);
     }
 
-    handleSuccess(responseText){
-        try{
-            const result = JSON.parse(responseText);
-            const step = parseInt(result.step) || this.currentStep;
-
-            this.updateProgress(step, this.config.postTotal);
-
-            if(step >= this.config.postTotal){
-                if(this.elements.progressText){
-                    this.elements.progressText.textContent = result.message || 'Generation completed!';
-                }
-                this.hideProgress();
-                return;
-            }
-
-            this.currentStep = step + 1;
-
-            // Add small delay to prevent overwhelming the server
-            setTimeout(() => {
-                if(this.isRunning){
-                    this.lipnamoGenerateItems();
-                }
-            }, 100);
-
-        }catch(error){
-            console.error('LipnamoGenerator: Error parsing response', error);
-            this.handleError(error);
-        }
-    }
-
-    handleError(error){
-        console.error('LipnamoGenerator: Error', error);
-        if(this.elements.progressText){
-            this.elements.progressText.textContent = 'An error occurred during generation. Please try again.';
-        }
-        this.hideProgress();
-    }
-
-    // Public methods for external access
-    stop(){
-        this.isRunning = false;
-        this.hideProgress();
-    }
-
-    reset(){
-        this.stop();
-        this.currentStep = 1;
-        if(this.elements.progressBar){
-            this.elements.progressBar.style.width = '0%';
-        }
-        if(this.elements.progressStep){
-            this.elements.progressStep.textContent = '0';
-        }
-        if(this.elements.progressText){
-            this.elements.progressText.textContent = '';
-        }
-        if(this.elements.stepInput){
-            this.elements.stepInput.value = '';
-        }
-    }
-
-    getStatus(){
+    function lipnamoGetFormConfig(){
         return {
-            isRunning: this.isRunning,
-            currentStep: this.currentStep,
-            totalSteps: this.config.postTotal
+            total: parseInt($('input[name="lipnamo_post_total"]').val()) || 0,
+            type: $('select[name="lipnamo_post_type"]').val(),
+            author: $('select[name="lipnamo_post_author"]').val(),
+            status: $('select[name="lipnamo_post_status"]').val(),
+            thumbnails: $('input[name="lipnamo_thumbnails"]').val(),
+            titleLength: lipnamoGetLengthRange('length_title_min', 'length_title_max'),
+            excerptLength: lipnamoGetLengthRange('length_excerpt_min', 'length_excerpt_max'),
+            bodyLength: lipnamoGetLengthRange('length_content_min', 'length_content_max')
         };
     }
-}
 
-document.addEventListener('DOMContentLoaded', function(){
-    new LipnamoGenerator();
+    function lipnamoGetLengthRange(minName, maxName){
+        const min = $(`input[name="${minName}"]`).val();
+        const max = $(`input[name="${maxName}"]`).val();
+        return `${min},${max}`;
+    }
+
+    function lipnamoValidateConfig(config){
+        if(config.total <= 0){
+            alert('Please enter a valid number of posts to generate.');
+            return false;
+        }
+        return true;
+    }
+
+    function lipnamoSetupUI(){
+        const $wpbody = $("#wpbody");
+        const $progressWrapper = $(".lipnamo-progress-wrapper");
+        const $generateBtn = $('.lipnamo-generate');
+
+        $wpbody.addClass("lipnamo-loading");
+        $progressWrapper.show();
+        $generateBtn.addClass('disabled');
+
+        $('.lipnamo-progress-total').text(lipnamoGetFormConfig().total);
+        $('.lipnamo-progress-step').text('0');
+        $('.lipnamo-progress-bar').css('width', '0%');
+    }
+
+    function lipnamoExecuteGeneration(config){
+        if(lipnamoCurrentStep > config.total){
+            lipnamoCompleteGeneration();
+            return;
+        }
+
+        const ajaxData = lipnamoBuildAjaxData(config);
+
+        $.ajax({
+            url: lipnamo_items.ajax_url,
+            type: 'POST',
+            data: ajaxData,
+            success: function(response){
+                lipnamoHandleAjaxSuccess(response, config);
+            },
+            error: function(xhr, status, error){
+                lipnamoHandleAjaxError(error);
+            }
+        });
+    }
+
+    function lipnamoBuildAjaxData(config){
+        return {
+            action: 'lipnamo_generate_items',
+            lipnamo_ajax_nonce: lipnamo_items.ajax_nonce,
+            post_total: config.total,
+            post_type: config.type,
+            post_author: config.author,
+            post_status: config.status,
+            post_thumbnails: config.thumbnails,
+            post_title_length: config.titleLength,
+            post_excerpt_length: config.excerptLength,
+            post_body_length: config.bodyLength,
+            post_step: lipnamoCurrentStep
+        };
+    }
+
+    function lipnamoHandleAjaxSuccess(response, config){
+        try{
+            const result = JSON.parse(response);
+            const step = parseInt(result.step);
+
+            lipnamoUpdateProgress(step, config.total);
+            lipnamoUpdateStepInput(step);
+
+            if(step < config.total){
+                lipnamoCurrentStep++;
+                lipnamoExecuteGeneration(config);
+            }else{
+                lipnamoFinalizeGeneration(result.message);
+            }
+        }catch(error){
+            lipnamoHandleAjaxError('Invalid response format');
+        }
+    }
+
+    function lipnamoUpdateProgress(step, total){
+        const percent = Math.min((step * 100) / total, 100);
+
+        $('.lipnamo-progress-step').text(step);
+        $('.lipnamo-progress-bar').animate({
+            width: percent + '%'
+        }, 150);
+    }
+
+    function lipnamoUpdateStepInput(step){
+        $('input[name="lipnamo-generate__step"]').val(step);
+    }
+
+    function lipnamoFinalizeGeneration(message){
+        $('.lipnamo-progress-bar').animate({
+            width: '100%'
+        }, 150);
+
+        if(message){
+            $('.lipnamo-progress-text').text(message);
+        }
+
+        setTimeout(lipnamoCompleteGeneration, 500);
+    }
+
+    function lipnamoCompleteGeneration(){
+        const $wpbody = $("#wpbody");
+        const $generateBtn = $('.lipnamo-generate');
+
+        $wpbody.removeClass("lipnamo-loading");
+        $generateBtn.removeClass('disabled');
+
+        lipnamoCurrentStep = 1;
+    }
+
+    function lipnamoHandleAjaxError(error){
+        console.error('Lipnamo Generation Error:', error);
+        alert('An error occurred during generation. Please try again.');
+        lipnamoCompleteGeneration();
+    }
 });
