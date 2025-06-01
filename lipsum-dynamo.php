@@ -3,7 +3,7 @@
  * Plugin Name:       Dummie (formerly Lipsum Dynamo)
  * Plugin URI:        https://wordpress.org/plugins/lipsum-dynamo/
  * Description:       🖨 Generate dummy content for demo purpose
- * Version:           3.1.0
+ * Version:           3.2.0
  * Requires at least: 5.2
  * Requires PHP:      8.0
  * Author:            Dao
@@ -25,7 +25,7 @@ if(!defined('ABSPATH')){
  * Definitions
  */
 
-const LIPNAMO_VERSION      = '3.1.0';
+const LIPNAMO_VERSION      = '3.2.0';
 const LIPNAMO_ENVIRONMENT  = 'production';
 const LIPNAMO_CSSJS_SUFFIX = (LIPNAMO_ENVIRONMENT !== 'development') ? '.min' : '';
 define("LIPNAMO_DIR", plugin_dir_path(__FILE__));
