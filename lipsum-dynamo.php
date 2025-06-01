@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Dummie
+ * Plugin Name:       Dummie (formerly Lipsum Dynamo)
  * Plugin URI:        https://wordpress.org/plugins/lipsum-dynamo/
  * Description:       🖨 Generate dummy content for demo purpose
  * Version:           3.1.0
