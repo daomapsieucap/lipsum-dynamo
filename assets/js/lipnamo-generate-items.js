@@ -1,5 +1,5 @@
 jQuery(document).ready(function($){
-    let i = 1;
+    let lipnamoCurrentStep = 1;
 
     $('.lipnamo-generate').click(function(e){
         e.preventDefault();
@@ -25,7 +25,8 @@ jQuery(document).ready(function($){
         $(".lipnamo-progress-wrapper").show();
         $(this).addClass('disabled');
 
-        if(i > post_total){
+        // stop when current step is greater than total posts
+        if(lipnamoCurrentStep > post_total){
             return;
         }
 
@@ -47,7 +48,7 @@ jQuery(document).ready(function($){
                 post_title_length: post_title_min + ',' + post_title_max,
                 post_excerpt_length: post_excerpt_min + ',' + post_excerpt_max,
                 post_body_length: post_body_min + ',' + post_body_max,
-                post_step: i
+                post_step: lipnamoCurrentStep
             },
             success: function(response){
                 let result = JSON.parse(response),
@@ -68,9 +69,10 @@ jQuery(document).ready(function($){
                     $('.lipnamo-progress-text').text(result.message);
                 }
 
-                //do your thing
-                i++;
-                //go to next iteration of the loop
+                // increase step
+                lipnamoCurrentStep++;
+
+                //continue generating items
                 lipnamoGenerateItems();
             }
         });

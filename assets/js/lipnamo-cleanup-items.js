@@ -1,95 +1,290 @@
-jQuery(document).ready(function($){
-    const $wpbody = $("#wpbody"), $cleanupButton = $('.lipnamo-cleanup.button');
+class LipnamoCleanupManager{
+    constructor(){
+        this.currentStep = 1;
+        this.isRunning = false;
+        this.config = {};
+        this.elements = {};
 
-    // Update post total
-    $('select[name="lipnamo_post_type"]').on('change', function(){
-        const post_type = $('select[name="lipnamo_post_type"]').val();
+        this.init();
+    }
 
-        $wpbody.addClass("lipnamo-loading");
-        $cleanupButton.addClass('disabled');
+    init(){
+        this.cacheElements();
+        this.bindEvents();
+    }
 
-        $.ajax({
-            url: lipnamo_items.ajax_url,
-            type: 'POST',
-            data: {
-                action: 'lipnamo_total_items',
-                lipnamo_ajax_nonce: lipnamo_items.ajax_nonce,
-                post_type: post_type
-            },
-            success: function(response){
-                let result = JSON.parse(response),
-                    post_total = parseInt(result.post_total);
+    cacheElements(){
+        this.elements = {
+            wpBody: document.getElementById('wpbody'),
+            cleanupButton: document.querySelector('.lipnamo-cleanup.button'),
+            progressBar: document.querySelector('.lipnamo-progress-bar'),
+            progressWrapper: document.querySelector('.lipnamo-progress-wrapper'),
+            progressStep: document.querySelector('.lipnamo-progress-step'),
+            progressTotal: document.querySelector('.lipnamo-progress-total'),
+            progressText: document.querySelector('.lipnamo-progress-text'),
+            stepInput: document.querySelector('input[name="lipnamo-cleanup__step"]'),
+            // Form inputs
+            postTotalInput: document.querySelector('input[name="lipnamo_post_total"]'),
+            postTypeSelect: document.querySelector('select[name="lipnamo_post_type"]')
+        };
+    }
 
-                $('input[name="lipnamo_post_total"]').val(post_total);
+    bindEvents(){
+        if(this.elements.postTypeSelect){
+            this.elements.postTypeSelect.addEventListener('change', () => {
+                this.updatePostTotal();
+            });
+        }
 
-                $wpbody.removeClass("lipnamo-loading");
-                $cleanupButton.removeClass('disabled');
+        if(this.elements.cleanupButton){
+            this.elements.cleanupButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.startCleanup();
+            });
+        }
+    }
+
+    async updatePostTotal(){
+        const postType = this.elements.postTypeSelect?.value || '';
+
+        this.showLoading();
+        this.disableCleanupButton();
+
+        try{
+            const formData = new FormData();
+            formData.append('action', 'lipnamo_total_items');
+            formData.append('lipnamo_ajax_nonce', lipnamo_items.ajax_nonce);
+            formData.append('post_type', postType);
+
+            const response = await fetch(lipnamo_items.ajax_url, {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin'
+            });
+
+            if(!response.ok){
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        });
-    });
 
-    // AJAX Cleanup
-    let ajaxIndex = 1;
+            const responseText = await response.text();
+            const result = JSON.parse(responseText);
+            const postTotal = parseInt(result.post_total) || 0;
 
-    $cleanupButton.click(function(e){
-        e.preventDefault();
-        lipnamoCleanupItems();
-    });
+            if(this.elements.postTotalInput){
+                this.elements.postTotalInput.value = postTotal;
+            }
 
-    function lipnamoCleanupItems(){
-        const post_total = parseInt($('input[name="lipnamo_post_total"]').val()),
-            post_type = $('select[name="lipnamo_post_type"]').val(),
-            $progressBar = $('.lipnamo-progress-bar');
+        }catch(error){
+            console.error('LipnamoCleanupManager: Error updating post total', error);
+        }finally{
+            this.hideLoading();
+            this.enableCleanupButton();
+        }
+    }
 
-        $wpbody.addClass("lipnamo-loading");
-        $(".lipnamo-progress-wrapper").show();
-        $(this).addClass('disabled');
+    startCleanup(){
+        if(this.isRunning) return;
 
-        if(ajaxIndex > post_total){
+        this.config = this.getCleanupConfig();
+        this.currentStep = 1;
+        this.isRunning = true;
+
+        this.showProgress();
+        if(this.elements.progressTotal){
+            this.elements.progressTotal.textContent = this.config.postTotal;
+        }
+
+        this.lipnamoCleanupItems();
+    }
+
+    getCleanupConfig(){
+        return {
+            postTotal: parseInt(this.elements.postTotalInput?.value) || 0,
+            postType: this.elements.postTypeSelect?.value || ''
+        };
+    }
+
+    showLoading(){
+        if(this.elements.wpBody){
+            this.elements.wpBody.classList.add('lipnamo-loading');
+        }
+    }
+
+    hideLoading(){
+        if(this.elements.wpBody){
+            this.elements.wpBody.classList.remove('lipnamo-loading');
+        }
+    }
+
+    showProgress(){
+        this.showLoading();
+        if(this.elements.progressWrapper){
+            this.elements.progressWrapper.style.display = 'block';
+        }
+        this.disableCleanupButton();
+    }
+
+    hideProgress(){
+        this.hideLoading();
+        this.enableCleanupButton();
+        this.isRunning = false;
+    }
+
+    disableCleanupButton(){
+        if(this.elements.cleanupButton){
+            this.elements.cleanupButton.classList.add('disabled');
+        }
+    }
+
+    enableCleanupButton(){
+        if(this.elements.cleanupButton){
+            this.elements.cleanupButton.classList.remove('disabled');
+        }
+    }
+
+    updateProgress(step, total){
+        const percent = Math.min((step * 100) / total, 100);
+
+        if(this.elements.progressStep){
+            this.elements.progressStep.textContent = step;
+        }
+        if(this.elements.stepInput){
+            this.elements.stepInput.value = step;
+        }
+
+        if(this.elements.progressBar){
+            this.animateProgressBar(percent);
+        }
+    }
+
+    animateProgressBar(targetPercent){
+        const progressBar = this.elements.progressBar;
+        const currentWidth = parseFloat(progressBar.style.width) || 0;
+        const targetWidth = targetPercent;
+        const duration = 150;
+        const startTime = performance.now();
+
+        const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // Easing function (ease-out)
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const currentPercent = currentWidth + (targetWidth - currentWidth) * easeOut;
+
+            progressBar.style.width = `${currentPercent}%`;
+
+            if(progress < 1){
+                requestAnimationFrame(animate);
+            }
+        };
+
+        requestAnimationFrame(animate);
+    }
+
+    async lipnamoCleanupItems(){
+        if(this.currentStep > this.config.postTotal){
+            this.hideProgress();
             return;
         }
 
-        // Update progress total
-        $('.lipnamo-progress-total').text(post_total);
+        try{
+            const formData = new FormData();
+            formData.append('action', 'lipnamo_cleanup_items');
+            formData.append('lipnamo_ajax_nonce', lipnamo_items.ajax_nonce);
+            formData.append('post_total', this.config.postTotal);
+            formData.append('post_type', this.config.postType);
+            formData.append('post_step', this.currentStep);
 
-        // Deleting items
-        $.ajax({
-            url: lipnamo_items.ajax_url,
-            type: 'POST',
-            data: {
-                action: 'lipnamo_cleanup_items',
-                lipnamo_ajax_nonce: lipnamo_items.ajax_nonce,
-                post_total: post_total,
-                post_type: post_type,
-                post_step: ajaxIndex
-            },
-            success: function(response){
-                let result = JSON.parse(response),
-                    step = parseInt(result.step),
-                    percent = step * 100 / post_total;
+            const response = await fetch(lipnamo_items.ajax_url, {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin'
+            });
 
-                $('input[name="lipnamo-cleanup__step"]').val(step);
-
-                if(step < post_total){
-                    $('.lipnamo-progress-step').text(step);
-                    $progressBar.animate({
-                        width: percent + '%'
-                    }, 150);
-                }else{
-                    $progressBar.animate({
-                        width: '100%'
-                    }, 150);
-                    $('.lipnamo-progress-text').text(result.message);
-                }
-
-                //do your thing
-                ajaxIndex++;
-                //go to next iteration of the loop
-                lipnamoCleanupItems();
+            if(!response.ok){
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        });
 
-        $wpbody.removeClass("lipnamo-loading");
-        $(this).removeClass('disabled');
+            const responseText = await response.text();
+            await this.handleSuccess(responseText);
+
+        }catch(error){
+            this.handleError(error);
+        }
     }
+
+    async handleSuccess(responseText){
+        try{
+            const result = JSON.parse(responseText);
+            const step = parseInt(result.step) || this.currentStep;
+
+            this.updateProgress(step, this.config.postTotal);
+
+            if(step >= this.config.postTotal){
+                if(this.elements.progressText){
+                    this.elements.progressText.textContent = result.message || 'Cleanup completed!';
+                }
+                this.hideProgress();
+                return;
+            }
+
+            this.currentStep = step + 1;
+
+            // Add small delay to prevent overwhelming the server
+            setTimeout(() => {
+                if(this.isRunning){
+                    this.lipnamoCleanupItems();
+                }
+            }, 100);
+
+        }catch(error){
+            console.error('LipnamoCleanupManager: Error parsing response', error);
+            this.handleError(error);
+        }
+    }
+
+    handleError(error){
+        console.error('LipnamoCleanupManager: Error', error);
+        if(this.elements.progressText){
+            this.elements.progressText.textContent = 'An error occurred during cleanup. Please try again.';
+        }
+        this.hideProgress();
+    }
+
+    // Public methods for external access
+    stop(){
+        this.isRunning = false;
+        this.hideProgress();
+    }
+
+    reset(){
+        this.stop();
+        this.currentStep = 1;
+        if(this.elements.progressBar){
+            this.elements.progressBar.style.width = '0%';
+        }
+        if(this.elements.progressStep){
+            this.elements.progressStep.textContent = '0';
+        }
+        if(this.elements.progressText){
+            this.elements.progressText.textContent = '';
+        }
+        if(this.elements.stepInput){
+            this.elements.stepInput.value = '';
+        }
+    }
+
+    getStatus(){
+        return {
+            isRunning: this.isRunning,
+            currentStep: this.currentStep,
+            totalSteps: this.config.postTotal,
+            postType: this.config.postType
+        };
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+    new LipnamoCleanupManager();
 });

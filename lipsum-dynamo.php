@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name:       Dummie
+ * Plugin Name:       Dummie (formerly Lipsum Dynamo)
  * Plugin URI:        https://wordpress.org/plugins/lipsum-dynamo/
  * Description:       🖨 Generate dummy content for demo purpose
- * Version:           3.1.0
+ * Version:           3.2.0
  * Requires at least: 5.2
- * Requires PHP:      7.2
+ * Requires PHP:      8.0
  * Author:            Dao
  * Author URI:        https://daochau.com/
  * Text Domain:       lipsum-dynamo
@@ -25,30 +25,31 @@ if(!defined('ABSPATH')){
  * Definitions
  */
 
-const DUMMIE_VERSION = '3.1.0';
+const LIPNAMO_VERSION      = '3.2.0';
+const LIPNAMO_ENVIRONMENT  = 'production';
+const LIPNAMO_CSSJS_SUFFIX = (LIPNAMO_ENVIRONMENT !== 'development') ? '.min' : '';
 define("LIPNAMO_DIR", plugin_dir_path(__FILE__));
 define("LIPNAMO_ASSETS_URL", plugin_dir_url(__FILE__) . 'assets/');
 
+// libraries
+require_once('vendor/LoremIpsum.php');
+
 // helper functions
-include_once(LIPNAMO_DIR . 'includes/lorem-ipsum.php');
-include_once(LIPNAMO_DIR . 'includes/helper.php');
+require_once(LIPNAMO_DIR . 'includes/helpers.php');
 
 /**
  * Init Functions
  */
 
-add_action('init', 'lipnamo_init');
-function lipnamo_init(){
-	// options pages
-	include_once(LIPNAMO_DIR . 'includes/setting/setting.php');
-	include_once(LIPNAMO_DIR . 'includes/setting/general.php');
-	include_once(LIPNAMO_DIR . 'includes/setting/cleanup.php');
-	include_once(LIPNAMO_DIR . 'includes/setting/data.php');
-	
-	// functions
-	include_once(LIPNAMO_DIR . 'includes/generate-items.php');
-	include_once(LIPNAMO_DIR . 'includes/cleanup.php');
-}
+// options pages
+require_once(LIPNAMO_DIR . 'includes/setting/setting.php');
+require_once(LIPNAMO_DIR . 'includes/setting/general.php');
+require_once(LIPNAMO_DIR . 'includes/setting/cleanup.php');
+require_once(LIPNAMO_DIR . 'includes/setting/data.php');
+
+// functions
+require_once(LIPNAMO_DIR . 'includes/generate-items.php');
+require_once(LIPNAMO_DIR . 'includes/cleanup.php');
 
 /**
  * Create / upgrade database
@@ -74,13 +75,13 @@ function lipnamo_install(){
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		dbDelta($sql);
 		
-		add_option('lipnamo_db_version', DUMMIE_VERSION);
+		add_option('lipnamo_db_version', LIPNAMO_VERSION);
 	}
 }
 
 add_action('plugins_loaded', 'lipnamo_update_db_check');
 function lipnamo_update_db_check(){
-	if(get_site_option('lipnamo_db_version') != DUMMIE_VERSION){
+	if(get_site_option('lipnamo_db_version') !== LIPNAMO_VERSION){
 		lipnamo_install();
 	}
 }

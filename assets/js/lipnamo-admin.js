@@ -1,79 +1,162 @@
 jQuery(document).ready(function($){
+    'use strict';
+
+    // Cache frequently used selectors
+    const $thumbnailsField = $('#lipnamo-thumbnails');
+
     /**
-     * Upload field
+     * Toggle preview visibility based on input value
      */
-    // show hide preview
     $('.lipnamo-input__img input[type="text"]').on('change', function(){
-        const preview = $(this).closest('fieldset').find('img');
-        if(!$(this).val()){
-            preview.hide();
-        }else{
-            preview.show();
-        }
+        const $preview = $(this).closest('fieldset').find('img');
+        $preview.toggle(!!$(this).val());
     });
 
-    // preview
+    /**
+     * Media uploader functionality
+     */
     $('.lipnamo-upload').each(function(){
-        const upload_element = $(this),
-            preview = upload_element.closest('fieldset').find('.lipnamo-preview__list');
+        const $uploadButton = $(this);
+        const $preview = $uploadButton.closest('fieldset').find('.lipnamo-preview__list');
+        let mediaUploader;
 
-        let custom_uploader;
-
-        upload_element.click(function(e){
+        $uploadButton.on('click', function(e){
             e.preventDefault();
-            //If the uploader object has already been created, reopen the dialog
-            if(custom_uploader){
-                custom_uploader.open();
+
+            // Reopen existing uploader
+            if(mediaUploader){
+                mediaUploader.open();
                 return;
             }
-            //Extend the wp.media object
-            custom_uploader = wp.media.frames.file_frame = wp.media({
-                title: 'Choose Image',
-                button: {
-                    text: 'Choose Image'
-                },
-                multiple: 'add'
-            });
-            //When a file is selected, grab the URL and set it as the text field's value
-            custom_uploader.on('select', function(){
-                const attachment = custom_uploader.state().get('selection').toJSON(),
-                    $thumbnails = $('#lipnamo-thumbnails');
 
-                let thumbnail_val = $thumbnails.val();
-
-                if(attachment){
-                    for(let i = 0; i < attachment.length; i++){
-                        thumbnail_val = $thumbnails.val();
-                        if(thumbnail_val){
-                            $thumbnails.val(thumbnail_val + ',' + attachment[i].id);
-                            let thumbnail_array = thumbnail_val.split(",").map(Number);
-                            if(!thumbnail_array.includes(attachment[i].id)){
-                                preview.append('<li><span><img src="' + attachment[i].url + '" /></span></li>');
-                            }
-                        }else{
-                            $thumbnails.val(attachment[i].id);
-                            preview.append('<li><span><img src="' + attachment[i].url + '" /></span></li>');
-                        }
-                    }
+            // Create new media uploader
+            mediaUploader = wp.media({
+                title: 'Choose Images',
+                button: {text: 'Choose Images'},
+                multiple: 'add',
+                library: {
+                    type: 'image'
                 }
             });
-            //Show selected items when open media popup
-            custom_uploader.on('open', function(){
-                const selection = custom_uploader.state().get('selection'),
-                    ids_value = $('#lipnamo-thumbnails').val();
 
-                if(ids_value.length > 0){
-                    var ids = ids_value.split(',');
-
-                    ids.forEach(function(id){
-                        let attachment = wp.media.attachment(id);
-                        attachment.fetch();
-                        selection.add(attachment ? [attachment] : []);
-                    });
-                }
+            // Handle media selection
+            mediaUploader.on('select', function(){
+                const attachments = mediaUploader.state().get('selection').toJSON();
+                lipnamoAddSelectedImages(attachments, $preview);
             });
-            //Open the uploader dialog
-            custom_uploader.open();
+
+            // Pre-select existing images when opening
+            mediaUploader.on('open', function(){
+                lipnamoPreselectExistingImages(mediaUploader);
+            });
+
+            mediaUploader.open();
         });
     });
+
+    /**
+     * Remove thumbnail functionality
+     */
+    $(document).on('click', '.lipnamo-remove-thumbnail', function(e){
+        e.preventDefault();
+
+        const imageId = parseInt($(this).data('lipnamo-id'));
+        const $previewItem = $(this).closest('.lipnamo-preview-item');
+
+        lipnamoRemoveImageFromField(imageId);
+        $previewItem.fadeOut(300, function(){
+            $(this).remove();
+        });
+    });
+
+    /**
+     * Add selected images to preview and update field
+     */
+    function lipnamoAddSelectedImages(attachments, $preview){
+        if(!attachments?.length) return;
+
+        const currentIds = lipnamoGetCurrentImageIds();
+        const newIds = [];
+
+        attachments.forEach((attachment, index) => {
+            const imageId = parseInt(attachment.id);
+
+            // Skip if image already exists
+            if(currentIds.includes(imageId)) return;
+
+            // Add to new IDs array
+            newIds.push(imageId);
+
+            // Add to preview
+            const altText = attachment.alt || `Image ${index + 1}`;
+            $preview.append(lipnamoCreateThumbnailHTML(imageId, attachment.url, altText));
+        });
+
+        // Update hidden field with combined IDs
+        if(newIds.length){
+            lipnamoUpdateThumbnailField([...currentIds, ...newIds]);
+        }
+    }
+
+    /**
+     * Create thumbnail HTML
+     */
+    function lipnamoCreateThumbnailHTML(imageId, imageUrl, altText){
+        return `
+            <li class="lipnamo-preview-item attachment" data-lipnamo-id="${imageId}">
+                <div class="attachment-preview">
+                    <div class="thumbnail">
+                        <div class="centered">
+                            <img src="${imageUrl}" alt="${altText}" class="lipnamo-preview-image" />
+                        </div>
+                    </div>
+                    <button type="button" class="lipnamo-remove-thumbnail button-link attachment-close media-modal-icon" 
+                            data-lipnamo-id="${imageId}" title="Remove image" aria-label="Remove image">
+                        <span class="screen-reader-text">Remove</span>
+                    </button>
+                </div>
+            </li>
+        `;
+    }
+
+    /**
+     * Get current image IDs from hidden field
+     */
+    function lipnamoGetCurrentImageIds(){
+        const value = $thumbnailsField.val().trim();
+        return value ? value.split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id)) : [];
+    }
+
+    /**
+     * Update thumbnail field with new IDs
+     */
+    function lipnamoUpdateThumbnailField(imageIds){
+        const uniqueIds = [...new Set(imageIds)].filter(id => !isNaN(id));
+        $thumbnailsField.val(uniqueIds.length ? uniqueIds.join(',') : '');
+    }
+
+    /**
+     * Remove image ID from hidden field
+     */
+    function lipnamoRemoveImageFromField(imageId){
+        const currentIds = lipnamoGetCurrentImageIds();
+        const updatedIds = currentIds.filter(id => id !== imageId);
+        lipnamoUpdateThumbnailField(updatedIds);
+    }
+
+    /**
+     * Pre-select existing images in media uploader
+     */
+    function lipnamoPreselectExistingImages(uploader){
+        const imageIds = lipnamoGetCurrentImageIds();
+        if(!imageIds.length) return;
+
+        const selection = uploader.state().get('selection');
+
+        imageIds.forEach(id => {
+            const attachment = wp.media.attachment(id);
+            attachment.fetch();
+            selection.add(attachment);
+        });
+    }
 });

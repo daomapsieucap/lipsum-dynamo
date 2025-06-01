@@ -11,39 +11,85 @@
  */
 
 .lipnamo-preview {
-    max-width:500px; height:200px;
+    height:300px; max-width:800px;
     background-color:#fff;border:#ccd0d4 solid 1px;
     margin-bottom:20px;overflow-x:auto;
 }
 .lipnamo-preview .lipnamo-input__img {margin-bottom:10px;}
-.lipnamo-preview .lipnamo-preview__list {display:flex; flex-wrap:wrap;}
-.lipnamo-preview .lipnamo-preview__list {padding:0 10px;}
-.lipnamo-preview .lipnamo-preview__list li {width:25%;}
-.lipnamo-preview .lipnamo-preview__list li span {
-    display:block; padding:10px; margin:5px;
-    background:#eee; border:#d5d9dd solid 1px;
+
+.lipnamo-preview .lipnamo-preview-item.attachment {width:16.66%;}
+.lipnamo-preview .lipnamo-preview-item.attachment img {max-height:100%; max-width:100%;}
+
+/* Loading state for preview items */
+.lipnamo-preview-item.lipnamo-loading .lipnamo-preview-wrapper {
+    opacity:0.5;
+    pointer-events:none;
 }
-.lipnamo-preview .lipnamo-preview__list li img {
-    height:auto; max-height:100%;
-    width:auto; max-width:100%;
+
+.lipnamo-preview-item.lipnamo-loading .lipnamo-preview-wrapper::after {
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:20px;
+    height:20px;
+    margin:-10px 0 0 -10px;
+    border:2px solid #ccc;
+    border-top-color:#0073aa;
+    border-radius:50%;
+    animation:lipnamo-spin 1s linear infinite;
+}
+
+@keyframes lipnamo-spin {
+    to { transform:rotate(360deg); }
+}
+
+/* Empty state */
+.lipnamo-preview__list:empty::after {
+    content:"No images selected. Click 'Upload Images' to add some.";
+    display:block;
+    padding:20px;
+    text-align:center;
+    color:#666;
+    font-style:italic;
 }
 
 /**
  * Length control
  */
 
-.lipnamo-length-control input {margin:0 0 1em;}
+.lipnamo-length-control input {margin:0 0 16px;}
 .lipnamo-length-control label, .lipnamo-length-control select {
-    display:inline-block;min-width:10em;vertical-align:middle;
-    margin:.35em 0 .75em !important;
+    display:inline-block;min-width:160px;vertical-align:middle;
+    margin:6px 0 12px !important;
 }
 
 /**
  * Progress Bar
  */
 
-.lipnamo-progress-wrapper {max-width:1000px;margin-bottom:20px;background-color:#fff; padding:15px 10px;}
-.lipnamo-progress {margin-bottom:5px;color:#000;background-color:#cecece;}
+.lipnamo-progress-wrapper {
+    max-width:1000px;
+    margin-bottom:20px;
+    background-color:#fff;
+    padding:15px 10px;
+    border:1px solid #c3c4c7;
+    border-radius:4px;
+}
+
+.lipnamo-progress {
+    margin-bottom:5px;
+    color:#1d2327;
+    background-color:#dcdcde;
+    border-radius:3px;
+    overflow:hidden;
+    height:20px;
+}
+
 .lipnamo-progress-bar {
-    height:20px;padding:0.01em 0;background-color:#0073aa;
+    height:20px;
+    padding:1px 0;
+    background-color:#2271b1;
+    border-radius:2px;
+    transition:width 0.3s ease;
 }
