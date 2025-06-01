@@ -28,9 +28,11 @@ Generate dummy content for demo purpose
 
 == Changelog ==
 
-= 3.1.0 =
-*Release Date - 15 July 2024*
+= 3.2.0 =
+*Release Date - 01 June 2025*
 
-* New: Rename plugin to Dummie.
-* Fixed: Fix wrong default admin post author.
-* Changed: Tested up to 6.5.5.
+* New: Add option to remove specific thumbnails.
+* New: Add list format with a tag in post content.
+* Changed: Inherit media style from WordPress core.
+* Changed: Optimize code for better performance.
+* Changed: Tested up to 6.8.1.
