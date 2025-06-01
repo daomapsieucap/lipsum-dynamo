@@ -91,12 +91,14 @@ class Lipsum_Dynamo_Generate{
 				$thumbnail_id    = $post_thumbnails[$thumbnail_rand];
 			}
 			
+			// prevent lorem ipsum from generating the same word twice in a row
 			if($post_step > 1){
 				$generator->word();
 			}
+			
+			// variables
 			$post_title   = ucfirst($generator->words($title_words));
 			$post_excerpt = $generator->sentences($excerpt_sentences);
-			
 			$post_content = '<ul>';
 			for($list_index = 0;$list_index < 3;$list_index ++){
 				$list_title   = $generator->words(5);
