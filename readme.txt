@@ -2,9 +2,9 @@
 Contributors: daomapsieucap
 Tags: lorem ipsum, dummy text generator, lorem ipsum generator
 Requires at least: 4.7
-Tested up to: 6.5.5
+Tested up to: 6.8.1
 Requires PHP: 7.2
-Stable tag: 3.1.0
+Stable tag: 3.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
