@@ -33,7 +33,10 @@ jQuery(document).ready(function($){
             mediaUploader = wp.media({
                 title: 'Choose Images',
                 button: {text: 'Choose Images'},
-                multiple: 'add'
+                multiple: 'add',
+                library: {
+                    type: 'image'
+                }
             });
 
             // Handle media selection
