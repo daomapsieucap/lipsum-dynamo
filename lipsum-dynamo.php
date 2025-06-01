@@ -35,21 +35,21 @@ define("LIPNAMO_ASSETS_URL", plugin_dir_url(__FILE__) . 'assets/');
 require_once('vendor/LoremIpsum.php');
 
 // helper functions
-include_once(LIPNAMO_DIR . 'includes/helpers.php');
+require_once(LIPNAMO_DIR . 'includes/helpers.php');
 
 /**
  * Init Functions
  */
 
 // options pages
-include_once(LIPNAMO_DIR . 'includes/setting/setting.php');
-include_once(LIPNAMO_DIR . 'includes/setting/general.php');
-include_once(LIPNAMO_DIR . 'includes/setting/cleanup.php');
-include_once(LIPNAMO_DIR . 'includes/setting/data.php');
+require_once(LIPNAMO_DIR . 'includes/setting/setting.php');
+require_once(LIPNAMO_DIR . 'includes/setting/general.php');
+require_once(LIPNAMO_DIR . 'includes/setting/cleanup.php');
+require_once(LIPNAMO_DIR . 'includes/setting/data.php');
 
 // functions
-include_once(LIPNAMO_DIR . 'includes/generate-items.php');
-include_once(LIPNAMO_DIR . 'includes/cleanup.php');
+require_once(LIPNAMO_DIR . 'includes/generate-items.php');
+require_once(LIPNAMO_DIR . 'includes/cleanup.php');
 
 /**
  * Create / upgrade database
