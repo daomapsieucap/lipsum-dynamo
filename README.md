@@ -2,6 +2,11 @@
 
 # [Lipsum Dynamo](https://wordpress.org/plugins/lipsum-dynamo/)
 
+[![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/lipsum-dynamo)](https://wordpress.org/plugins/lipsum-dynamo/)
+[![WordPress Tested Version](https://img.shields.io/wordpress/v/lipsum-dynamo)](https://wordpress.org/plugins/lipsum-dynamo/)
+[![WordPress Plugin Downloads](https://img.shields.io/wordpress/plugin/dt/lipsum-dynamo)](https://wordpress.org/plugins/lipsum-dynamo/)
+[![License](https://img.shields.io/badge/license-GPLv2%2B-blue)](http://www.gnu.org/licenses/gpl-2.0.html)
+
 > 🖨 WordPress plugin to generate dummy content for demo purpose.
 
 ## Installation
