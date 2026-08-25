@@ -30,18 +30,22 @@ class LipnamoCleanupManager{
     }
 
     bindEvents(){
+        // Bail if we're not on the cleanup tab, so this doesn't hijack the shared
+        // post-type field on other tabs (e.g. resetting the generate tab's item count).
+        if(!this.elements.cleanupButton){
+            return;
+        }
+
         if(this.elements.postTypeSelect){
             this.elements.postTypeSelect.addEventListener('change', () => {
                 this.updatePostTotal();
             });
         }
 
-        if(this.elements.cleanupButton){
-            this.elements.cleanupButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.startCleanup();
-            });
-        }
+        this.elements.cleanupButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.startCleanup();
+        });
     }
 
     async updatePostTotal(){
