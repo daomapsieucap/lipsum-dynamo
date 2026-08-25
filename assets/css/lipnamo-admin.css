@@ -17,12 +17,13 @@
 }
 .lipnamo-preview .lipnamo-input__img {margin-bottom:10px;}
 
-.lipnamo-preview .lipnamo-preview-item.attachment {width:16.66%;}
+.lipnamo-preview .lipnamo-preview-item.attachment {width:16.66%; transition:opacity .2s ease, transform .2s ease;}
 .lipnamo-preview .lipnamo-preview-item.attachment img {max-height:100%; max-width:100%;}
 
-/* Add-tile: appended as the last grid item, styled after the core Gallery block's "+" tile.
-   Keeps core's own .attachment-preview::before square trick and .thumbnail/.centered
-   centering intact; only layers a dashed border and icon color on top. */
+/* Add/remove animation for real thumbnails */
+.lipnamo-preview-item.lipnamo-enter, .lipnamo-preview-item.lipnamo-leave {opacity:0; transform:scale(.85);}
+
+/* keeps core's ::before square trick, just adds a dashed border */
 .lipnamo-add-tile .attachment-preview {
     display:block; width:100%; box-sizing:border-box; padding:0; margin:0;
     background:transparent; border:1px dashed #b5b5b5; box-shadow:none;

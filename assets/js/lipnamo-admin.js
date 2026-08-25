@@ -64,9 +64,10 @@ jQuery(document).ready(function($){
         const $previewItem = $(this).closest('.lipnamo-preview-item');
 
         lipnamoRemoveImageFromField(imageId);
-        $previewItem.fadeOut(300, function(){
-            $(this).remove();
-        });
+
+        const removeItem = () => $previewItem.remove();
+        $previewItem.addClass('lipnamo-leave').one('transitionend', removeItem);
+        setTimeout(removeItem, 300); // fallback in case transitionend never fires
     });
 
     /**
@@ -90,7 +91,11 @@ jQuery(document).ready(function($){
             // Add to preview, before the add-tile so it stays last
             const altText = attachment.alt || `Image ${index + 1}`;
             const ariaLabel = attachment.title || lipnamoGetNoTitleText();
-            $preview.find('.lipnamo-add-tile').before(lipnamoCreateThumbnailHTML(imageId, attachment.url, altText, ariaLabel));
+            const $item = $(lipnamoCreateThumbnailHTML(imageId, attachment.url, altText, ariaLabel));
+            $preview.find('.lipnamo-add-tile').before($item);
+
+            // Let the browser paint the entering state first, then transition it in
+            requestAnimationFrame(() => requestAnimationFrame(() => $item.removeClass('lipnamo-enter')));
         });
 
         // Update hidden field with combined IDs
@@ -123,7 +128,7 @@ jQuery(document).ready(function($){
                 </button>`;
 
         return `
-            <li class="lipnamo-preview-item attachment" data-lipnamo-id="${imageId}" aria-label="${ariaLabel}">
+            <li class="lipnamo-preview-item attachment lipnamo-enter" data-lipnamo-id="${imageId}" aria-label="${ariaLabel}">
                 <div class="attachment-preview">
                     <div class="thumbnail">
                         <div class="centered">
