@@ -28,11 +28,14 @@ Generate dummy content for demo purpose
 
 == Changelog ==
 
-= 3.2.0 =
-*Release Date - 01 June 2025*
+= 3.3.0 =
+*Release Date - 25 August 2026*
 
-* New: Add option to remove specific thumbnails.
-* New: Add list format with a tag in post content.
-* Changed: Inherit media style from WordPress core.
-* Changed: Optimize code for better performance.
-* Changed: Tested up to 6.8.1.
+* New: Add full demo content option with headings, single image and gallery.
+* New: Add hr, link and 2-level list (ul/li) options to dummy content.
+* New: Add title to gallery preview thumbnails.
+* New: Add transition effect when adding/removing gallery preview items.
+* Changed: Update gallery preview thumbnails structure for WordPress 7.x compatibility.
+* Changed: Requires at least WordPress 6.0.
+* Changed: Tested up to 7.1.
+* Fixed: Number of items no longer resets after updating the custom post type.
