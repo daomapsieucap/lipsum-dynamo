@@ -164,6 +164,8 @@ class Lipsum_Dynamo_Generate{
 			$blocks[] = $image_html;
 		}
 
+		$blocks[] = '<hr>';
+
 		$blocks[] = $this->lipnamo_build_heading($generator, 'h2', 3, 6);
 		$blocks[] = $this->lipnamo_short_paragraph($generator);
 
