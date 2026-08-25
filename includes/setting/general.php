@@ -206,17 +206,6 @@ class Lipsum_Dynamo_General_Setting{
 			<?php echo __("to", "lipsum-dynamo"); ?>
             <input class="small-text" id="length_excerpt_max" type="number" min="1" value="2"
                    name="length_excerpt_max"/> <?php echo __("sentence(s)", "lipsum-dynamo"); ?>
-
-            <br/>
-
-            <label for="length_content_min"><?php echo __("Content", "lipsum-dynamo"); ?></label>
-			
-			<?php echo __("From", "lipsum-dynamo"); ?>
-            <input class="small-text" id="length_content_min" type="number" min="1" value="1"
-                   name="length_content_min"/> <?php echo __("paragraph(s)", "lipsum-dynamo"); ?>
-			<?php echo __("to", "lipsum-dynamo"); ?>
-            <input class="small-text" id="length_content_max" min="1" type="number" value="10"
-                   name="length_content_max"/> <?php echo __("paragraph(s)", "lipsum-dynamo"); ?>
         </fieldset>
 		<?php
 	}
