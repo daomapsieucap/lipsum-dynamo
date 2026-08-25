@@ -30,18 +30,21 @@ class LipnamoCleanupManager{
     }
 
     bindEvents(){
+        // Only the cleanup tab has this button; other tabs share the post-type field.
+        if(!this.elements.cleanupButton){
+            return;
+        }
+
         if(this.elements.postTypeSelect){
             this.elements.postTypeSelect.addEventListener('change', () => {
                 this.updatePostTotal();
             });
         }
 
-        if(this.elements.cleanupButton){
-            this.elements.cleanupButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.startCleanup();
-            });
-        }
+        this.elements.cleanupButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.startCleanup();
+        });
     }
 
     async updatePostTotal(){
