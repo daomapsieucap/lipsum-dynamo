@@ -110,8 +110,9 @@ jQuery(document).ready(function($){
                             <img src="${imageUrl}" alt="${altText}" class="lipnamo-preview-image" />
                         </div>
                     </div>
-                    <button type="button" class="lipnamo-remove-thumbnail button-link attachment-close media-modal-icon" 
+                    <button type="button" class="lipnamo-remove-thumbnail button-link attachment-close"
                             data-lipnamo-id="${imageId}" title="Remove image" aria-label="Remove image">
+                        <span class="media-modal-icon" aria-hidden="true"></span>
                         <span class="screen-reader-text">Remove</span>
                     </button>
                 </div>
