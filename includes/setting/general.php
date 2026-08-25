@@ -175,7 +175,7 @@ class Lipsum_Dynamo_General_Setting{
         <fieldset class="lipnamo-input__img">
             <div class="lipnamo-preview attachments-wrapper">
                 <ul class="attachments lipnamo-preview__list">
-                    <li class="lipnamo-preview-item lipnamo-add-tile attachment">
+                    <li class="lipnamo-preview-item lipnamo-add-tile attachment" aria-label="<?php esc_attr_e('Add Thumbnails', 'lipsum-dynamo'); ?>">
                         <button type="button" class="lipnamo-upload attachment-preview">
                             <span class="thumbnail">
                                 <span class="centered">

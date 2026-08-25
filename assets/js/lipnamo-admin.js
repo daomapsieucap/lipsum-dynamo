@@ -89,7 +89,8 @@ jQuery(document).ready(function($){
 
             // Add to preview, before the add-tile so it stays last
             const altText = attachment.alt || `Image ${index + 1}`;
-            $preview.find('.lipnamo-add-tile').before(lipnamoCreateThumbnailHTML(imageId, attachment.url, altText));
+            const ariaLabel = attachment.title || lipnamoGetNoTitleText();
+            $preview.find('.lipnamo-add-tile').before(lipnamoCreateThumbnailHTML(imageId, attachment.url, altText, ariaLabel));
         });
 
         // Update hidden field with combined IDs
@@ -99,9 +100,16 @@ jQuery(document).ready(function($){
     }
 
     /**
+     * Matches wp.media.view.Attachment's own aria-label fallback (media-views.js)
+     */
+    function lipnamoGetNoTitleText(){
+        return (typeof lipnamoAdmin !== 'undefined' && lipnamoAdmin.noTitleText) || '(no title)';
+    }
+
+    /**
      * Create thumbnail HTML
      */
-    function lipnamoCreateThumbnailHTML(imageId, imageUrl, altText){
+    function lipnamoCreateThumbnailHTML(imageId, imageUrl, altText, ariaLabel){
         const coreIconSplit = typeof lipnamoAdmin !== 'undefined' && !!lipnamoAdmin.coreIconSplit;
         const removeButtonHTML = coreIconSplit
             ? `<button type="button" class="lipnamo-remove-thumbnail button-link attachment-close"
@@ -115,7 +123,7 @@ jQuery(document).ready(function($){
                 </button>`;
 
         return `
-            <li class="lipnamo-preview-item attachment" data-lipnamo-id="${imageId}">
+            <li class="lipnamo-preview-item attachment" data-lipnamo-id="${imageId}" aria-label="${ariaLabel}">
                 <div class="attachment-preview">
                     <div class="thumbnail">
                         <div class="centered">
