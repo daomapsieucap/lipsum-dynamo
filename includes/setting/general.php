@@ -174,12 +174,22 @@ class Lipsum_Dynamo_General_Setting{
 		?>
         <fieldset class="lipnamo-input__img">
             <div class="lipnamo-preview attachments-wrapper">
-                <ul class="attachments lipnamo-preview__list"></ul>
+                <ul class="attachments lipnamo-preview__list">
+                    <li class="lipnamo-preview-item lipnamo-add-tile attachment">
+                        <button type="button" class="lipnamo-upload attachment-preview">
+                            <span class="thumbnail">
+                                <span class="centered">
+                                    <span class="dashicons dashicons-insert" aria-hidden="true"></span>
+                                </span>
+                            </span>
+                            <span class="screen-reader-text"><?php esc_html_e('Add Thumbnails', 'lipsum-dynamo'); ?></span>
+                        </button>
+                    </li>
+                </ul>
             </div>
             <label>
                 <input id="lipnamo-thumbnails" type="hidden" name="lipnamo_thumbnails" value=""/>
             </label>
-            <button class="button lipnamo-upload"><?php echo __('Add Thumbnails', 'lipsum-dynamo'); ?></button>
         </fieldset>
 		<?php
 	}

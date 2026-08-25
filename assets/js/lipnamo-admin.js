@@ -87,9 +87,9 @@ jQuery(document).ready(function($){
             // Add to new IDs array
             newIds.push(imageId);
 
-            // Add to preview
+            // Add to preview, before the add-tile so it stays last
             const altText = attachment.alt || `Image ${index + 1}`;
-            $preview.append(lipnamoCreateThumbnailHTML(imageId, attachment.url, altText));
+            $preview.find('.lipnamo-add-tile').before(lipnamoCreateThumbnailHTML(imageId, attachment.url, altText));
         });
 
         // Update hidden field with combined IDs
