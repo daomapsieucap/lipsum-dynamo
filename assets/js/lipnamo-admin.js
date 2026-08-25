@@ -64,9 +64,10 @@ jQuery(document).ready(function($){
         const $previewItem = $(this).closest('.lipnamo-preview-item');
 
         lipnamoRemoveImageFromField(imageId);
-        $previewItem.fadeOut(300, function(){
-            $(this).remove();
-        });
+
+        const removeItem = () => $previewItem.remove();
+        $previewItem.addClass('lipnamo-leave').one('transitionend', removeItem);
+        setTimeout(removeItem, 300); // fallback in case transitionend never fires
     });
 
     /**
@@ -87,9 +88,14 @@ jQuery(document).ready(function($){
             // Add to new IDs array
             newIds.push(imageId);
 
-            // Add to preview
+            // Add to preview, before the add-tile so it stays last
             const altText = attachment.alt || `Image ${index + 1}`;
-            $preview.append(lipnamoCreateThumbnailHTML(imageId, attachment.url, altText));
+            const ariaLabel = attachment.title || lipnamoGetNoTitleText();
+            const $item = $(lipnamoCreateThumbnailHTML(imageId, attachment.url, altText, ariaLabel));
+            $preview.find('.lipnamo-add-tile').before($item);
+
+            // Let the browser paint the entering state first, then transition it in
+            requestAnimationFrame(() => requestAnimationFrame(() => $item.removeClass('lipnamo-enter')));
         });
 
         // Update hidden field with combined IDs
@@ -99,21 +105,37 @@ jQuery(document).ready(function($){
     }
 
     /**
+     * Matches wp.media.view.Attachment's own aria-label fallback (media-views.js)
+     */
+    function lipnamoGetNoTitleText(){
+        return (typeof lipnamoAdmin !== 'undefined' && lipnamoAdmin.noTitleText) || '(no title)';
+    }
+
+    /**
      * Create thumbnail HTML
      */
-    function lipnamoCreateThumbnailHTML(imageId, imageUrl, altText){
+    function lipnamoCreateThumbnailHTML(imageId, imageUrl, altText, ariaLabel){
+        const coreIconSplit = typeof lipnamoAdmin !== 'undefined' && !!lipnamoAdmin.coreIconSplit;
+        const removeButtonHTML = coreIconSplit
+            ? `<button type="button" class="lipnamo-remove-thumbnail button-link attachment-close"
+                        data-lipnamo-id="${imageId}" title="Remove image" aria-label="Remove image">
+                    <span class="media-modal-icon" aria-hidden="true"></span>
+                    <span class="screen-reader-text">Remove</span>
+                </button>`
+            : `<button type="button" class="lipnamo-remove-thumbnail button-link attachment-close media-modal-icon"
+                        data-lipnamo-id="${imageId}" title="Remove image" aria-label="Remove image">
+                    <span class="screen-reader-text">Remove</span>
+                </button>`;
+
         return `
-            <li class="lipnamo-preview-item attachment" data-lipnamo-id="${imageId}">
+            <li class="lipnamo-preview-item attachment lipnamo-enter" data-lipnamo-id="${imageId}" aria-label="${ariaLabel}">
                 <div class="attachment-preview">
                     <div class="thumbnail">
                         <div class="centered">
                             <img src="${imageUrl}" alt="${altText}" class="lipnamo-preview-image" />
                         </div>
                     </div>
-                    <button type="button" class="lipnamo-remove-thumbnail button-link attachment-close media-modal-icon" 
-                            data-lipnamo-id="${imageId}" title="Remove image" aria-label="Remove image">
-                        <span class="screen-reader-text">Remove</span>
-                    </button>
+                    ${removeButtonHTML}
                 </div>
             </li>
         `;
