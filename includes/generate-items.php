@@ -150,13 +150,14 @@ class Lipsum_Dynamo_Generate{
 		$blocks[] = $this->lipnamo_short_paragraph($generator);
 
 		$blocks[] = $this->lipnamo_build_heading($generator, 'h2', 3, 6);
-		$blocks[] = $this->lipnamo_short_paragraph($generator);
+		$blocks[] = $this->lipnamo_paragraph_with_link($generator);
 
 		$blocks[] = $this->lipnamo_build_heading($generator, 'h3', 3, 5);
 		$blocks[] = $this->lipnamo_short_paragraph($generator);
 
 		$blocks[] = $this->lipnamo_build_heading($generator, 'h3', 3, 5);
 		$blocks[] = $this->lipnamo_short_paragraph($generator);
+		$blocks[] = $this->lipnamo_build_list($generator, 'ul', 3, 5);
 
 		$image_html = $this->lipnamo_build_image_html($content_image_id);
 		if($image_html){
@@ -171,6 +172,7 @@ class Lipsum_Dynamo_Generate{
 
 		$blocks[] = $this->lipnamo_build_heading($generator, 'h3', 3, 5);
 		$blocks[] = $this->lipnamo_short_paragraph($generator);
+		$blocks[] = $this->lipnamo_build_list($generator, 'ol', 3, 5);
 
 		$gallery_shortcode = $this->lipnamo_build_gallery_shortcode($gallery_ids);
 		if($gallery_shortcode){
@@ -195,6 +197,47 @@ class Lipsum_Dynamo_Generate{
 	 */
 	private function lipnamo_short_paragraph($generator){
 		return '<p>' . $generator->sentences(rand(2, 3)) . '</p>';
+	}
+
+	/**
+	 * Build a short paragraph that ends with an inline link, so demo content always has one.
+	 */
+	private function lipnamo_paragraph_with_link($generator){
+		$sentences = $generator->sentences(rand(2, 3));
+		$link_text = ucfirst($generator->words(rand(2, 3)));
+
+		return '<p>' . $sentences . ' <a href="#">' . $link_text . '</a>.</p>';
+	}
+
+	/**
+	 * Build a ul/ol list with randomized short item text, nesting a second-level list under one random item.
+	 */
+	private function lipnamo_build_list($generator, $tag, $min_items, $max_items){
+		$item_count  = rand($min_items, $max_items);
+		$nested_item = rand(1, $item_count);
+
+		$items = '';
+		foreach(range(1, $item_count) as $i){
+			$items .= '<li>' . ucfirst($generator->words(rand(3, 6)));
+			if($i === $nested_item){
+				$items .= $this->lipnamo_build_sublist($generator, $tag);
+			}
+			$items .= '</li>';
+		}
+
+		return '<' . $tag . '>' . $items . '</' . $tag . '>';
+	}
+
+	/**
+	 * Build a second-level ul/ol list nested inside a parent list item.
+	 */
+	private function lipnamo_build_sublist($generator, $tag){
+		$items = '';
+		foreach(range(1, rand(2, 3)) as $i){
+			$items .= '<li>' . ucfirst($generator->words(rand(3, 6))) . '</li>';
+		}
+
+		return '<' . $tag . '>' . $items . '</' . $tag . '>';
 	}
 
 	/**
