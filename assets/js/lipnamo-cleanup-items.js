@@ -30,8 +30,7 @@ class LipnamoCleanupManager{
     }
 
     bindEvents(){
-        // Bail if we're not on the cleanup tab, so this doesn't hijack the shared
-        // post-type field on other tabs (e.g. resetting the generate tab's item count).
+        // Only the cleanup tab has this button; other tabs share the post-type field.
         if(!this.elements.cleanupButton){
             return;
         }
