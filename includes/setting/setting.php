@@ -32,6 +32,11 @@ class Lipsum_Dynamo_Setting{
 			'media-upload',
 			'media-views',
 		], LIPNAMO_VERSION);
+
+		// WP 7.0 split attachment-close's icon markup into a nested span; tell JS which shape to emit.
+		wp_localize_script('lipnamo-admin', 'lipnamoAdmin', [
+			'coreIconSplit' => version_compare(get_bloginfo('version'), '7.0', '>='),
+		]);
 	}
 	
 	public function lipnamo_setting_init(){
